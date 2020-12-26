@@ -1,0 +1,8 @@
+/* Start:: General variables */
+/* End:: General variables */
+/* Start:: Header CSS */
+.menu-item-active .menu-item {
+  background-color: #0BB783;
+}
+
+/* End:: Header CSS */

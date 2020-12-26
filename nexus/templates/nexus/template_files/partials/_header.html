@@ -1,0 +1,278 @@
+{% load static %}
+<!--begin::Header-->
+					<div id="kt_header" class="header flex-column header-fixed">
+
+						<!--begin::Top-->
+						<div class="header-top">
+
+							<!--begin::Container-->
+							<div class="container">
+
+								<!--begin::Left-->
+								<div class="d-none d-lg-flex align-items-center mr-3">
+
+									<!--begin::Logo-->
+									<a href="index.html" class="mr-20 text-white">
+										<!-- <img alt="Logo" src="{% static 'assets/media/logos/logo-letter-9.png' %}" class="max-h-35px" /> -->
+										<h1 class="mb-0" style="margin: 15px 0px 0px !important;">Nexus</h1>
+									</a>
+
+									<!--end::Logo-->
+
+									<!--begin::Tab Navs(for desktop mode)-->
+									<ul class="header-tabs nav align-self-end font-size-lg" role="tablist">
+
+										<!--begin::Item-->
+										<li class="nav-item">
+											<a href="#" class="nav-link py-4 px-6 active" data-toggle="tab" data-target="#kt_header_tab_1" role="tab">Proyectos</a>
+										</li>
+
+										<!--end::Item-->
+
+										<!--begin::Item-->
+										<li class="nav-item mr-3">
+											<a href="#" class="nav-link py-4 px-6" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Usuarios</a>
+										</li>
+
+										<!--end::Item-->
+
+										<!--begin::Item-->
+										<li class="nav-item mr-3">
+											<a href="#" class="nav-link py-4 px-6" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Panel de Administrador</a>
+										</li>
+
+										<!--end::Item-->
+									</ul>
+
+									<!--begin::Tab Navs-->
+								</div>
+
+								<!--end::Left-->
+
+								<!--begin::Topbar-->
+								<div class="topbar bg-primary">
+
+									<!--begin::Notifications-->
+									<div class="dropdown">
+
+										<!--begin::Toggle-->
+										<div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
+											<div class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1 pulse pulse-white">
+												<span class="svg-icon svg-icon-xl">
+
+													<!--begin::Svg Icon | path:assets/media/svg/icons/Code/Compiling.svg-->
+													<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+														<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+															<rect x="0" y="0" width="24" height="24" />
+															<path d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z" fill="#000000" opacity="0.3" />
+															<path d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z" fill="#000000" />
+														</g>
+													</svg>
+
+													<!--end::Svg Icon-->
+												</span>
+												<span class="pulse-ring"></span>
+											</div>
+										</div>
+
+										<!--end::Toggle-->
+
+										<!--begin::Dropdown-->
+										<div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg">
+											<form>
+
+												<!--[html-partial:include:{"file":"partials/_extras/dropdown/notifications.html"}]/-->
+												{% include "nexus/template_files/partials/_extras/dropdown/notifications.html" %}
+											</form>
+										</div>
+
+										<!--end::Dropdown-->
+									</div>
+
+									<!--end::Notifications-->
+
+									<!--begin::Quick Actions-->
+									<div class="dropdown">
+
+										<!--begin::Toggle-->
+										<div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
+											<div class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1">
+												<span class="svg-icon svg-icon-xl">
+
+													<!--begin::Svg Icon | path:assets/media/svg/icons/Media/Equalizer.svg-->
+													<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+														<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+															<rect x="0" y="0" width="24" height="24" />
+															<rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5" />
+															<rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5" />
+															<rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5" />
+															<rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5" />
+														</g>
+													</svg>
+
+													<!--end::Svg Icon-->
+												</span>
+											</div>
+										</div>
+
+										<!--end::Toggle-->
+
+										<!--begin::Dropdown-->
+										<div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg">
+
+											<!--[html-partial:include:{"file":"partials/_extras/dropdown/quick-actions.html"}]/-->
+											{% include "nexus/template_files/partials/_extras/dropdown/quick-actions.html" %}
+										</div>
+
+										<!--end::Dropdown-->
+									</div>
+
+									<!--end::Quick Actions-->
+
+									<!--begin::User-->
+									<div class="topbar-item">
+										<div class="btn btn-icon btn-hover-transparent-white w-sm-auto d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
+											<div class="d-flex flex-column text-right pr-sm-3">
+												<span class="text-white opacity-50 font-weight-bold font-size-sm d-none d-sm-inline">Sean</span>
+												<span class="text-white font-weight-bolder font-size-sm d-none d-sm-inline">UX Designer</span>
+											</div>
+											<span class="symbol symbol-35">
+												<span class="symbol-label font-size-h5 font-weight-bold text-white bg-white-o-30">S</span>
+											</span>
+										</div>
+									</div>
+
+									<!--end::User-->
+								</div>
+
+								<!--end::Topbar-->
+							</div>
+
+							<!--end::Container-->
+						</div>
+
+						<!--end::Top-->
+
+						<!--begin::Bottom-->
+						<div class="header-bottom">
+
+							<!--begin::Container-->
+							<div class="container">
+
+								<!--begin::Header Menu Wrapper-->
+								<div class="header-navs header-navs-left" id="kt_header_navs">
+
+									<!--begin::Tab Navs(for tablet and mobile modes)-->
+									<ul class="header-tabs p-5 p-lg-0 d-flex d-lg-none nav nav-bold nav-tabs" role="tablist">
+
+										<!--begin::Item-->
+										<li class="nav-item mr-2">
+											<a href="#" class="nav-link btn btn-clean active" data-toggle="tab" data-target="#kt_header_tab_1" role="tab">Home</a>
+										</li>
+
+										<!--end::Item-->
+
+										<!--begin::Item-->
+										<li class="nav-item mr-2">
+											<a href="#" class="nav-link btn btn-clean" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Reports</a>
+										</li>
+
+										<!--end::Item-->
+
+										<!--begin::Item-->
+										<li class="nav-item mr-2">
+											<a href="#" class="nav-link btn btn-clean" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Orders</a>
+										</li>
+
+										<!--end::Item-->
+
+										<!--begin::Item-->
+										<li class="nav-item mr-2">
+											<a href="#" class="nav-link btn btn-clean" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Help Ceter</a>
+										</li>
+
+										<!--end::Item-->
+									</ul>
+
+									<!--begin::Tab Navs-->
+
+									<!--begin::Tab Content-->
+									<div class="tab-content">
+
+										<!--begin::Tab Pane-->
+										<div class="tab-pane py-5 p-lg-0 show active" id="kt_header_tab_1">
+
+											<!--begin::Menu-->
+											<div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
+
+												<!--begin::Nav-->
+												<ul class="menu-nav">
+													<li class="menu-item menu-item-active" aria-haspopup="true">
+														<a href="/" class="menu-link">
+															<span class="menu-text">Inicio</span>
+														</a>
+													</li>
+													<li class="menu-item" aria-haspopup="true">
+														<a href="index.html" class="menu-link">
+															<span class="menu-text">Mis proyectos</span>
+														</a>
+													</li>
+													<li class="menu-item" aria-haspopup="true">
+														<a href="index.html" class="menu-link">
+															<span class="menu-text">Mis tickets</span>
+														</a>
+													</li>
+													<li class="menu-item" aria-haspopup="true">
+														<a href="index.html" class="menu-link">
+															<span class="menu-text">Gestionar roles</span>
+														</a>
+													</li>
+												</ul>
+
+												<!--end::Nav-->
+											</div>
+
+											<!--end::Menu-->
+										</div>
+
+										<!--begin::Tab Pane-->
+
+										<!--begin::Tab Pane-->
+										<div class="tab-pane p-5 p-lg-0 justify-content-between" id="kt_header_tab_2">
+											<div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
+
+												<!--begin::Actions-->
+												<a href="#" class="btn btn-primary btn-hover-light-primary font-weight-bold mr-3 my-2 my-lg-0">Inicio</a>
+												<a href="#" class="btn btn-light-primary font-weight-bold mr-3 my-2 my-lg-0">Mis proyectos</a>
+												<a href="#" class="btn btn-light-primary font-weight-bold mr-3 my-2 my-lg-0">Mis tickets</a>
+												<a href="#" class="btn btn-light-primary font-weight-bold mr-3 my-2 my-lg-0">Gestionar usuarios</a>
+
+												<!--end::Actions-->
+											</div>
+
+											<!-- Right-aligned section -->
+											<div class="d-flex align-items-center">
+
+												<!--begin::Actions-->
+												<!-- <a href="#" class="btn btn-danger font-weight-bold my-2 my-lg-0">Generate Reports</a> -->
+
+												<!--end::Actions-->
+											</div>
+										</div>
+
+										<!--begin::Tab Pane-->
+									</div>
+
+									<!--end::Tab Content-->
+								</div>
+
+								<!--end::Header Menu Wrapper-->
+							</div>
+
+							<!--end::Container-->
+						</div>
+
+						<!--end::Bottom-->
+					</div>
+
+					<!--end::Header-->
