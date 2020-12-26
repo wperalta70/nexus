@@ -1,15 +1,79 @@
 /* Start:: General variables */
 
 // Theme colors
-$primary:       									#FBAF4F;
-$primary-hover:    									#df9841;
-$primary-light:    									#fac789;
+$primary:       								    #0BB783;
+$primary-hover:    									#04AA77;
+$primary-light:    									#D7F9EF;
 $primary-inverse:  									#FFFFFF;
+
+// Grid breakpoints - media queries
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px // custom breakpoint
+) !default;
 
 /* End:: General variables */
 
+
+
+/* Start:: Logo CSS */
+.brand-logo{
+    margin-top: 10px;
+    font-size: 3rem !important;
+    color: white;
+}
+
+.brand-logo-mobile{
+    color: white;
+    margin-top: 5px;
+    font-size: calc(1.5rem + .9vw);
+}
+/* End:: Logo CSS */
+
+
+
 /* Start:: Header CSS */
-.menu-item-active .menu-item{
-    background-color: $primary;
+.menu-item a{
+    background-color: $primary-light !important;
+}
+
+.menu-item-active a{
+    background-color: $primary !important;
+    span{
+        color: white !important;
+    }
+}
+
+// Tablet & Mobile Modes
+@media (max-width: 768px) {
+    .menu-item{
+        margin: 10px 0px !important;
+    }
 }
 /* End:: Header CSS */
+
+
+
+/* Start:: User panel */
+#profile-email{
+    word-break: break-all;
+    width: 150px;
+}
+
+@media (max-width: 768px) {
+    #kt_quick_user{
+        min-width: 100%;
+    }
+
+    #profile-email{
+        max-width: 150px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+/* End:: User panel */

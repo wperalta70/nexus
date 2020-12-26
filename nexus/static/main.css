@@ -1,8 +1,55 @@
 /* Start:: General variables */
 /* End:: General variables */
+/* Start:: Logo CSS */
+.brand-logo {
+  margin-top: 10px;
+  font-size: 3rem !important;
+  color: white;
+}
+
+.brand-logo-mobile {
+  color: white;
+  margin-top: 5px;
+  font-size: calc(1.5rem + .9vw);
+}
+
+/* End:: Logo CSS */
 /* Start:: Header CSS */
-.menu-item-active .menu-item {
-  background-color: #0BB783;
+.menu-item a {
+  background-color: #D7F9EF !important;
+}
+
+.menu-item-active a {
+  background-color: #0BB783 !important;
+}
+
+.menu-item-active a span {
+  color: white !important;
+}
+
+@media (max-width: 768px) {
+  .menu-item {
+    margin: 10px 0px !important;
+  }
 }
 
 /* End:: Header CSS */
+/* Start:: User panel */
+#profile-email {
+  word-break: break-all;
+  width: 150px;
+}
+
+@media (max-width: 768px) {
+  #kt_quick_user {
+    min-width: 100%;
+  }
+  #profile-email {
+    max-width: 150px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+/* End:: User panel */
