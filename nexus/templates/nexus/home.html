@@ -12,7 +12,14 @@
 
 {% block content %}
     <div class="container">
-        <h1>Testing 123</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend>Crear nuevo proyecto</legend>
+                {{ form.as_p }}
+            </fieldset>
+            <button type="submit">Aceptar</button>
+        </form>
     </div>
 {% endblock content %}
 
