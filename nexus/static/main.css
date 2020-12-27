@@ -94,3 +94,94 @@
 }
 
 /* End:: Breadcrumbs style */
+/* Start:: Datatables CSS */
+.custom-datatable .datatable-head {
+  text-transform: uppercase;
+}
+
+.custom-datatable .datatable-head .datatable-row .datatable-cell span {
+  font-weight: 600;
+  color: #b5b5c3;
+}
+
+.custom-datatable .datatable-head .datatable-row .datatable-cell:hover {
+  color: #0BB783;
+}
+
+.custom-datatable .datatable-head .datatable-row .datatable-cell:hover span {
+  color: #0BB783;
+}
+
+.custom-datatable .datatable-head .datatable-row .sorting_desc span, .custom-datatable .datatable-head .datatable-row .sorting_asc span {
+  color: #0BB783;
+}
+
+@media (max-width: 768px) {
+  /* Prevent word wrap on mobile when table cell is too long */
+  .custom-datatable tbody tr td {
+    white-space: nowrap;
+    overflow: scroll;
+  }
+}
+
+/* Start:: Hide Datatables Sorting Icons */
+@media (min-width: 768px) {
+  table.custom-datatable thead .sorting:before,
+  table.custom-datatable thead .sorting_asc:before,
+  table.custom-datatable thead .sorting_desc:before,
+  table.custom-datatable thead .sorting_asc_disabled:before,
+  table.custom-datatable thead .sorting_desc_disabled:before {
+    right: 0 !important;
+    content: "" !important;
+  }
+  table.custom-datatable thead .sorting:after,
+  table.custom-datatable thead .sorting_asc:after,
+  table.custom-datatable thead .sorting_desc:after,
+  table.custom-datatable thead .sorting_asc_disabled:after,
+  table.custom-datatable thead .sorting_desc_disabled:after {
+    right: 0 !important;
+    content: "" !important;
+  }
+}
+
+/* Start:: Hide Datatables Sorting Icons */
+/* Start:: Replace Datatables default sorting icons with fontawesome icons */
+@media (min-width: 768px) {
+  table.custom-datatable thead th {
+    position: relative;
+    background-image: none !important;
+  }
+  table.custom-datatable thead tr th span {
+    white-space: nowrap;
+    margin-left: 10px !important;
+  }
+  table.custom-datatable tbody tr td span > div {
+    margin-left: 10px !important;
+  }
+  table.custom-datatable tbody tr td span > span {
+    margin-left: 10px !important;
+  }
+  table.custom-datatable thead th.sorting:after,
+  table.custom-datatable thead th.sorting_asc:after,
+  table.custom-datatable thead th.sorting_desc:after {
+    position: absolute !important;
+    top: 12px !important;
+    left: 8px !important;
+    display: block !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+  }
+  table.custom-datatable thead th.sorting_asc:after {
+    content: "\f062" !important;
+    text-align: left;
+    opacity: 1 !important;
+  }
+  table.custom-datatable thead th.sorting_desc:after {
+    content: "\f063" !important;
+    text-align: left;
+    opacity: 1 !important;
+  }
+}
+
+/* End:: Replace Datatables default sorting icons with fontawesome icons */
+/* End:: Datatables CSS */
