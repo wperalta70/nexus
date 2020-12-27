@@ -53,3 +53,41 @@
 }
 
 /* End:: User panel */
+/* Start:: Form styles */
+.card-title {
+  color: #0BB783 !important;
+}
+
+.asteriskField {
+  margin-left: 5px;
+  color: red;
+}
+
+.custom-file-input ~ .custom-file-label::after {
+  content: "Buscar";
+}
+
+.card-footer a, .card-footer button {
+  width: 150px;
+  margin: 0px 5px;
+}
+
+@media (max-width: 768px) {
+  .card-footer a, .card-footer button {
+    width: 100px;
+  }
+}
+
+@media (min-width: 768px) {
+  .card-title {
+    font-size: 2rem !important;
+  }
+}
+
+/* End:: Form styles */
+/* Start:: Breadcrumbs style */
+.breadcrumb {
+  top: -3px;
+}
+
+/* End:: Breadcrumbs style */
