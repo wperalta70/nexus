@@ -1,5 +1,6 @@
 {% extends "nexus/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 <!-- --- -->
 {% block template_vendors_css %}
 {% endblock template_vendors_css %}
@@ -16,7 +17,7 @@
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend>Crear nuevo proyecto</legend>
-                {{ form.as_p }}
+                {{ form|crispy }}
             </fieldset>
             <button type="submit">Aceptar</button>
         </form>
