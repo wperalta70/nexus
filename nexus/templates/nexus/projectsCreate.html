@@ -1,5 +1,6 @@
 {% extends "nexus/base.html" %}
 {% load static %}
+{% load template_tags %}
 {% load crispy_forms_tags %}
 <!-- --- -->
 {% block template_vendors_css %}
@@ -14,8 +15,7 @@
     {{ title }}
 {% endblock page_title %}
 
-{% block breadcrumbs %}
-    <li class="breadcrumb-item">
+    <!-- <li class="breadcrumb-item">
         <a href="" class="text-muted">Inicio</a>
     </li>
     <li class="breadcrumb-item">
@@ -23,7 +23,14 @@
     </li>
     <li class="breadcrumb-item">
         <a href="" class="text-muted">Crear proyecto</a>
-    </li>
+    </li> -->
+
+{% block breadcrumbs %}
+    {% for item in breadcrumbs %}
+        <li class="breadcrumb-item">
+            <a href="{{ breadcrumbs|get_item:item }}" class="text-muted">{{ item }}</a>
+        </li>
+    {% endfor %}
 {% endblock breadcrumbs %}
 
 {% block subheader_toolbar %}{% endblock subheader_toolbar %}
