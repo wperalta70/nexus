@@ -1,13 +1,21 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import *
+from .models import *
 
 # Create your views here.
-def home(request):
+
+def projectsList(request):
+    context = {
+        'title': 'Listado de proyectos',
+        'projects': Project.objects.all()
+    }
+
+    return render(request, 'nexus/projectsList.html', context)
+
+def projectsCreate(request):
     if request.method == 'POST':
         form = CreateProjectForm(request.POST, request.FILES)
-        #print('Request.user:', request.user)
-        #print('Request.user.id:', request.user.id)
 
         if form.is_valid():
             # save(commit = False) returns a model object that hasn't been saved to the database yet
@@ -22,10 +30,7 @@ def home(request):
     form = CreateProjectForm()
 
     context = {
-        'title': 'Crear proyecto',
+        'title': 'Crear Proyecto',
         'form': form
     }
-    return render(request, 'nexus/home.html', context)
-
-def success(request):
-    return render(request, 'nexus/success.html')
+    return render(request, 'nexus/projectsCreate.html', context)

@@ -11,7 +11,7 @@
 
 
 {% block page_title %}
-    Crear Proyecto
+    {{ title }}
 {% endblock page_title %}
 
 {% block breadcrumbs %}
@@ -33,7 +33,7 @@
         <!--begin::Card-->
         <div class="card card-custom">
             <div class="card-header">
-                <h1 class="card-title">Crear Proyecto</h1>
+                <h1 class="card-title">{{ title }}</h1>
             </div>
             <!--begin::Form-->
             <form method="POST" enctype="multipart/form-data">
@@ -68,6 +68,8 @@
                             <div class="alert-text">Por favor complete los siguientes campos.</div>
                         </div>
                     </div>
+
+                    <div class="form-wrapper">
                         {% csrf_token %}
                         <div class="form-group">
                             {{ form.title|as_crispy_field }}
@@ -85,6 +87,7 @@
                                 <label class="custom-file-label" for="customFile">Seleccionar archivo</label>
                             </div>
                         </div>
+                    </div>
                 </div>
                 <div class="card-footer text-center">
                     <button type="submit" class="btn btn-primary">Aceptar</button>

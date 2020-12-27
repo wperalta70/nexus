@@ -3,12 +3,12 @@ from .models import *
 
 class CreateProjectForm(forms.ModelForm):
     title = forms.CharField(
-        label = 'Título: '
+        label = 'Título: ',
+        max_length = 150
     )
 
     description = forms.CharField(
         label = 'Descripción: ',
-        max_length = 150,
         widget = forms.Textarea(
             attrs = {
                 'rows': 3,
