@@ -12,10 +12,18 @@ def get_upload_path(self, filename):
 
 # Create your models here.
 class Project(models.Model):
+    STATUS_CHOICES = (
+        ('EN DESARROLLO', 'EN DESARROLLO'),
+        ('EN PRODUCCIÓN', 'EN PRODUCCIÓN'),
+        ('INACTIVO', 'INACTIVO'),
+    )
+
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     title = models.CharField(max_length = 150)
+    short_description = models.CharField(max_length = 150, null = True, blank = True)
     description = models.TextField()
     image = models.ImageField(upload_to=get_upload_path, blank = True, null = True, default = None)
+    status = models.CharField(max_length = 14, choices = STATUS_CHOICES)
     date_created = models.DateTimeField(default = timezone.now)
 
     # Create a slug based on the project's title -> project-name

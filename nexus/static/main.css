@@ -95,25 +95,21 @@
 
 /* End:: Breadcrumbs style */
 /* Start:: Datatables CSS */
-.custom-datatable .datatable-head {
+.custom-datatable thead {
   text-transform: uppercase;
 }
 
-.custom-datatable .datatable-head .datatable-row .datatable-cell span {
+.custom-datatable thead tr th span {
   font-weight: 600;
-  color: #b5b5c3;
+  color: #b5b5b3;
 }
 
-.custom-datatable .datatable-head .datatable-row .datatable-cell:hover {
+.custom-datatable thead tr th:hover {
   color: #0BB783;
 }
 
-.custom-datatable .datatable-head .datatable-row .datatable-cell:hover span {
-  color: #0BB783;
-}
-
-.custom-datatable .datatable-head .datatable-row .sorting_desc span, .custom-datatable .datatable-head .datatable-row .sorting_asc span {
-  color: #0BB783;
+.custom-datatable tbody tr td span {
+  font-weight: bold !important;
 }
 
 @media (max-width: 768px) {

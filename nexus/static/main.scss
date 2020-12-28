@@ -126,28 +126,28 @@ $grid-breakpoints: (
 
 /* Start:: Datatables CSS */
 .custom-datatable{
-    .datatable-head{
+    thead{
         text-transform: uppercase;
 
-        .datatable-row{
-            .datatable-cell{
+        tr{
+            th{
                 span{
                     font-weight: 600;
-                    color: #b5b5c3;
+                    color: #b5b5b3;
                 }
-    
+                
                 &:hover{
                     color: $primary;
-    
-                    span{
-                        color: $primary;
-                    }
                 }
             }
+        }
+    }
 
-            .sorting_desc, .sorting_asc{
+    tbody{
+        tr{
+            td{
                 span{
-                    color: $primary;
+                    font-weight: bold !important;
                 }
             }
         }
@@ -193,9 +193,12 @@ $grid-breakpoints: (
     
     table.custom-datatable thead tr th span{
         white-space: nowrap;
+
+        // Left align sorting icon
         margin-left: 10px !important;
     }
     
+    // Left align sorting icon
     table.custom-datatable tbody tr td span{
         > div{
             margin-left: 10px !important;

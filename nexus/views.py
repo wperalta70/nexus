@@ -18,7 +18,14 @@ def projectsList(request):
             'Proyectos': '/projects',
             'Listado': '/projects'
         },
-        'projects': Project.objects.all()
+        'projects': Project.objects.all(),
+        'logo_colors': [
+            'primary',
+            'success',
+            'danger',
+            'warning',
+            'info'
+        ]
     }
 
     return render(request, 'nexus/projectsList.html', context)
@@ -36,7 +43,7 @@ def projectsCreate(request):
             project.user = request.user
             project.save()
             # TODO: Fix redirect and show message
-            return redirect('/')
+            return redirect('/projects')
 
     form = CreateProjectForm()
 
