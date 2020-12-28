@@ -1,0 +1,10 @@
+<div class="custom-file mb-4">
+    <input class="custom-file-input" id="customFile" type="{{ widget.type }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>
+    <label class="custom-file-label" for="customFile">Seleccionar archivo</label>
+</div>
+{% if widget.is_initial %}{{ widget.initial_text }}: <a href="{{ widget.value.url }}">{{ widget.value }}</a>{% if not widget.required %}
+    <div class="form-check form-check-inline mb-4">
+        <label class="form-check-label ml-4 mr-2" for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>{% endif %}<br>
+        <input name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" data-on-text="SI" data-off-text="NO" data-switch="true" type="checkbox" data-on-color="warning" data-off-color="primary"{% if widget.attrs.disabled %} disabled{% endif %}>
+    </div>
+{% endif %}

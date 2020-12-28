@@ -58,3 +58,29 @@ def projectsCreate(request):
     }
 
     return render(request, 'nexus/projectsCreate.html', context)
+
+# Update project
+def projectsUpdate(request, projectId):
+    project = Project.objects.get(id = projectId)
+
+    form = UpdateProjectForm(instance = project)
+
+    if request.method == 'POST':
+        form = UpdateProjectForm(request.POST, request.FILES, instance = project)
+
+        if form.is_valid():
+            form.save()
+
+        return redirect('projects-list')
+
+    context = {
+        'title': 'Modificar Proyecto',
+        'breadcrumbs': {
+            'Inicio': '/',
+            'Proyectos': '/projects',
+            'Modificar Proyecto': '{% url "projects-update" projectId %}',
+        },
+        'form': form
+    }
+
+    return render(request, 'nexus/projectsUpdate.html', context)
