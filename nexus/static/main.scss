@@ -18,7 +18,12 @@ $grid-breakpoints: (
 
 /* End:: General variables */
 
-
+/* Start:: Site-wide CSS */
+::selection{
+    background: $primary;
+    color: white;
+}
+/* End:: Site-wide CSS */
 
 /* Start:: Logo CSS */
 .brand-logo{

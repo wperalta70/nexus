@@ -1,5 +1,12 @@
 /* Start:: General variables */
 /* End:: General variables */
+/* Start:: Site-wide CSS */
+::selection {
+  background: #0BB783;
+  color: white;
+}
+
+/* End:: Site-wide CSS */
 /* Start:: Logo CSS */
 .brand-logo {
   margin-top: 10px;

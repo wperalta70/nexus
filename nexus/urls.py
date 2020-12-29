@@ -4,7 +4,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('', views.index, name="index"),
     path('projects/', views.projectsList, name = "projects-list"),
+    path('projects/<int:projectId>/', views.projectsDetail, name="projects-detail"),
     path('projects/create', views.projectsCreate, name = "projects-create"),
     path('projects/<int:projectId>/update/', views.projectsUpdate, name = "projects-update"),
     path('projects/<int:projectId>/delete/', views.projectsDelete, name = "projects-delete"),

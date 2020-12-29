@@ -8,6 +8,9 @@ from .models import *
 #   breadcrumbs: Dict that contains the breadcrumb name as the key, and the href url as the value
 
 # Create your views here.
+# Index (dashboard)
+def index(request):
+    return redirect('projects-list')
 
 # List of projects
 def projectsList(request):
@@ -29,6 +32,21 @@ def projectsList(request):
     }
 
     return render(request, 'nexus/projectsList.html', context)
+
+def projectsDetail(request, projectId):
+    project = Project.objects.get(id = projectId)
+
+    context = {
+        'title': 'Detalles del proyecto',
+        'breadcrumbs': { 
+            'Inicio': '/',
+            'Proyectos': '/projects',
+            'Detalles': '{% url "projects-detail" projectId %}'
+        },
+        'project': project,
+    }
+
+    return render(request, 'nexus/projectsDetail.html', context)
 
 # Create project
 def projectsCreate(request):
