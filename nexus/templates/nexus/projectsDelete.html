@@ -1,0 +1,107 @@
+{% extends "nexus/base.html" %}
+{% load static %}
+{% load template_tags %}
+{% load crispy_forms_tags %}
+<!-- --- -->
+{% block template_vendors_css %}
+{% endblock template_vendors_css %}
+
+{% block template_layout_css %}
+{% endblock template_layout_css %}
+<!-- --- -->
+
+
+{% block page_title %}
+    {{ title }}
+{% endblock page_title %}
+
+{% block breadcrumbs %}
+    {% for item in breadcrumbs %}
+        <li class="breadcrumb-item">
+            <a href="{{ breadcrumbs|get_item:item }}" class="text-muted">{{ item }}</a>
+        </li>
+    {% endfor %}
+{% endblock breadcrumbs %}
+
+{% block subheader_toolbar %}{% endblock subheader_toolbar %}
+
+{% block content %}
+    <div id="deleteProject" class="container">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <h1 class="card-title">{{ title }}</h1>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>¿Está seguro que desea eliminar este proyecto?</h3>
+                    </div>
+                </div>
+
+                <div id="project-title-container" class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-lg-6 d-flex align-items-center">
+                                {% if project.image %}
+                                    <div class="symbol symbol-80 symbol-md">
+                                        <img id="project-img" src="{{ project.image.url }}">
+                                    </div>
+                                {% else %}
+                                    <div class="symbol symbol-light-{{ logo_colors|pick_color }} symbol-80 symbol symbol-md">
+                                        <span class="symbol-label">{{ project.title|make_list|first|upper }}</span>
+                                    </div>
+                                {% endif %}
+                                
+                                <h1 id="project-title" class="ml-5 font-weight-bolder text-dark text-hover-primary mb-0">
+                                    <a class="text-dark text-hover-primary" href="{% url 'projects-list' %}">{{ project.title }}</a>
+                                    <span id="project-info" class="text-muted">
+                                        ID: {{ project.id }} - Creado por: {{ project.user }}
+                                    </span>
+                                </h1>
+                            </div>
+                            <div id="project-date" class="col-md-6">
+                                <h3 class="text-muted mb-0">{{ project.date_created|date:"d/m/Y - h:m a" }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="project-description-container" class="row">
+                    <div class="col-md-12">
+                        <h3 class="text-muted">Description: </h3>
+                        <div class="description font-weight-bold">
+                            <p id="project-short-description" class="mb-0 text-primary text-uppercase">{{ project.short_description }}</p>
+                            <p id="project-description">{{ project.description }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="project-button-container" class="row">
+                    <div class="col-md-12 text-center">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-lg btn-danger" type="submit">Borrar</button>
+                            <a class="btn btn-lg btn-secondary" href="{% url 'projects-list' %}">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+<!-- --- -->
+{% block template_vendor_js %}
+{% endblock template_vendor_js %}
+
+{% block template_page_js %}
+{% endblock template_page_js %}
+<!-- --- -->
+
+
+
+{% block custom_scripts %}
+{% endblock custom_scripts %}
+

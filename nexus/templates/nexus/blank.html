@@ -1,5 +1,6 @@
 {% extends "nexus/base.html" %}
 {% load static %}
+{% load template_tags %}
 {% load crispy_forms_tags %}
 <!-- --- -->
 {% block template_vendors_css %}
@@ -11,19 +12,30 @@
 
 
 {% block page_title %}
+    {{ title }}
 {% endblock page_title %}
 
 {% block breadcrumbs %}
-    <!-- <li class="breadcrumb-item">
-        <a href="" class="text-muted">Inicio</a>
-    </li> -->
+    {% for item in breadcrumbs %}
+        <li class="breadcrumb-item">
+            <a href="{{ breadcrumbs|get_item:item }}" class="text-muted">{{ item }}</a>
+        </li>
+    {% endfor %}
 {% endblock breadcrumbs %}
 
 {% block subheader_toolbar %}{% endblock subheader_toolbar %}
 
 {% block content %}
     <div class="container">
-        
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <h1 class="card-title">{{ title }}</h1>
+            </div>
+            <div class="card-body">
+                
+            </div>
+        </div>
     </div>
 {% endblock content %}
 

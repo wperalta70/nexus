@@ -43,7 +43,7 @@ def projectsCreate(request):
             project.user = request.user
             project.save()
             # TODO: Fix redirect and show message
-            return redirect('/projects')
+            return redirect('projects-list')
 
     form = CreateProjectForm()
 
@@ -84,3 +84,29 @@ def projectsUpdate(request, projectId):
     }
 
     return render(request, 'nexus/projectsUpdate.html', context)
+
+# Delete project
+def projectsDelete(request, projectId):
+    project = Project.objects.get(id = projectId)
+
+    if request.method == 'POST':
+        project.delete()
+        return redirect('projects-list')
+
+    context = {
+        'title': 'Eliminar Proyecto',
+        'breadcrumbs': {
+            'Inicio': '/',
+            'Proyectos': '/projects',
+            'Crear Proyecto': '/projects/create',
+        },
+        'logo_colors': [
+            'primary',
+            'success',
+            'danger',
+            'warning',
+            'info'
+        ],
+        'project': project
+    }
+    return render(request, 'nexus/projectsDelete.html', context)

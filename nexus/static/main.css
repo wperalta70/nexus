@@ -181,3 +181,97 @@
 
 /* End:: Replace Datatables default sorting icons with fontawesome icons */
 /* End:: Datatables CSS */
+/* Start:: Delete Project CSS */
+#project-title-container {
+  margin-left: 15px;
+}
+
+#project-title-container #project-title {
+  font-size: 3rem;
+}
+
+#project-title-container #project-info {
+  font-size: 1.4rem;
+  display: block;
+}
+
+#project-title-container #project-date {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#project-title-container .symbol-label {
+  font-size: 3rem !important;
+}
+
+#project-description-container {
+  margin-top: 15px;
+}
+
+#project-description-container h3 {
+  font-size: 1.3rem;
+}
+
+#project-description-container .description {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+#project-description-container #project-short-description {
+  font-size: 1.2rem;
+}
+
+#project-description-container #project-description {
+  font-size: 1.5rem;
+}
+
+#project-button-container {
+  margin-top: 15px;
+}
+
+#project-button-container button, #project-button-container a {
+  margin: 0px 10px;
+  width: 120px;
+}
+
+@media (max-width: 768px) {
+  #project-title-container {
+    margin-top: 15px;
+    margin-left: 0px;
+  }
+  #project-title-container .col-md-12 {
+    padding: 0px;
+  }
+  #project-title-container #project-title {
+    font-size: 2rem;
+  }
+  #project-title-container #project-info {
+    font-size: 1.2rem;
+  }
+  #project-title-container #project-date {
+    margin-top: 1rem;
+    justify-content: center;
+  }
+  #project-title-container .symbol-80 img {
+    max-width: 60px !important;
+    height: 60px !important;
+  }
+  #project-title-container .symbol-label {
+    font-size: 3rem !important;
+  }
+  #project-description-container {
+    font-size: 1rem;
+  }
+  #project-description-container #project-short-description {
+    font-size: 1rem;
+  }
+  #project-description-container #project-description {
+    font-size: 1.2rem;
+  }
+  #project-description-container .description {
+    margin-left: 0px;
+  }
+}
+
+/* End:: Delete Project CSS */

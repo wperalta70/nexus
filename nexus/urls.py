@@ -7,6 +7,7 @@ urlpatterns = [
     path('projects/', views.projectsList, name = "projects-list"),
     path('projects/create', views.projectsCreate, name = "projects-create"),
     path('projects/<int:projectId>/update/', views.projectsUpdate, name = "projects-update"),
+    path('projects/<int:projectId>/delete/', views.projectsDelete, name = "projects-delete"),
 ]
 
 if settings.DEBUG:

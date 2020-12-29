@@ -236,3 +236,109 @@ $grid-breakpoints: (
 /* End:: Replace Datatables default sorting icons with fontawesome icons */
 
 /* End:: Datatables CSS */
+
+/* Start:: Delete Project CSS */
+#project-title-container{
+    margin-left: 15px;
+
+    #project-title{
+        font-size: 3rem;
+    }
+    
+    #project-info{
+        font-size: 1.4rem;
+        display: block;
+    }
+    
+    #project-date{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .symbol-label{
+        font-size: 3rem !important;
+    }
+}
+
+#project-description-container{
+    margin-top: 15px;
+
+    h3{
+        font-size: 1.3rem;
+    }
+
+    .description{
+        margin-top: 10px;
+        margin-left: 15px;
+    }
+
+    #project-short-description{
+        font-size: 1.2rem;
+    }
+
+    #project-description{
+        font-size: 1.5rem;
+    }
+}
+
+#project-button-container{
+    margin-top: 15px;
+
+    button, a{
+        margin: 0px 10px;
+        width: 120px;
+    }
+}
+
+@media(max-width: 768px){
+    #project-title-container{
+        margin-top: 15px;
+        margin-left: 0px;
+
+        .col-md-12{
+            padding: 0px;
+        }
+        
+        #project-title{
+            font-size: 2rem;
+        }
+    
+        #project-info{
+            font-size: 1.2rem;
+        }
+    
+        #project-date{
+            margin-top: 1rem;
+            justify-content: center;
+        }
+    
+        .symbol-80{
+            img{
+                max-width: 60px !important;
+                height: 60px !important;
+            }
+        }
+
+        .symbol-label{
+            font-size: 3rem !important;
+        }
+    }
+
+    #project-description-container{
+        font-size: 1rem;
+
+        #project-short-description{
+            font-size: 1rem;
+        }
+    
+        #project-description{
+            font-size: 1.2rem;
+        }
+
+        .description{
+            margin-left: 0px;
+        }
+    }
+}
+/* End:: Delete Project CSS */
