@@ -282,3 +282,56 @@
 }
 
 /* End:: Delete Project CSS */
+/* Start:: Project details page CSS */
+#projects-detail-container #title-card #logo-col .symbol span {
+  font-size: 3rem;
+}
+
+#projects-detail-container #title-card #logo-col .symbol img {
+  height: auto !important;
+}
+
+#projects-detail-container #title-card #title-col #title {
+  font-size: 3rem;
+}
+
+#projects-detail-container #title-card #title-col #short-description {
+  font-size: 1.3rem;
+}
+
+#projects-detail-container #title-card #title-col #user, #projects-detail-container #title-card #title-col #user-email {
+  font-size: 1.2rem;
+}
+
+#projects-detail-container #title-card #button-col a {
+  padding: 0.55rem 1.1rem;
+}
+
+#projects-detail-container #title-card #description {
+  font-size: 1.2rem !important;
+}
+
+#projects-detail-container #title-card #icon-row .svg-icon-primary:hover svg g [fill] {
+  fill: #7F7F7F !important;
+}
+
+@media (max-width: 768px) {
+  #projects-detail-container #title-card #logo-col {
+    padding-left: 0px;
+  }
+  #projects-detail-container #title-card #title-col #title {
+    text-align: center;
+  }
+  #projects-detail-container #title-card #title-col #short-description {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  #projects-detail-container #title-card #button-col {
+    text-align: center;
+  }
+  #projects-detail-container #icon-row {
+    justify-content: start !important;
+  }
+}
+
+/* End:: Project details page CSS */

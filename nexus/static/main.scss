@@ -347,3 +347,80 @@ $grid-breakpoints: (
     }
 }
 /* End:: Delete Project CSS */
+
+/* Start:: Project details page CSS */
+#projects-detail-container{
+    #title-card{
+        #logo-col{
+            .symbol{
+                span{
+                    font-size: 3rem;
+                }
+
+                img{
+                    height: auto !important
+                }
+            }
+        }
+        
+        #title-col{
+            #title{
+                font-size: 3rem;
+            }
+
+            #short-description{
+                font-size: 1.3rem;
+            }
+
+            #user, #user-email{
+                font-size: 1.2rem;
+            }
+        }
+
+        #button-col a{
+            padding: 0.55rem 1.1rem;
+        }
+
+        #description{
+            font-size: 1.2rem !important;
+        }
+
+        #icon-row{
+            .svg-icon-primary:hover{
+                svg g [fill]{
+                    fill: #7F7F7F !important;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 768px){
+    #projects-detail-container{
+        #title-card{
+            #logo-col{
+                padding-left: 0px;
+            }
+
+            #title-col{
+                #title{
+                    text-align: center;
+                }
+
+                #short-description{
+                    text-align: center;
+                    margin-bottom: 10px;
+                }
+            }
+
+            #button-col{
+                text-align: center;
+            }
+        }
+
+        #icon-row{
+            justify-content: start !important;
+        }
+    }
+}
+/* End:: Project details page CSS */
