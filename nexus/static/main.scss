@@ -162,8 +162,8 @@ $grid-breakpoints: (
 @media(max-width: 768px){
     /* Prevent word wrap on mobile when table cell is too long */
     .custom-datatable tbody tr td{
-        white-space: nowrap;
-        overflow: scroll;
+        // white-space: nowrap;
+        // overflow-x: scroll;
     }
 }
 
@@ -200,17 +200,22 @@ $grid-breakpoints: (
         white-space: nowrap;
 
         // Left align sorting icon
-        margin-left: 10px !important;
     }
     
     // Left align sorting icon
     table.custom-datatable tbody tr td span{
-        > div{
-            margin-left: 10px !important;
-        }
+        // > div{
+        //     margin-left: 10px !important;
+        // }
 
-        > span{
-            margin-left: 10px !important;
+        // > span{
+        //     margin-left: 10px !important;
+        // }
+    }
+
+    table.custom-datatable thead th.sorting_asc, table.custom-datatable thead th.sorting_desc{
+        span{
+            color: $primary !important;
         }
     }
     
@@ -219,7 +224,7 @@ $grid-breakpoints: (
     table.custom-datatable thead th.sorting_desc:after {
         position: absolute !important;
         top: 12px !important;
-        left: 8px !important;
+        right: 8px !important;
         display: block !important;
         font-family: "Font Awesome 5 Free" !important;
         font-weight: 900 !important;
@@ -377,17 +382,13 @@ $grid-breakpoints: (
             }
         }
 
-        #button-col a{
-            padding: 0.55rem 1.1rem;
-        }
-
         #description{
             font-size: 1.2rem !important;
         }
 
         #icon-row{
-            .svg-icon-primary:hover{
-                svg g [fill]{
+            #icon:hover{
+                .svg-icon-primary svg g [fill]{
                     fill: #7F7F7F !important;
                 }
             }
@@ -411,6 +412,10 @@ $grid-breakpoints: (
                     text-align: center;
                     margin-bottom: 10px;
                 }
+            }
+
+            #dates{
+                justify-content: center !important;
             }
 
             #button-col{
