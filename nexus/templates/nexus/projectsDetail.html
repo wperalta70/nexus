@@ -245,13 +245,14 @@
                 <div class="card card-custom gutter-b">
                     <div class="card-body">
                         <div id="title-row" class="row">
-                            <!-- TODO: Change to text-center on mobile -->
-                            <div id="title" class="col-md-10 text-center">
+                            <div id="title" class="col-md-10">
                                 <h1 class="m-0 mb-2">Listado de Tickets</h1>
                             </div>
-                            <!-- TODO: Change to text-center on mobile -->
-                            <div id="button" class="col-md-2 text-right">
-                                <a class="btn btn-primary btn-sm font-weight-bolder" href="#">NUEVO TICKET</a>
+                            <div id="button" class="col-md-2">
+                                <a class="btn btn-primary font-weight-bolder" href="{% url 'tickets-create' project.id %}">
+                                    <i class="fas fa-plus-circle"></i>
+                                    NUEVO TICKET
+                                </a>
                             </div>
                         </div>
                         <div class="separator separator-solid my-3 mb-7"></div>
@@ -271,44 +272,49 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><span>1</span></td>
-                                                <td><span>Sistema de tickets Sistema de tickets</span></td>
-                                                <td>
-                                                    <span>
-                                                        <div class="">Waldemar Peralta</div>
-                                                        <div class="text-muted">Desarrollador</div>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span>
-                                                        <span class="label label-lg font-weight-bold  label-light-danger label-inline text-nowrap text-uppercase">
-                                                            Alta
+                                            {% for ticket in tickets %}
+                                                <tr>
+                                                    <td><span>{{ ticket.id }}</span></td>
+                                                    <td><span>{{ ticket.title }}</span></td>
+                                                    <td>
+                                                        <span>
+                                                            <!-- TODO: Change to tickets.user.name -->
+                                                            <div class="">{{ ticket.user }}</div>
+                                                            <!-- TODO: Change to tickets.role -->
+                                                            <div class="text-muted">Desarrollador</div>
                                                         </span>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span>
-                                                        <span class="label label-lg font-weight-bold  label-light-success label-inline text-nowrap text-uppercase">
-                                                            En desarrollo
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            <span class="label label-lg font-weight-bold  label-light-danger label-inline text-nowrap text-uppercase">
+                                                                {{ ticket.priority }}
+                                                            </span>
                                                         </span>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span>
-                                                        <span class="label label-lg font-weight-bold  label-light-info label-inline text-nowrap text-uppercase ">
-                                                            Feature
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            <span class="label label-lg font-weight-bold  label-light-success label-inline text-nowrap text-uppercase">
+                                                                {{ ticket.status }}
+                                                            </span>
                                                         </span>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span>
-                                                        <a href="" class="btn btn-primary btn-sm font-weight-bold text-uppercase">
-                                                            Seleccionar
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            <span class="label label-lg font-weight-bold  label-light-info label-inline text-nowrap text-uppercase ">
+                                                                {{ ticket.type }}
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            <!-- TODO: Change url to tickets-detail -->
+                                                            <a href="#" class="btn btn-primary btn-sm font-weight-bold text-uppercase">
+                                                                Seleccionar
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
@@ -344,15 +350,15 @@
 <script>
     $(document).ready(function () {
         $('#ticketsTable').DataTable({
-            // TODO: Change column widths
-            // "columns": [
-            //     { "width": "1%" },
-            //     { "width": "30%" },
-            //     { "width": "20%" },
-            //     { "width": "5%" },
-            //     { "width": "10%" },
-            //     { "width": "10%" },
-            // ],
+            "columns": [
+                { "width": "1%" },
+                { "width": "40%" },
+                { "width": "15%" },
+                { "width": "10%" },
+                { "width": "15%" },
+                { "width": "10%" },
+                { "width": "9%" },
+            ],
         });
     });
 </script>

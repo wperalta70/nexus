@@ -19,7 +19,7 @@ def projectsList(request):
         'breadcrumbs': { 
             'Inicio': '/',
             'Proyectos': '/projects',
-            'Listado': '/projects'
+            'Listado': '#'
         },
         'projects': Project.objects.all(),
         'logo_colors': [
@@ -35,15 +35,17 @@ def projectsList(request):
 
 def projectsDetail(request, projectId):
     project = Project.objects.get(id = projectId)
+    tickets = project.tickets.all()
 
     context = {
         'title': 'Detalles del proyecto',
         'breadcrumbs': { 
             'Inicio': '/',
             'Proyectos': '/projects',
-            'Detalles': '{% url "projects-detail" projectId %}'
+            'Detalles': '#',
         },
         'project': project,
+        'tickets': tickets
     }
 
     return render(request, 'nexus/projectsDetail.html', context)
@@ -70,7 +72,7 @@ def projectsCreate(request):
         'breadcrumbs': {
             'Inicio': '/',
             'Proyectos': '/projects',
-            'Crear Proyecto': '/projects/create',
+            'Crear Proyecto': '#',
         },
         'form': form
     }
@@ -96,7 +98,7 @@ def projectsUpdate(request, projectId):
         'breadcrumbs': {
             'Inicio': '/',
             'Proyectos': '/projects',
-            'Modificar Proyecto': '{% url "projects-update" projectId %}',
+            'Modificar Proyecto': '#',
         },
         'form': form
     }
@@ -116,7 +118,7 @@ def projectsDelete(request, projectId):
         'breadcrumbs': {
             'Inicio': '/',
             'Proyectos': '/projects',
-            'Crear Proyecto': '/projects/create',
+            'Eliminar Proyecto': '#',
         },
         'logo_colors': [
             'primary',
@@ -128,3 +130,54 @@ def projectsDelete(request, projectId):
         'project': project
     }
     return render(request, 'nexus/projectsDelete.html', context)
+
+"""def ticketsDetail(request, projectId, ticketId):
+
+    context = {
+        'title': 'Detalles del ticket',
+        'breadcrumbs': {
+            'Inicio': '/',
+            'Proyectos': '/projects',
+            'Detalles': '{% url "projects-detail" projectId %}',
+            'Ticket': '{% url "tickets-detail" projectId %}',
+            'Detalles del ticket': '/projects/create',
+        },
+        'logo_colors': [
+            'primary',
+            'success',
+            'danger',
+            'warning',
+            'info'
+        ],
+        'ticket': 'blank'
+    }
+    return render(request, 'nexus/ticketsDetail.html', context)"""
+
+def ticketsCreate(request, projectId):
+    if request.method == 'POST':
+        form = CreateTicketForm(request.POST)
+
+        if form.is_valid():
+            ticket = form.save(commit = False)
+            ticket.project = Project.objects.get(id = projectId)
+            ticket.user = request.user
+            ticket.save()
+            # TODO: Fix redirect and show message
+            return redirect('projects-detail', projectId = projectId)
+
+    form = CreateTicketForm()
+
+    context = {
+        'title': 'Crear nuevo ticket',
+        'breadcrumbs': {
+            'Inicio': '/',
+            'Proyectos': '/projects',
+            'Detalles': '/projects/'+ str(projectId),
+            # TODO: Add ticketId to line below
+            #'Ticket': '{% url "tickets-detail" projectId %}',
+            'Crear nuevo ticket': '#',
+        },
+        'projectId': projectId,
+        'form': form
+    }
+    return render(request, 'nexus/ticketsCreate.html', context)

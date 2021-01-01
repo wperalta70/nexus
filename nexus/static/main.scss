@@ -159,14 +159,6 @@ $grid-breakpoints: (
     }
 }
 
-@media(max-width: 768px){
-    /* Prevent word wrap on mobile when table cell is too long */
-    .custom-datatable tbody tr td{
-        // white-space: nowrap;
-        // overflow-x: scroll;
-    }
-}
-
 /* Start:: Hide Datatables Sorting Icons */
 @media (min-width: 768px) {
     table.custom-datatable thead .sorting:before,
@@ -198,19 +190,6 @@ $grid-breakpoints: (
     
     table.custom-datatable thead tr th span{
         white-space: nowrap;
-
-        // Left align sorting icon
-    }
-    
-    // Left align sorting icon
-    table.custom-datatable tbody tr td span{
-        // > div{
-        //     margin-left: 10px !important;
-        // }
-
-        // > span{
-        //     margin-left: 10px !important;
-        // }
     }
 
     table.custom-datatable thead th.sorting_asc, table.custom-datatable thead th.sorting_desc{
@@ -429,3 +408,32 @@ $grid-breakpoints: (
     }
 }
 /* End:: Project details page CSS */
+
+/* Start:: Tickets table in Project Details page CSS */
+#projects-detail-container{
+    #tickets-container{
+        #title-row{
+            #button{
+                text-align: right;
+            }
+        }
+    }
+}
+
+@media(max-width: 768px){
+    #projects-detail-container{
+        #tickets-container{
+            #title-row{
+                #title h1{
+                    text-align: center;
+                    margin-bottom: 10px;
+                }
+
+                #button{
+                    text-align: center !important;
+                }
+            }
+        }
+    }
+}
+/* End:: Tickets table in Project Details page CSS */

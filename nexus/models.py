@@ -18,7 +18,7 @@ class Project(models.Model):
         ('INACTIVO', 'INACTIVO'),
     )
 
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'projects')
     title = models.CharField(max_length = 150)
     short_description = models.CharField(max_length = 150, null = True, blank = True)
     description = models.TextField()
@@ -30,7 +30,7 @@ class Project(models.Model):
     slug = models.SlugField(max_length = 30, blank=True)
 
     def __str__(self):
-        return f'Project: {self.title}'
+        return self.title
 
     def save(self, *args, **kwargs):
         # Before saving, this line creates the slug based on the project's title
@@ -44,3 +44,38 @@ class Project(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)'''
+
+class Ticket(models.Model):
+    PRIORITY_CHOICES = (
+        ('BAJA', 'BAJA'),
+        ('MEDIA', 'MEDIA'),
+        ('ALTA', 'ALTA'),
+    )
+
+    STATUS_CHOICES = (
+        ('ABIERTO', 'ABIERTO'),
+        ('ASIGNADO', 'ASIGNADO'),
+        ('EN DESARROLLO', 'EN DESARROLLO'),
+        ('CERRADO', 'CERRADO'),
+    )
+
+    TYPE_CHOICES = (
+        ('FEATURE', 'FEATURE'),
+        ('BUG', 'BUG'),
+        ('DISEÑO', 'DISEÑO'),
+    )
+
+    project = models.ForeignKey(Project, on_delete = models.CASCADE, related_name = 'tickets')
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'tickets')
+    title = models.CharField(max_length = 150)
+    description = models.TextField()
+    priority = models.CharField(max_length = 5, choices = PRIORITY_CHOICES)
+    status = models.CharField(max_length = 13, choices = STATUS_CHOICES)
+    type = models.CharField(max_length = 7, choices = TYPE_CHOICES)
+    date_created = models.DateTimeField(default = timezone.now)
+    date_closed = models.DateTimeField(null = True, blank = True)
+    last_updated = models.DateTimeField(null = True, blank = True)
+
+    def __str__(self):
+        return self.title
+

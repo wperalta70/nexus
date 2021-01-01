@@ -119,10 +119,6 @@
   font-weight: bold !important;
 }
 
-@media (max-width: 768px) {
-  /* Prevent word wrap on mobile when table cell is too long */
-}
-
 /* Start:: Hide Datatables Sorting Icons */
 @media (min-width: 768px) {
   table.custom-datatable thead .sorting:before,
@@ -326,3 +322,19 @@
 }
 
 /* End:: Project details page CSS */
+/* Start:: Tickets table in Project Details page CSS */
+#projects-detail-container #tickets-container #title-row #button {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  #projects-detail-container #tickets-container #title-row #title h1 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  #projects-detail-container #tickets-container #title-row #button {
+    text-align: center !important;
+  }
+}
+
+/* End:: Tickets table in Project Details page CSS */
