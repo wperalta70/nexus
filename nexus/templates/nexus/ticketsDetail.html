@@ -1,0 +1,127 @@
+{% extends "nexus/base.html" %}
+{% load static %}
+{% load template_tags %}
+{% load crispy_forms_tags %}
+<!-- --- -->
+{% block template_vendors_css %}
+{% endblock template_vendors_css %}
+
+{% block template_layout_css %}
+{% endblock template_layout_css %}
+<!-- --- -->
+
+
+{% block page_title %}
+    {{ title }}
+{% endblock page_title %}
+
+{% block breadcrumbs %}
+    {% for item in breadcrumbs %}
+        <li class="breadcrumb-item">
+            <a href="{{ breadcrumbs|get_item:item }}" class="text-muted">{{ item }}</a>
+        </li>
+    {% endfor %}
+{% endblock breadcrumbs %}
+
+{% block subheader_toolbar %}{% endblock subheader_toolbar %}
+
+{% block content %}
+    <div class="container">
+        <!-- begin:: Project Info Card -->
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <div class="card card-custom">
+                    <div class="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
+                        <!--begin::Info-->
+                        <div class="d-flex align-items-center mr-2 py-2">
+                            <!-- begin::Logo -->
+                            <div class="mr-5">
+                                {% if project.image %}
+                                    <div class="symbol symbol-50">
+                                        <img style="height: auto;" alt="Pic" src="{{ project.image.url }}" />
+                                    </div>
+                                {% else %}
+                                    <div class="symbol symbol-50 symbol-primary">
+                                        <span class="symbol-label font-weight-boldest">{{ project.title|make_list|first|upper }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <!-- end::Logo -->
+                            <!--begin::Title-->
+                            <div class="d-flex flex-wrap">
+                                <a href="">
+                                    <h1 class="font-weight-bold text-dark text-hover-primary mr-5">{{ project.title }}</h1>
+                                </a>
+                                <h5 class="font-weight-bold d-flex align-items-center text-muted text-hover-dark mb-1">{{ project.short_description }}</h5>
+                            </div>
+                            <!--end::Title-->
+                        </div>
+                        <!--end::Info-->
+                        <!--begin::Users-->
+                        <div class="symbol-group symbol-hover py-2">
+                            <div class="symbol symbol-40 symbol-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Alice Stone">
+                                <img alt="Pic" src="{% static 'assets/media/users/300_19.jpg' %}">
+                            </div>
+                            <div class="symbol symbol-40 symbol-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Anna Krox">
+                                <img alt="Pic" src="{% static 'assets/media/users/300_21.jpg' %}">
+                            </div>
+                            <div class="symbol symbol-40 symbol-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Nick Nilson">
+                                <img alt="Pic" src="{% static 'assets/media/users/300_22.jpg' %}">
+                            </div>
+                            <div class="symbol symbol-40 symbol-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ana Tor">
+                                <img alt="Pic" src="{% static 'assets/media/users/300_23.jpg' %}">
+                            </div>
+                            <div class="symbol symbol-40 symbol-circle symbol-light-primary">
+                                <!-- TODO: Show number of users not shown -->
+                                <span class="symbol-label font-weight-bolder">5+</span>
+                            </div>
+                        </div>
+                        <!--end::Users-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end:: Project Info Card -->
+        
+        <!-- begin:: Ticket Row -->
+        <div id="ticket-info" class="row">
+            <div class="col-md-12">
+                <div class="card  card-custom">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h1 id="ticket-title" class="m-0"><span class="primary-dash"></span>{{ ticket.title }}</h1>
+                            </div>
+                            <div id="button-col" class="col-md-3">
+                                <a href="{#% url 'tickets-update' ticket.id %#}" class="btn btn-sm btn-primary btn-hover-light-primary font-weight-bolder text-uppercase mr-2">Modificar</a>
+                                <a href="{#% url 'tickets-delete' ticket.id %#}" class="btn btn-sm btn-danger btn-hover-light-danger font-weight-bolder text-uppercase mr-2">Eliminar</a>
+                                <a href="{% url 'projects-detail' project.id %}" class="btn btn-sm btn-outline-secondary font-weight-bolder text-uppercase">Atrás</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p id="ticket-description" class="text-dark-50 mt-3">{{ ticket.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end:: Ticket Row -->
+    </div>
+{% endblock content %}
+
+
+<!-- --- -->
+{% block template_vendor_js %}
+{% endblock template_vendor_js %}
+
+{% block template_page_js %}
+{% endblock template_page_js %}
+<!-- --- -->
+
+
+
+{% block custom_scripts %}
+{% endblock custom_scripts %}
+

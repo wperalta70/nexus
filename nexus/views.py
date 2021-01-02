@@ -131,7 +131,9 @@ def projectsDelete(request, projectId):
     }
     return render(request, 'nexus/projectsDelete.html', context)
 
-"""def ticketsDetail(request, projectId, ticketId):
+def ticketsDetail(request, projectId, ticketId):
+    project = Project.objects.get(id = projectId)
+    ticket = Ticket.objects.get(id = ticketId)
 
     context = {
         'title': 'Detalles del ticket',
@@ -149,9 +151,10 @@ def projectsDelete(request, projectId):
             'warning',
             'info'
         ],
-        'ticket': 'blank'
+        'project': project,
+        'ticket': ticket
     }
-    return render(request, 'nexus/ticketsDetail.html', context)"""
+    return render(request, 'nexus/ticketsDetail.html', context)
 
 def ticketsCreate(request, projectId):
     if request.method == 'POST':

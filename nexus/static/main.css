@@ -6,6 +6,20 @@
   color: white;
 }
 
+h1 .primary-dash {
+  position: relative;
+  margin-right: 20px;
+}
+
+h1 .primary-dash::before {
+  content: "";
+  position: absolute;
+  top: 17px;
+  height: 5px;
+  width: 15px;
+  background: #0BB783;
+}
+
 /* End:: Site-wide CSS */
 /* Start:: Logo CSS */
 .brand-logo {
@@ -338,3 +352,39 @@
 }
 
 /* End:: Tickets table in Project Details page CSS */
+/* Start:: Ticket details CSS */
+#ticket-info #ticket-title {
+  font-size: 2.5rem;
+}
+
+#ticket-info #ticket-title span::before {
+  top: 21px;
+}
+
+#ticket-info #button-col {
+  text-align: right;
+}
+
+#ticket-info #ticket-description {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  #ticket-info #ticket-title {
+    font-size: 1.5rem;
+  }
+  #ticket-info #ticket-title span::before {
+    height: 4px;
+    top: 12px;
+  }
+  #ticket-info #button-col {
+    margin-top: 15px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  #ticket-info #ticket-description {
+    font-size: 1.1rem;
+  }
+}
+
+/* End:: Ticket details CSS */

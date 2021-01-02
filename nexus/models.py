@@ -20,7 +20,7 @@ class Project(models.Model):
 
     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'projects')
     title = models.CharField(max_length = 150)
-    short_description = models.CharField(max_length = 150, null = True, blank = True)
+    short_description = models.CharField(max_length = 50, null = True, blank = True)
     description = models.TextField()
     image = models.ImageField(upload_to=get_upload_path, blank = True, null = True, default = None)
     status = models.CharField(max_length = 14, choices = STATUS_CHOICES)

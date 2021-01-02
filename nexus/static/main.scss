@@ -23,6 +23,21 @@ $grid-breakpoints: (
     background: $primary;
     color: white;
 }
+
+h1{
+    .primary-dash{
+        position: relative;
+        margin-right: 20px;
+        &::before{
+            content: "";
+            position: absolute;
+            top: 17px;
+            height: 5px;
+            width: 15px;
+            background: $primary;
+        }
+    }
+}
 /* End:: Site-wide CSS */
 
 /* Start:: Logo CSS */
@@ -437,3 +452,50 @@ $grid-breakpoints: (
     }
 }
 /* End:: Tickets table in Project Details page CSS */
+
+/* Start:: Ticket details CSS */
+#ticket-info{
+    #ticket-title{
+        font-size: 2.5rem;
+        
+        span::before{
+            top: 21px;
+        }
+    }
+
+    #button-col{
+        text-align: right;
+
+        a{
+
+        }
+    }
+
+    #ticket-description{
+        font-size: 1.5rem;
+    }
+}
+
+@media(max-width: 768px){
+    #ticket-info{
+        #ticket-title{
+            font-size: 1.5rem;
+            
+            span::before{
+                height: 4px;
+                top: 12px;
+            }
+        }
+    
+        #button-col{
+            margin-top: 15px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    
+        #ticket-description{
+            font-size: 1.1rem;
+        }
+    }
+}
+/* End:: Ticket details CSS */

@@ -8,26 +8,36 @@
 {% endblock template_vendors_css %}
 
 {% block template_layout_css %}
+<style>
+    .subheader{
+        padding-top: 10px !important;
+    }
+
+    @media(max-width: 768px){
+        .subheader{
+            padding-top: 0px !important;
+            padding-bottom: 0px !important;
+        }
+    }
+</style>
 {% endblock template_layout_css %}
 <!-- --- -->
 
-
-{% block page_title %}
-    {{ title }}
-{% endblock page_title %}
-
-{% block breadcrumbs %}
-    {% for item in breadcrumbs %}
-        <li class="breadcrumb-item">
-            <a href="{{ breadcrumbs|get_item:item }}" class="text-muted">{{ item }}</a>
-        </li>
-    {% endfor %}
-{% endblock breadcrumbs %}
-
-{% block subheader_toolbar %}{% endblock subheader_toolbar %}
-
 {% block content %}
     <div id="projects-detail-container" class="container-fluid">
+        <div class="d-flex align-items-baseline flex-wrap mb-2 mr-5">
+            <h2 class="d-flex align-items-center text-dark font-weight-bold my-1 mr-3">{{ title }}</h2>
+
+            <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold my-2 p-0" style="position: relative;">
+                {% for item in breadcrumbs %}
+                    <li class="breadcrumb-item">
+                        <a href="{{ breadcrumbs|get_item:item }}" class="text-muted">{{ item }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!--end::Page Title-->
         <div id="title-card" class="card card-custom gutter-b">
             <div class="card-body">
                 <div class="row">
@@ -308,7 +318,7 @@
                                                     <td>
                                                         <span>
                                                             <!-- TODO: Change url to tickets-detail -->
-                                                            <a href="#" class="btn btn-primary btn-sm font-weight-bold text-uppercase">
+                                                            <a href="{% url 'tickets-detail' project.id ticket.id %}" class="btn btn-primary btn-sm font-weight-bold text-uppercase">
                                                                 Seleccionar
                                                             </a>
                                                         </span>

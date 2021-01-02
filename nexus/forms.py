@@ -66,7 +66,7 @@ class UpdateProjectForm(forms.ModelForm):
 
     short_description = forms.CharField(
         label = 'Descripción Breve: ',
-        max_length = 150,
+        max_length = 50,
         required = False
     )
 
