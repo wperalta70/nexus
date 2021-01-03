@@ -385,6 +385,9 @@ h1 .primary-dash::before {
   #ticket-info #ticket-description {
     font-size: 1.1rem;
   }
+  #ticket-info #dates {
+    margin-top: 20px;
+  }
 }
 
 /* End:: Ticket details CSS */
