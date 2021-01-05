@@ -130,7 +130,13 @@
         <div class="row">
             <div class="col-md-4 mt-5">
                 <div class="card card-custom">
-                    <div class="card-body">
+                    <div class="card-body ribbon ribbon-clip ribbon-right">
+                        {% if ticket.priority == 'ALTA' %}
+                            <div data-toggle="tooltip" data-title="Prioridad Alta" class="ribbon-target px-5" style="top: 15px; height: 45px;">
+                                <span class="ribbon-inner bg-danger"></span>
+                                <i class="fa fa-exclamation text-white"></i>
+                            </div>
+                        {% endif %}
                         <h3 class="text-center">Información del ticket</h3>
                         <div class="d-flex justify-content-center mb-5">
                             <a href="#" class="btn btn-sm btn-outline-primary font-weight-bolder px-10 py-3">Modificar Ticket</a>
@@ -200,7 +206,7 @@
                             </div>
                             <div class="">
                                 <div class="text-muted font-weight-bolder">Prioridad:</div>
-                                <span class="label label-lg label-light-danger label-inline text-dark-75 font-weight-bolder py-5 px-5">Alta</span>
+                                <span class="label label-lg label-danger label-inline font-weight-bolder text-uppercase py-3 px-3">Alta</span>
                             </div>
                         </div>
                         <!-- End:: Item -->
@@ -223,7 +229,7 @@
                             </div>
                             <div class="font-weight-bolder">
                                 <div class="text-muted">Estado:</div>
-                                <span class="label label-lg label-light-info label-inline text-dark-75 py-5 px-5 font-weight-bolder">En desarrollo</span>
+                                <span class="label label-lg label-info label-inline py-3 px-3 font-weight-bolder text-uppercase">En desarrollo</span>
                             </div>
                         </div>
                         <!-- End:: Item -->
@@ -246,30 +252,7 @@
                             </div>
                             <div class="font-weight-bolder">
                                 <div class="text-muted">Tipo:</div>
-                                <span class="label label-lg label-light-success label-inline text-dark-75 py-5 px-5 font-weight-bolder">Feature</span>
-                            </div>
-                        </div>
-                        <!-- End:: Item -->
-                        <!-- Start:: Item -->
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="symbol symbol-50 symbol-light mr-4">
-                                <div class="symbol-label">
-                                    <span class="svg-icon svg-icon-2x svg-icon-dark-50">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5"></rect>
-                                                <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5"></rect>
-                                                <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5"></rect>
-                                                <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5"></rect>
-                                            </g>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="font-weight-bolder">
-                                <div class="text-muted">Asignado a:</div>
-                                <div class="text-dark-75 text-hover-primary">Waldemar Peralta</div>
+                                <span class="label label-lg label-success label-inline py-3 px-3 text-uppercase font-weight-bolder">Feature</span>
                             </div>
                         </div>
                         <!-- End:: Item -->
