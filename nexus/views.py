@@ -140,9 +140,8 @@ def ticketsDetail(request, projectId, ticketId):
         'breadcrumbs': {
             'Inicio': '/',
             'Proyectos': '/projects',
-            'Detalles': '{% url "projects-detail" projectId %}',
-            'Ticket': '{% url "tickets-detail" projectId %}',
-            'Detalles del ticket': '/projects/create',
+            project.title: '{% url "projects-detail" projectId %}',
+            'Ticket #' + str(ticketId): '#',
         },
         'logo_colors': [
             'primary',
@@ -184,3 +183,6 @@ def ticketsCreate(request, projectId):
         'form': form
     }
     return render(request, 'nexus/ticketsCreate.html', context)
+
+def ticketsDelete(request, ticketId):
+    pass
