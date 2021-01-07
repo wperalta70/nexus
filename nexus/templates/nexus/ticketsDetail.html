@@ -160,54 +160,14 @@
                                 </div>
                             </div>
                             <div class="">
-                                <div class="text-muted font-weight-bolder">Creado por:</div>
-                                <div class="text-dark-75 text-hover-primary font-weight-bolder">{{ ticket.user }}</div>
-                            </div>
-                        </div>
-                        <!-- End:: Item -->
-                        <!-- Start:: Item -->
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="symbol symbol-50 symbol-light mr-4">
-                                <div class="symbol-label">
-                                    <span class="svg-icon svg-icon-2x svg-icon-dark-50">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5"></rect>
-                                                <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5"></rect>
-                                                <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5"></rect>
-                                                <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5"></rect>
-                                            </g>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="font-weight-bolder">
-                                <div class="text-muted">Asignado a:</div>
-                                <div class="text-dark-75 text-hover-primary">Waldemar Peralta</div>
-                            </div>
-                        </div>
-                        <!-- End:: Item -->
-                        <!-- Start:: Item -->
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="symbol symbol-50 symbol-light mr-4">
-                                <div class="symbol-label">
-                                    <span class="svg-icon svg-icon-2x svg-icon-dark-50">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5"></rect>
-                                                <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5"></rect>
-                                                <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5"></rect>
-                                                <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5"></rect>
-                                            </g>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="">
                                 <div class="text-muted font-weight-bolder">Prioridad:</div>
-                                <span class="label label-lg label-danger label-inline font-weight-bolder text-uppercase py-3 px-3">Alta</span>
+                                {% if ticket.priority == 'ALTA' %}
+                                    <span class="label label-lg label-danger label-inline font-weight-bolder py-3 px-3">{{ ticket.priority }}</span>
+                                {% elif ticket.priority == 'MEDIA'  %}
+                                    <span class="label label-lg label-warning label-inline font-weight-bolder py-3 px-3">{{ ticket.priority }}</span>
+                                {% elif ticket.priority == 'BAJA' %}
+                                    <span class="label label-lg label-primary label-inline font-weight-bolder py-3 px-3">{{ ticket.priority }}</span>
+                                {% endif %}
                             </div>
                         </div>
                         <!-- End:: Item -->
@@ -230,11 +190,39 @@
                             </div>
                             <div class="font-weight-bolder">
                                 <div class="text-muted">Estado:</div>
-                                <span class="label label-lg label-info label-inline py-3 px-3 font-weight-bolder text-uppercase">En desarrollo</span>
+                                <span class="font-weight-bolder">{{ ticket.status }}</span>
                             </div>
                         </div>
                         <!-- End:: Item -->
-                        <!-- Start:: Tipo -->
+                        <!-- Start:: Item -->
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="symbol symbol-50 symbol-light mr-4">
+                                <div class="symbol-label">
+                                    <span class="svg-icon svg-icon-2x svg-icon-dark-50">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5"></rect>
+                                                <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5"></rect>
+                                                <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5"></rect>
+                                                <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5"></rect>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="font-weight-bolder">
+                                <div class="text-muted">Asignado a:</div>
+                                <!-- TODO: Change to ticket.assigned_to -->
+                                {% if ticket.assigned_to == None %}
+                                    <div class="text-dark-75 text-hover-primary">No asignado</div>
+                                {% else %}
+                                    <div class="text-dark-75 text-hover-primary">{{ ticket.user }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- End:: Item -->
+                        <!-- Start:: Item -->
                         <div class="d-flex align-items-center mb-4">
                             <div class="symbol symbol-50 symbol-light mr-4">
                                 <div class="symbol-label">
@@ -253,7 +241,30 @@
                             </div>
                             <div class="font-weight-bolder">
                                 <div class="text-muted">Tipo:</div>
-                                <span class="label label-lg label-success label-inline py-3 px-3 text-uppercase font-weight-bolder">Feature</span>
+                                <span class="font-weight-bolder">{{ ticket.type }}</span>
+                            </div>
+                        </div>
+                        <!-- End:: Item -->
+                        <!-- Start:: Item -->
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="symbol symbol-50 symbol-light mr-4">
+                                <div class="symbol-label">
+                                    <span class="svg-icon svg-icon-2x svg-icon-dark-50">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5"></rect>
+                                                <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5"></rect>
+                                                <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5"></rect>
+                                                <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5"></rect>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="text-muted font-weight-bolder">Creado por:</div>
+                                <div class="text-dark-75 text-hover-primary font-weight-bolder">{{ ticket.user }}</div>
                             </div>
                         </div>
                         <!-- End:: Item -->
