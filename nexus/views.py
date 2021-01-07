@@ -42,7 +42,7 @@ def projectsDetail(request, projectId):
         'breadcrumbs': { 
             'Inicio': '/',
             'Proyectos': '/projects',
-            'Detalles': '#',
+            project.title: '#',
         },
         'project': project,
         'tickets': tickets
@@ -140,7 +140,7 @@ def ticketsDetail(request, projectId, ticketId):
         'breadcrumbs': {
             'Inicio': '/',
             'Proyectos': '/projects',
-            project.title: '{% url "projects-detail" projectId %}',
+            project.title: '/projects/' + str(projectId),
             'Ticket #' + str(ticketId): '#',
         },
         'logo_colors': [
@@ -156,12 +156,14 @@ def ticketsDetail(request, projectId, ticketId):
     return render(request, 'nexus/ticketsDetail.html', context)
 
 def ticketsCreate(request, projectId):
+    project = Project.objects.get(id = projectId)
+
     if request.method == 'POST':
         form = CreateTicketForm(request.POST)
 
         if form.is_valid():
             ticket = form.save(commit = False)
-            ticket.project = Project.objects.get(id = projectId)
+            ticket.project = project
             ticket.user = request.user
             ticket.save()
             # TODO: Fix redirect and show message
@@ -174,9 +176,7 @@ def ticketsCreate(request, projectId):
         'breadcrumbs': {
             'Inicio': '/',
             'Proyectos': '/projects',
-            'Detalles': '/projects/'+ str(projectId),
-            # TODO: Add ticketId to line below
-            #'Ticket': '{% url "tickets-detail" projectId %}',
+            project.title: '/projects/' + str(projectId),
             'Crear nuevo ticket': '#',
         },
         'projectId': projectId,
