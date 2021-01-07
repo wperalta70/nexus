@@ -15,6 +15,7 @@ urlpatterns = [
     # Tickets
     path('projects/<int:projectId>/tickets/<int:ticketId>', views.ticketsDetail, name = "tickets-detail"),
     path('projects/<int:projectId>/tickets/create', views.ticketsCreate, name = "tickets-create"),
+    path('projects/<int:projectId>/tickets/<int:ticketId>/delete', views.ticketsDelete, name = "tickets-delete"),
 ]
 
 if settings.DEBUG:

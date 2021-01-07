@@ -70,7 +70,7 @@ class Ticket(models.Model):
     title = models.CharField(max_length = 150)
     description = models.TextField()
     priority = models.CharField(max_length = 5, choices = PRIORITY_CHOICES)
-    status = models.CharField(max_length = 13, choices = STATUS_CHOICES)
+    status = models.CharField(max_length = 13, choices = STATUS_CHOICES, default="ABIERTO")
     type = models.CharField(max_length = 7, choices = TYPE_CHOICES)
     date_created = models.DateTimeField(default = timezone.now)
     date_closed = models.DateTimeField(null = True, blank = True)

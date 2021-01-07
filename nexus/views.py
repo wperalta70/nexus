@@ -140,8 +140,8 @@ def ticketsDetail(request, projectId, ticketId):
         'breadcrumbs': {
             'Inicio': '/',
             'Proyectos': '/projects',
-            project.title: '/projects/' + str(projectId),
-            'Ticket #' + str(ticketId): '#',
+            project.title: f'/projects/{projectId}',
+            f'Ticket #{ticketId}': '#',
         },
         'logo_colors': [
             'primary',
@@ -176,7 +176,7 @@ def ticketsCreate(request, projectId):
         'breadcrumbs': {
             'Inicio': '/',
             'Proyectos': '/projects',
-            project.title: '/projects/' + str(projectId),
+            project.title: f'/projects/{projectId}',
             'Crear nuevo ticket': '#',
         },
         'projectId': projectId,
@@ -184,5 +184,31 @@ def ticketsCreate(request, projectId):
     }
     return render(request, 'nexus/ticketsCreate.html', context)
 
-def ticketsDelete(request, ticketId):
-    pass
+def ticketsDelete(request, projectId, ticketId):
+    project = Project.objects.get(id = projectId)
+    ticket = Ticket.objects.get(id = ticketId)
+
+    if request.method == 'POST':
+        ticket.delete()
+        return redirect('projects-detail', projectId = projectId)
+
+    context = {
+        'title': 'Eliminar Ticket',
+        'breadcrumbs': {
+            'Inicio': '/',
+            'Proyectos': '/projects',
+            project.title: f'/projects/{projectId}',
+            f'Ticket #{ticketId}': f'/projects/{projectId}/tickets/{ticketId}',
+            'Eliminar Ticket': '#',
+        },
+        'logo_colors': [
+            'primary',
+            'success',
+            'danger',
+            'warning',
+            'info'
+        ],
+        'project': project,
+        'ticket': ticket
+    }
+    return render(request, 'nexus/ticketsDelete.html', context)

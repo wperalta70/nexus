@@ -1,0 +1,101 @@
+{% extends "nexus/base.html" %}
+{% load static %}
+{% load template_tags %}
+{% load crispy_forms_tags %}
+<!-- --- -->
+{% block template_vendors_css %}
+{% endblock template_vendors_css %}
+
+{% block template_layout_css %}
+{% endblock template_layout_css %}
+<!-- --- -->
+
+
+{% block page_title %}
+    {{ title }}
+{% endblock page_title %}
+
+{% block breadcrumbs %}
+    {% for item in breadcrumbs %}
+        <li class="breadcrumb-item">
+            <a href="{{ breadcrumbs|get_item:item }}" class="text-muted">{{ item }}</a>
+        </li>
+    {% endfor %}
+{% endblock breadcrumbs %}
+
+{% block subheader_toolbar %}{% endblock subheader_toolbar %}
+
+{% block content %}
+    <div id="deleteTicket" class="container">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <h1 class="card-title">{{ title }}</h1>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>¿Está seguro que desea eliminar este ticket?</h3>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <span class="text-muted font-size-lg font-weight-bold">TÍTULO:</span>
+                        <h1 class="ml-5">
+                            <a href="{% url 'tickets-detail' ticket.project_id ticket.id %}" class="text-dark text-hover-primary">{{ ticket.title }}</a>
+                        </h1>
+                    </div>
+                    <div class="col-md-12 mt-5">
+                        <span class="text-muted font-size-lg font-weight-bold">DESCRIPCIÓN:</span>
+                        <h4 class="text-dark-75 ml-5">{{ ticket.description }}</h4>
+                    </div>
+                </div>
+
+                <div class="row mt-10 text-center">
+                    <div class="col-md-4">
+                        <span class="text-muted font-size-lg font-weight-bold">PROYECTO:</span>
+                        <h4>
+                            <a href="{% url 'projects-detail' project.id %}" class="text-dark-75 text-hover-primary">{{ project.title }}</a>
+                        </h4>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-muted font-size-lg font-weight-bold">CREADO POR:</span>
+                        <!-- TODO: Link to the user's profile -->
+                        <h4 class="text-dark-75">{{ ticket.user }}</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-muted font-size-lg font-weight-bold">FECHA DE CREACIÓN:</span>
+                        <h4 class="text-dark-75">{{ ticket.date_created|date:"d/m/Y - h:m a" }}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer py-5">
+                <div id="project-button-container" class="row m-0">
+                    <div class="col-md-12 text-center">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-lg btn-danger my-2" type="submit">Borrar</button>
+                            <a class="btn btn-lg btn-secondary" href="{% url 'tickets-detail' ticket.project_id ticket.id %}">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+<!-- --- -->
+{% block template_vendor_js %}
+{% endblock template_vendor_js %}
+
+{% block template_page_js %}
+{% endblock template_page_js %}
+<!-- --- -->
+
+
+
+{% block custom_scripts %}
+{% endblock custom_scripts %}
+

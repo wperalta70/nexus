@@ -81,17 +81,13 @@
                         </div>
 
                         <div class="form-group">
-                            {{ form.status|as_crispy_field }}
-                        </div>
-
-                        <div class="form-group">
                             {{ form.type|as_crispy_field }}
                         </div>
                     </div>
                 </div>
                 <div class="card-footer text-center">
                     <button type="submit" class="btn btn-primary">Aceptar</button>
-                    <a href="{% url 'tickets-create' projectId %}" class="btn btn-outline-primary">Cancelar</a>
+                    <a href="{% url 'projects-detail' projectId %}" class="btn btn-outline-primary">Cancelar</a>
                 </div>
             </form>
             <!--end::Form-->

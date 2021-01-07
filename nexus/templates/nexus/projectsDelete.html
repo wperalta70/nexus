@@ -54,7 +54,7 @@
                                 {% endif %}
                                 
                                 <h1 id="project-title" class="ml-5 font-weight-bolder text-dark text-hover-primary mb-0">
-                                    <a class="text-dark text-hover-primary" href="{% url 'projects-list' %}">{{ project.title }}</a>
+                                    <a class="text-dark text-hover-primary" href="{% url 'projects-detail' project.id %}">{{ project.title }}</a>
                                     <span id="project-info" class="text-muted">
                                         ID: {{ project.id }} - Creado por: {{ project.user }}
                                     </span>
@@ -69,20 +69,21 @@
 
                 <div id="project-description-container" class="row">
                     <div class="col-md-12">
-                        <h3 class="text-muted">Description: </h3>
+                        <h3 class="text-muted">Descripción: </h3>
                         <div class="description font-weight-bold">
                             <p id="project-short-description" class="mb-0 text-primary text-uppercase">{{ project.short_description }}</p>
                             <p id="project-description">{{ project.description }}</p>
                         </div>
                     </div>
                 </div>
-
-                <div id="project-button-container" class="row">
+            </div>
+            <div class="card-footer py-5">
+                <div id="project-button-container" class="row m-0">
                     <div class="col-md-12 text-center">
                         <form method="POST">
                             {% csrf_token %}
-                            <button class="btn btn-lg btn-danger" type="submit">Borrar</button>
-                            <a class="btn btn-lg btn-secondary" href="{% url 'projects-list' %}">Cancelar</a>
+                            <button class="btn btn-lg btn-danger my-2" type="submit">Borrar</button>
+                            <a class="btn btn-lg btn-secondary" href="{% url 'projects-detail' project.id %}">Cancelar</a>
                         </form>
                     </div>
                 </div>

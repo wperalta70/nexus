@@ -94,7 +94,7 @@
                             </div>
                             <div id="button-col" class="col-md-3">
                                 <a href="{#% url 'tickets-update' ticket.id %#}" class="btn btn-sm btn-primary btn-hover-light-primary font-weight-bolder text-uppercase mr-2">Modificar</a>
-                                <a href="{#% url 'tickets-delete' ticket.id %#}" class="btn btn-sm btn-danger btn-hover-light-danger font-weight-bolder text-uppercase mr-2">Eliminar</a>
+                                <a href="{% url 'tickets-delete' project.id ticket.id %}" class="btn btn-sm btn-danger btn-hover-light-danger font-weight-bolder text-uppercase mr-2">Eliminar</a>
                                 <a href="{% url 'projects-detail' project.id %}" class="btn btn-sm btn-outline-secondary font-weight-bolder text-uppercase">Atrás</a>
                             </div>
                         </div>

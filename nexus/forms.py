@@ -108,12 +108,12 @@ class CreateTicketForm(forms.ModelForm):
         ('ALTA', 'ALTA'),
     )
 
-    STATUS_CHOICES = (
+    '''STATUS_CHOICES = (
         ('ABIERTO', 'ABIERTO'),
         ('ASIGNADO', 'ASIGNADO'),
         ('EN DESARROLLO', 'EN DESARROLLO'),
         ('CERRADO', 'CERRADO'),
-    )
+    )'''
 
     TYPE_CHOICES = (
         ('FEATURE', 'FEATURE'),
@@ -140,10 +140,10 @@ class CreateTicketForm(forms.ModelForm):
         choices = PRIORITY_CHOICES
     )
 
-    status = forms.ChoiceField(
+    '''status = forms.ChoiceField(
         label = 'Estado: ',
         choices = STATUS_CHOICES
-    )
+    )'''
 
     type = forms.ChoiceField(
         label = 'Tipo: ',
@@ -152,4 +152,4 @@ class CreateTicketForm(forms.ModelForm):
 
     class Meta:
         model = Ticket
-        fields = ['title', 'description', 'priority', 'status', 'type']
+        fields = ['title', 'description', 'priority', 'type']
