@@ -107,7 +107,7 @@
                                 <div class="d-flex align-items-center justify-content-end">
                                     <div class="mr-5 text-center">
                                         <div class="font-weight-bolder mb-2 text-dark-50">Fecha de creación</div>
-                                        <span class="btn btn-light-primary font-weight-bolder text-uppercase">
+                                        <span data-toggle="tooltip" data-original-title="{{ ticket.date_created|date:'h:i a' }}" class="btn btn-light-primary font-weight-bolder text-uppercase">
                                             {{ ticket.date_created|date:"d \d\e F, Y" }}
                                         </span>
                                     </div>
@@ -115,7 +115,7 @@
                                         <div class="ml-5 text-center">
                                             <!-- TODO: If ticket is not closed, show last updated, else show date_closed -->
                                             <div class="font-weight-bolder mb-2 text-dark-50">Última modificación</div>
-                                            <span class="btn btn-light-success font-weight-bolder text-uppercase">
+                                            <span data-toggle="tooltip" data-original-title="{{ ticket.last_updated|date:'h:i a' }}" class="btn btn-light-success font-weight-bolder text-uppercase">
                                                 {{ ticket.last_updated|date:"d \d\e F, Y" }}
                                             </span>
                                         </div>
