@@ -86,16 +86,12 @@
                         <div id="dates" class="d-flex align-items-center justify-content-end">
                             <div class="mr-5 text-center">
                                 <div class="font-weight-bolder mb-2 text-dark-50">Fecha de creación</div>
-                                <span class="btn btn-light-primary font-weight-bolder text-uppercase">
-                                    {{ project.date_created|date:"d \d\e F, Y" }}
-                                </span>
+                                <span data-toggle="tooltip" data-original-title="{{ project.date_created|date:'h:i a' }}" class="btn btn-light-primary font-weight-bolder text-uppercase">{{ project.date_created|date:"d \d\e F, Y" }}</span>
                             </div>
                             <div class="text-center">
                                 <div class="font-weight-bolder mb-2 text-dark-50">Última modificación</div>
-                                <span class="btn btn-light-success font-weight-bolder text-uppercase">
-                                    <!-- TODO: Change to last_updated -->
-                                    {{ project.date_created|date:"d \d\e F, Y" }}
-                                </span>
+                                <!-- TODO: Change to last_updated -->
+                                <span data-toggle="tooltip" data-original-title="{{ project.date_created|date:'h:i a' }}" class="btn btn-light-success font-weight-bolder text-uppercase">{{ project.date_created|date:"d \d\e F, Y" }}</span>
                             </div>
                         </div>
                     </div>
