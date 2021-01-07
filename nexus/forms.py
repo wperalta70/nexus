@@ -153,3 +153,56 @@ class CreateTicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
         fields = ['title', 'description', 'priority', 'type']
+
+class UpdateTicketForm(forms.ModelForm):
+    PRIORITY_CHOICES = (
+        ('BAJA', 'BAJA'),
+        ('MEDIA', 'MEDIA'),
+        ('ALTA', 'ALTA'),
+    )
+
+    STATUS_CHOICES = (
+        ('ABIERTO', 'ABIERTO'),
+        ('ASIGNADO', 'ASIGNADO'),
+        ('EN DESARROLLO', 'EN DESARROLLO'),
+        ('CERRADO', 'CERRADO'),
+    )
+
+    TYPE_CHOICES = (
+        ('FEATURE', 'FEATURE'),
+        ('BUG', 'BUG'),
+        ('DISEÑO', 'DISEÑO'),
+    )
+
+    title = forms.CharField(
+        label = 'Título: ',
+        max_length = 150
+    )
+
+    description = forms.CharField(
+        label = 'Descripción: ',
+        widget = forms.Textarea(
+            attrs = {
+                'rows': 3,
+            }
+        )
+    )
+
+    priority = forms.ChoiceField(
+        label = 'Prioridad: ',
+        choices = PRIORITY_CHOICES
+    )
+
+    status = forms.ChoiceField(
+        label = 'Estado: ',
+        choices = STATUS_CHOICES
+    )
+
+    type = forms.ChoiceField(
+        label = 'Tipo: ',
+        choices = TYPE_CHOICES
+    )
+
+    class Meta:
+        model = Ticket
+        fields = ['title', 'description', 'priority', 'status', 'type']

@@ -93,7 +93,7 @@
                                 <h1 id="ticket-title" class="m-0"><span class="primary-dash"></span>{{ ticket.title }}</h1>
                             </div>
                             <div id="button-col" class="col-md-3">
-                                <a href="{#% url 'tickets-update' ticket.id %#}" class="btn btn-sm btn-primary btn-hover-light-primary font-weight-bolder text-uppercase mr-2">Modificar</a>
+                                <a href="{% url 'tickets-update' project.id ticket.id %}" class="btn btn-sm btn-primary btn-hover-light-primary font-weight-bolder text-uppercase mr-2">Modificar</a>
                                 <a href="{% url 'tickets-delete' project.id ticket.id %}" class="btn btn-sm btn-danger btn-hover-light-danger font-weight-bolder text-uppercase mr-2">Eliminar</a>
                                 <a href="{% url 'projects-detail' project.id %}" class="btn btn-sm btn-outline-secondary font-weight-bolder text-uppercase">Atrás</a>
                             </div>
@@ -108,17 +108,18 @@
                                     <div class="mr-5 text-center">
                                         <div class="font-weight-bolder mb-2 text-dark-50">Fecha de creación</div>
                                         <span class="btn btn-light-primary font-weight-bolder text-uppercase">
-                                            {{ project.date_created|date:"d \d\e F, Y" }}
+                                            {{ ticket.date_created|date:"d \d\e F, Y" }}
                                         </span>
                                     </div>
-                                    <div class="text-center">
-                                        <!-- TODO: If ticket is open, show last updated, else show date_closed -->
-                                        <div class="font-weight-bolder mb-2 text-dark-50">Última modificación</div>
-                                        <span class="btn btn-light-success font-weight-bolder text-uppercase">
-                                            <!-- TODO: Change to last_updated -->
-                                            {{ project.date_created|date:"d \d\e F, Y" }}
-                                        </span>
-                                    </div>
+                                    {% if ticket.last_updated %}
+                                        <div class="ml-5 text-center">
+                                            <!-- TODO: If ticket is not closed, show last updated, else show date_closed -->
+                                            <div class="font-weight-bolder mb-2 text-dark-50">Última modificación</div>
+                                            <span class="btn btn-light-success font-weight-bolder text-uppercase">
+                                                {{ ticket.last_updated|date:"d \d\e F, Y" }}
+                                            </span>
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

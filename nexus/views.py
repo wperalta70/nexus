@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import *
 from .models import *
+import datetime
 
 # context:
 #   title: Page's main title
@@ -131,6 +132,7 @@ def projectsDelete(request, projectId):
     }
     return render(request, 'nexus/projectsDelete.html', context)
 
+# Ticket details
 def ticketsDetail(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
@@ -155,6 +157,7 @@ def ticketsDetail(request, projectId, ticketId):
     }
     return render(request, 'nexus/ticketsDetail.html', context)
 
+# Create ticket
 def ticketsCreate(request, projectId):
     project = Project.objects.get(id = projectId)
 
@@ -184,6 +187,39 @@ def ticketsCreate(request, projectId):
     }
     return render(request, 'nexus/ticketsCreate.html', context)
 
+# Update ticket
+def ticketsUpdate(request, projectId, ticketId):
+    project = Project.objects.get(id = projectId)
+    ticket = Ticket.objects.get(id = ticketId)
+
+    form = UpdateTicketForm(instance = ticket)
+
+    if request.method == 'POST':
+        form = UpdateTicketForm(request.POST, instance = ticket)
+
+        if form.is_valid():
+            ticket = form.save(commit = False)
+            ticket.last_updated = datetime.datetime.now()
+            ticket.save()
+
+        return redirect('tickets-detail', projectId = projectId, ticketId = ticketId)
+
+    context = {
+        'title': 'Modificar Ticket',
+        'breadcrumbs': {
+            'Inicio': '/',
+            'Proyectos': '/projects',
+            project.title: f'/projects/{projectId}',
+            f'Ticket #{ticketId}': f'/projects/{projectId}/tickets/{ticketId}',
+            'Modificar Ticket': '#',
+        },
+        'projectId': projectId,
+        'form': form
+    }
+
+    return render(request, 'nexus/ticketsUpdate.html', context)
+
+# Delete ticket
 def ticketsDelete(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
