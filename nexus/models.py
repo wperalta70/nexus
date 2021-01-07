@@ -67,6 +67,7 @@ class Ticket(models.Model):
 
     project = models.ForeignKey(Project, on_delete = models.CASCADE, related_name = 'tickets')
     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'tickets')
+    assigned_to = models.ForeignKey(User, on_delete = models.RESTRICT, related_name='assigned_to', blank = True, null = True)
     title = models.CharField(max_length = 150)
     description = models.TextField()
     priority = models.CharField(max_length = 5, choices = PRIORITY_CHOICES)
