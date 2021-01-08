@@ -49,7 +49,7 @@
                             <!-- end::Logo -->
                             <!--begin::Title-->
                             <div class="d-flex flex-wrap">
-                                <a href="">
+                                <a href="{% url 'projects-detail' project.id %}">
                                     <h1 class="font-weight-bold text-dark text-hover-primary mr-5">{{ project.title }}</h1>
                                 </a>
                                 <h5 class="font-weight-bold d-flex align-items-center text-muted text-hover-dark mb-1">{{ project.short_description }}</h5>
@@ -123,6 +123,27 @@
                                 </div>
                             </div>
                         </div>
+                        {% if ticket.status == 'CERRADO' %}
+                            <div class="row">
+                                <div class="col-md-12 text-center text-md-left mt-5 mt-md-0">
+                                    <label data-toggle="tooltip" data-title="Este ticket se encuentra cerrado" class="btn btn-danger">Ticket Cerrado</label>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if ticket.status == 'ABIERTO' %}
+                            <div class="row">
+                                <div class="col-md-12 text-center text-md-left mt-5 mt-md-0">
+                                    <label data-toggle="tooltip" data-title="Este ticket no se encuentra asignado a ningún desarrollador" class="btn btn-secondary">No asignado</label>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if ticket.status == 'ASIGNADO' %}
+                            <div class="row">
+                                <div class="col-md-12 text-center text-md-left mt-5 mt-md-0">
+                                    <label data-toggle="tooltip" data-title="Este ticket no se encuentra asignado a ningún desarrollador" class="btn btn-secondary">Ticket asignado a {{ ticket.assigned_to }}</label>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

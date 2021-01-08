@@ -286,29 +286,35 @@
                                                         <span>
                                                             <!-- TODO: Change to tickets.user.name -->
                                                             <div class="">{{ ticket.user }}</div>
-                                                            <!-- TODO: Change to tickets.role -->
+                                                            <!-- TODO: Change to tickets.user.role -->
                                                             <div class="text-muted">Desarrollador</div>
                                                         </span>
                                                     </td>
                                                     <td>
                                                         <span>
-                                                            <span class="label label-lg font-weight-bold  label-light-danger label-inline text-nowrap text-uppercase">
-                                                                {{ ticket.priority }}
-                                                            </span>
+                                                            {% if ticket.priority == 'ALTA' %}
+                                                                <span class="label label-lg font-weight-bold  label-light-danger label-inline text-nowrap text-uppercase">
+                                                                    {{ ticket.priority }}
+                                                                </span>
+                                                            {% elif ticket.priority == 'MEDIA' %}
+                                                                <span class="label label-lg font-weight-bold  label-light-warning label-inline text-nowrap text-uppercase">
+                                                                    {{ ticket.priority }}
+                                                                </span>
+                                                            {% elif ticket.priority == 'BAJA' %}
+                                                                <span class="label label-lg font-weight-bold  label-light-primary label-inline text-nowrap text-uppercase">
+                                                                    {{ ticket.priority }}
+                                                                </span>
+                                                            {% endif %}
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        <span>
-                                                            <span class="label label-lg font-weight-bold  label-light-success label-inline text-nowrap text-uppercase">
-                                                                {{ ticket.status }}
-                                                            </span>
+                                                        <span class="font-weight-bold text-nowrap text-uppercase">
+                                                            {{ ticket.status }}
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        <span>
-                                                            <span class="label label-lg font-weight-bold  label-light-info label-inline text-nowrap text-uppercase ">
-                                                                {{ ticket.type }}
-                                                            </span>
+                                                        <span class="font-weight-bold text-nowrap text-uppercase">
+                                                            {{ ticket.type }}
                                                         </span>
                                                     </td>
                                                     <td>

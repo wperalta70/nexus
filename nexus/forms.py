@@ -108,13 +108,6 @@ class CreateTicketForm(forms.ModelForm):
         ('ALTA', 'ALTA'),
     )
 
-    '''STATUS_CHOICES = (
-        ('ABIERTO', 'ABIERTO'),
-        ('ASIGNADO', 'ASIGNADO'),
-        ('EN DESARROLLO', 'EN DESARROLLO'),
-        ('CERRADO', 'CERRADO'),
-    )'''
-
     TYPE_CHOICES = (
         ('FEATURE', 'FEATURE'),
         ('BUG', 'BUG'),
@@ -140,11 +133,6 @@ class CreateTicketForm(forms.ModelForm):
         choices = PRIORITY_CHOICES
     )
 
-    '''status = forms.ChoiceField(
-        label = 'Estado: ',
-        choices = STATUS_CHOICES
-    )'''
-
     type = forms.ChoiceField(
         label = 'Tipo: ',
         choices = TYPE_CHOICES
@@ -162,7 +150,7 @@ class UpdateTicketForm(forms.ModelForm):
     )
 
     STATUS_CHOICES = (
-        ('ABIERTO', 'ABIERTO'),
+        ('NUEVO', 'NUEVO'),
         ('ASIGNADO', 'ASIGNADO'),
         ('EN DESARROLLO', 'EN DESARROLLO'),
         ('CERRADO', 'CERRADO'),
