@@ -25,6 +25,7 @@ class Project(models.Model):
     image = models.ImageField(upload_to=get_upload_path, blank = True, null = True, default = None)
     status = models.CharField(max_length = 14, choices = STATUS_CHOICES)
     date_created = models.DateTimeField(default = timezone.now)
+    last_updated = models.DateTimeField(null = True, blank = True)
 
     # Create a slug based on the project's title -> project-name
     slug = models.SlugField(max_length = 30, blank=True)

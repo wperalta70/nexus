@@ -88,11 +88,12 @@
                                 <div class="font-weight-bolder mb-2 text-dark-50">Fecha de creación</div>
                                 <span data-toggle="tooltip" data-original-title="{{ project.date_created|date:'h:i a' }}" class="btn btn-light-primary font-weight-bolder text-uppercase">{{ project.date_created|date:"d \d\e F, Y" }}</span>
                             </div>
-                            <div class="text-center">
-                                <div class="font-weight-bolder mb-2 text-dark-50">Última modificación</div>
-                                <!-- TODO: Change to last_updated -->
-                                <span data-toggle="tooltip" data-original-title="{{ project.date_created|date:'h:i a' }}" class="btn btn-light-success font-weight-bolder text-uppercase">{{ project.date_created|date:"d \d\e F, Y" }}</span>
-                            </div>
+                            {% if project.last_updated %}
+                                <div class="text-center">
+                                    <div class="font-weight-bolder mb-2 text-dark-50">Última modificación</div>
+                                    <span data-toggle="tooltip" data-original-title="{{ project.last_updated|date:'h:i a' }}" class="btn btn-light-success font-weight-bolder text-uppercase">{{ project.last_updated|date:"d \d\e F, Y" }}</span>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

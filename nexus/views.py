@@ -91,9 +91,11 @@ def projectsUpdate(request, projectId):
         form = UpdateProjectForm(request.POST, request.FILES, instance = project)
 
         if form.is_valid():
-            form.save()
+            project = form.save(commit = False)
+            project.last_updated = datetime.datetime.now()
+            project.save()
 
-        return redirect('projects-list')
+        return redirect('projects-detail', projectId = projectId)
 
     context = {
         'title': 'Modificar Proyecto',
@@ -102,6 +104,7 @@ def projectsUpdate(request, projectId):
             'Proyectos': '/projects',
             'Modificar Proyecto': '#',
         },
+        'projectId': projectId,
         'form': form
     }
 
