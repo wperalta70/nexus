@@ -34,9 +34,10 @@ def projectsList(request):
 
     return render(request, 'nexus/projectsList.html', context)
 
+# Project details
 def projectsDetail(request, projectId):
     project = Project.objects.get(id = projectId)
-    tickets = project.tickets.all()
+    tickets = project.tickets.all().exclude(status="CERRADO")
 
     context = {
         'title': 'Detalles del proyecto',
