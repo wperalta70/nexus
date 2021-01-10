@@ -37,7 +37,7 @@ def projectsList(request):
 # Project details
 def projectsDetail(request, projectId):
     project = Project.objects.get(id = projectId)
-    tickets = project.tickets.all().exclude(status="CERRADO")
+    tickets = project.tickets.all()
 
     context = {
         'title': 'Detalles del proyecto',

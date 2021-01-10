@@ -6,7 +6,7 @@ from django.template.defaultfilters import slugify
 
 
 def get_upload_path(self, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    # file will be uploaded to MEDIA_ROOT/project_thumbnails/<project-name>/<filename>
     return 'project_thumbnails/{0}/{1}'.format(self.slug, filename)
 
 

@@ -19,6 +19,24 @@
             padding-bottom: 0px !important;
         }
     }
+
+    .status{
+        margin-bottom: 6px;
+    }
+
+    .type{
+        margin-bottom: 6px;
+    }
+
+    /* #ticketsTable_wrapper #ticketsTable_length label{
+        content: "";
+        margin-bottom: 0px !important;
+        margin-right: 5px;
+    }
+
+    #ticketsTable_wrapper #ticketsTable_info{
+        padding-top: 0px !important;
+    } */
 </style>
 {% endblock template_layout_css %}
 <!-- --- -->
@@ -362,7 +380,7 @@
 {% block custom_scripts %}
 <script>
     $(document).ready(function () {
-        $('#ticketsTable').DataTable({
+        var ticketsTable = $('#ticketsTable').DataTable({
             "columns": [
                 { "width": "1%" },
                 { "width": "40%" },
@@ -372,6 +390,63 @@
                 { "width": "10%" },
                 { "width": "9%" },
             ],
+            "dom": 
+                "<'row' " +
+                    "<'col-sm-12 col-md-2'l>" +
+                    "<'customFilters col-sm-12 col-md-7' <'row' <'col-md-6 status'><'col-md-6 type'> >>" +
+                    "<'col-sm-12 col-md-3'f>" +
+                ">" +
+                "<'row' " +
+                    "<'col-sm-12'tr>" + 
+                ">" +
+                "<'row' " +
+                    "<'col-sm-12 col-md-5'i>" +
+                    "<'col-sm-12 col-md-7'p>" +
+                ">"
+            ,
+        });
+
+        $("div.customFilters .status").append(
+            '<div class="d-flex align-items-center">'+
+                '<span class="mr-3">Estado:</span>'+
+                '<select class="form-control form-control-sm" id="selectStatus">'+
+                    '<option value="TODOS">TODOS</option>'+
+                    '<option value="NUEVO">NUEVO</option>'+
+                    '<option value="ASIGNADO">ASIGNADO</option>'+
+                    '<option value="EN DESARROLLO">EN DESARROLLO</option>'+
+                    '<option value="CERRADO">CERRADO</option>'+
+                '</select>'+
+            '</div>'
+        );
+
+        $("div.customFilters .type").append(
+            '<div class="d-flex align-items-center">'+
+                '<span class="mr-3">Tipo:</span>'+
+                '<select class="form-control form-control-sm" id="selectType">'+
+                    '<option value="TODOS">TODOS</option>'+
+                    '<option value="FEATURE">FEATURE</option>'+
+                    '<option value="BUG">BUG</option>'+
+                    '<option value="DISEÑO">DISEÑO</option>'+
+                '</select>'+
+            '</div>'
+        );
+
+        $('#selectStatus').on('change', function() {
+            var status = $(this).val();
+            if(status == 'TODOS'){
+                ticketsTable.column(4).search('').draw();
+            }else{
+                ticketsTable.column(4).search(status).draw();
+            }
+        });
+
+        $('#selectType').on('change', function() {
+            var type = $(this).val();
+            if(type == 'TODOS'){
+                ticketsTable.column(5).search('').draw();
+            }else{
+                ticketsTable.column(5).search(type).draw();
+            }
         });
     });
 </script>
