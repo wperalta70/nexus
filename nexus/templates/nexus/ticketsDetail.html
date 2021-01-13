@@ -1,7 +1,7 @@
 {% extends "nexus/base.html" %}
 {% load static %}
 {% load template_tags %}
-{% load crispy_forms_tags %}
+{% load humanize %}
 <!-- --- -->
 {% block template_vendors_css %}
 {% endblock template_vendors_css %}
@@ -348,7 +348,7 @@
                                         <a href="#" class="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">
                                             {{ comment.user }}
                                         </a>
-                                        <span class="font-size-sm text-muted">{{ comment.date_created }}</span>
+                                        <span class="font-size-sm text-muted" data-toggle="tooltip" title="{{ comment.date_created|date:'j \d\e F, Y - H:i a' }}">{{ comment.date_created|naturaltime }}</span>
                                     </div>
                                     <div class="d-flex flex-grow-1 justify-content-end customDropdown dropdown-inline">
                                         <button type="button" class="btn btn-hover-secondary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -357,7 +357,7 @@
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <h6 class="dropdown-header font-size-sm text-muted">ACCIONES:</h6>
                                             <!-- TODO: Change data-userimage to show user's profile picture -->
-                                            <button id="deleteCommentButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteCommentModal" data-user="{{ comment.user }}" data-userimage="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" data-datecreated="{{ comment.date_created }}" data-comment="{{ comment.comment }}">
+                                            <button id="deleteCommentButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteCommentModal" data-user="{{ comment.user }}" data-userimage="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" data-datelong="{{ comment.date_created|date:'j \d\e F, Y - H:i a' }}" data-datenatural="{{ comment.date_created|naturaltime }}" data-comment="{{ comment.comment }}">
                                                 Eliminar comentario
                                             </button>
                                         </div>
@@ -408,7 +408,7 @@
                                 <a id="userModal" href="#" class="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">
                                     {{ comment.user }}
                                 </a>
-                                <span id="datecreatedModal" class="font-size-sm text-muted">{{ comment.date_created }}</span>
+                                <span id="datecreatedModal" class="font-size-sm text-muted" data-toggle="tooltip" data-original-title="">{{ comment.date_created }}</span>
                             </div>
                         </div>
                         <p id="commentModal" class="font-size-lg text-dark-50">
@@ -442,12 +442,14 @@
         $(document).on("click", "#deleteCommentButton", function() {
             var user = $(this).data('user');
             var userimage = $(this).data('userimage');
-            var datecreated = $(this).data('datecreated');
+            var datelong = $(this).data('datelong');
+            var datenatural = $(this).data('datenatural');
             var comment = $(this).data('comment');
 
             $('.modal-body #userModal').text(user);
             $('.modal-body #userImageModal').attr("src", userimage);
-            $('.modal-body #datecreatedModal').text(datecreated);
+            $('.modal-body #datecreatedModal').attr("data-original-title", datelong);
+            $('.modal-body #datecreatedModal').text(datenatural);
             $('.modal-body #commentModal').text(comment);
         });
     </script>

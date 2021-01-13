@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'nexus',
     'crispy_forms',
     'django_cleanup.apps.CleanupConfig',
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [
