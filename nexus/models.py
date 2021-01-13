@@ -81,3 +81,12 @@ class Ticket(models.Model):
     def __str__(self):
         return self.title
 
+# Ticket comments
+class Comment(models.Model):
+    ticket = models.ForeignKey(Ticket, on_delete = models.CASCADE, related_name = 'comments')
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'comments')
+    comment = models.CharField(max_length = 255)
+    date_posted = models.DateTimeField(default = timezone.now)
+
+    def __str__(self):
+        return self.comment

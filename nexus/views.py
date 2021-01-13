@@ -141,6 +141,18 @@ def ticketsDetail(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
 
+    if request.method == 'POST':
+        if 'addCommentBtn' in request.POST:
+            commentForm = CreateCommentForm(request.POST)
+
+            if commentForm.is_valid:
+                comment = commentForm.save(commit = False)
+                comment.user = request.user
+                comment.ticket = ticket
+                comment.save()
+
+    commentForm = CreateCommentForm()
+
     context = {
         'title': 'Detalles del ticket',
         'breadcrumbs': {
@@ -157,7 +169,8 @@ def ticketsDetail(request, projectId, ticketId):
             'info'
         ],
         'project': project,
-        'ticket': ticket
+        'ticket': ticket,
+        'commentForm': commentForm
     }
     return render(request, 'nexus/ticketsDetail.html', context)
 

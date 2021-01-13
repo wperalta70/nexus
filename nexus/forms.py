@@ -1,6 +1,8 @@
 from django import forms
-from django.forms.widgets import ClearableFileInput
+from django.forms.widgets import ClearableFileInput, TextInput
 from .models import *
+
+### PROJECT FORMS ###
 
 class CreateProjectForm(forms.ModelForm):
     title = forms.CharField(
@@ -101,6 +103,13 @@ class UpdateProjectForm(forms.ModelForm):
         model = Project
         fields = ['title', 'short_description', 'description', 'image', 'status']
 
+### PROJECT FORMS ###
+
+
+
+
+### TICKET FORMS ###
+
 class CreateTicketForm(forms.ModelForm):
     PRIORITY_CHOICES = (
         ('BAJA', 'BAJA'),
@@ -194,3 +203,29 @@ class UpdateTicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
         fields = ['title', 'description', 'priority', 'status', 'type']
+
+### TICKET FORMS ###
+
+
+
+
+
+### TICKET COMMENT FORMS ###
+
+# Custom input group widget - used in Create Comment Form (for tickets)
+class CustomCommentInput(TextInput):
+    template_name = 'widgets/customCommentInput.html'
+
+class CreateCommentForm(forms.ModelForm):
+    comment = forms.CharField(
+        required = True,
+        max_length = 255,
+        widget = CustomCommentInput(),
+        label = False
+    )
+
+    class Meta:
+        model = Comment
+        fields = ['comment']
+
+### TICKET COMMENT FORMS ###
