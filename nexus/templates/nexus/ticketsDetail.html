@@ -334,98 +334,38 @@
 
                 <div id="comments" class="card card-custom">
                     <div class="card-body">
-                        <div id="commentBlock" class="mb-10">
-                            <div id="userInfo" class="d-flex align-items-center mb-3">
-                                <div class="symbol symbol-40 symbol-light-success mr-5">
-                                    <a href="#">
-                                        <span class="symbol-label">
-                                            <img src="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" class="h-75 align-self-end" alt="">
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="d-flex flex-column flex-grow-1">
-                                    <a href="#" class="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">
-                                        {{ ticket.user }}
-                                    </a>
-                                    <span class="font-size-sm text-muted">{{ ticket.date_created }}</span>
-                                </div>
-                                <div class="dropdown dropdown-inline">
-                                    <button type="button" class="btn btn-hover-secondary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="ki ki-bold-more-hor"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <h6 class="dropdown-header font-size-sm text-muted">ACCIONES:</h6>
-                                        <button class="dropdown-item">Eliminar comentario</button>
-                                        <a class="dropdown-item" href="#">Action</a>
+                        {% for comment in comments %}
+                            <div id="commentBlock" class="mb-10">
+                                <div id="userInfo" class="d-flex align-items-center mb-3">
+                                    <div class="symbol symbol-40 symbol-light-success mr-5">
+                                        <a href="#">
+                                            <span class="symbol-label">
+                                                <img src="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" class="h-75 align-self-end" alt="">
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="d-flex flex-column flex-grow-1">
+                                        <a href="#" class="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">
+                                            {{ comment.user }}
+                                        </a>
+                                        <span class="font-size-sm text-muted">{{ comment.date_created }}</span>
+                                    </div>
+                                    <div class="dropdown dropdown-inline">
+                                        <button type="button" class="btn btn-hover-secondary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ki ki-bold-more-hor"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <h6 class="dropdown-header font-size-sm text-muted">ACCIONES:</h6>
+                                            <button class="dropdown-item">Eliminar comentario</button>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                        </div>
                                     </div>
                                 </div>
+                                <p id="comment" class="font-size-lg text-dark-50">
+                                    {{ comment.comment }}
+                                </p>
                             </div>
-                            <p id="comment" class="font-size-lg text-dark-50">
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci earum eos voluptate corrupti qui deleniti deserunt velit repellat doloribus nesciunt.
-                            </p>
-                        </div>
-
-                        <div id="commentBlock" class="mb-10">
-                            <div id="userInfo" class="d-flex align-items-center mb-3">
-                                <div class="symbol symbol-40 symbol-light-success mr-5">
-                                    <a href="#">
-                                        <span class="symbol-label">
-                                            <img src="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" class="h-75 align-self-end" alt="">
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="d-flex flex-column flex-grow-1">
-                                    <a href="#" class="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">
-                                        {{ ticket.user }}
-                                    </a>
-                                    <span class="font-size-sm text-muted">{{ ticket.date_created }}</span>
-                                </div>
-                                <div class="dropdown dropdown-inline">
-                                    <button type="button" class="btn btn-hover-secondary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="ki ki-bold-more-hor"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <h6 class="dropdown-header font-size-sm text-muted">ACCIONES:</h6>
-                                        <button class="dropdown-item">Eliminar comentario</button>
-                                        <a class="dropdown-item" href="#">Action</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <p id="comment" class="font-size-lg text-dark-50">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem eius earum numquam necessitatibus quo iure! Porro ad repudiandae ipsum nostrum error dolorum eveniet, dicta perspiciatis sapiente cumque totam provident consectetur ex? Id porro, aspernatur sit perferendis impedit cumque. Quod aperiam in odio exercitationem enim optio?
-                            </p>
-                        </div>
-
-                        <div id="commentBlock" class="mb-10">
-                            <div id="userInfo" class="d-flex align-items-center mb-3">
-                                <div class="symbol symbol-40 symbol-light-success mr-5">
-                                    <a href="#">
-                                        <span class="symbol-label">
-                                            <img src="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" class="h-75 align-self-end" alt="">
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="d-flex flex-column flex-grow-1">
-                                    <a href="#" class="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">
-                                        {{ ticket.user }}
-                                    </a>
-                                    <span class="font-size-sm text-muted">{{ ticket.date_created }}</span>
-                                </div>
-                                <div class="dropdown dropdown-inline">
-                                    <button type="button" class="btn btn-hover-secondary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="ki ki-bold-more-hor"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <h6 class="dropdown-header font-size-sm text-muted">ACCIONES:</h6>
-                                        <button class="dropdown-item">Eliminar comentario</button>
-                                        <a class="dropdown-item" href="#">Action</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <p id="comment" class="font-size-lg text-dark-50">
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci earum eos voluptate corrupti qui deleniti deserunt velit repellat doloribus nesciunt.
-                            </p>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

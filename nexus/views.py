@@ -140,6 +140,7 @@ def projectsDelete(request, projectId):
 def ticketsDetail(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
+    comments = Comment.objects.filter(ticket = ticketId)
 
     if request.method == 'POST':
         if 'addCommentBtn' in request.POST:
@@ -170,7 +171,8 @@ def ticketsDetail(request, projectId, ticketId):
         ],
         'project': project,
         'ticket': ticket,
-        'commentForm': commentForm
+        'commentForm': commentForm,
+        'comments': comments
     }
     return render(request, 'nexus/ticketsDetail.html', context)
 
