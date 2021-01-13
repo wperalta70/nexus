@@ -140,9 +140,11 @@ def projectsDelete(request, projectId):
 def ticketsDetail(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
-    comments = Comment.objects.filter(ticket = ticketId)
+    comments = Comment.objects.filter(ticket = ticketId).order_by('-id')
 
     if request.method == 'POST':
+
+        # Add comment
         if 'addCommentBtn' in request.POST:
             commentForm = CreateCommentForm(request.POST)
 
@@ -151,6 +153,15 @@ def ticketsDetail(request, projectId, ticketId):
                 comment.user = request.user
                 comment.ticket = ticket
                 comment.save()
+
+        # Delete comment
+        if 'deleteCommentModalBtn' in request.POST:
+            commentId = request.POST.get("commentIdModal")
+
+            comment = Comment.objects.get(id = commentId)
+            comment.delete()
+
+        return redirect('tickets-detail', projectId = projectId, ticketId = ticketId)
 
     commentForm = CreateCommentForm()
 

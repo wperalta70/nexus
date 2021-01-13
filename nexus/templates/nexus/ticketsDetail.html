@@ -354,10 +354,11 @@
                                         <button type="button" class="btn btn-hover-secondary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="ki ki-bold-more-hor"></i>
                                         </button>
+                                        <!-- TODO: Only show this div if the current user created this comment, or the user has an admin role -->
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <h6 class="dropdown-header font-size-sm text-muted">ACCIONES:</h6>
                                             <!-- TODO: Change data-userimage to show user's profile picture -->
-                                            <button id="deleteCommentButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteCommentModal" data-user="{{ comment.user }}" data-userimage="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" data-datelong="{{ comment.date_created|date:'j \d\e F, Y - H:i a' }}" data-datenatural="{{ comment.date_created|naturaltime }}" data-comment="{{ comment.comment }}">
+                                            <button id="deleteCommentButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteCommentModal" data-commentid="{{ comment.id }}" data-user="{{ comment.user }}" data-userimage="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" data-datelong="{{ comment.date_created|date:'j \d\e F, Y - H:i a' }}" data-datenatural="{{ comment.date_created|naturaltime }}" data-comment="{{ comment.comment }}">
                                                 Eliminar comentario
                                             </button>
                                         </div>
@@ -417,8 +418,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger">Eliminar</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input name="commentIdModal" id="commentIdModal" type="hidden">
+                        <button name="deleteCommentModalBtn" type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -439,13 +444,18 @@
 
 {% block custom_scripts %}
     <script>
+        // When "deleteCommentButton" is clicked, the "deleteComment" modal will be opened,
+        // and all of the data within the specific "deleteCommentButton" that is pressed
+        // will be transferred into the modal to display to the user.
         $(document).on("click", "#deleteCommentButton", function() {
+            var commentId = $(this).data('commentid');
             var user = $(this).data('user');
             var userimage = $(this).data('userimage');
             var datelong = $(this).data('datelong');
             var datenatural = $(this).data('datenatural');
             var comment = $(this).data('comment');
 
+            $('#commentIdModal').val(commentId);
             $('.modal-body #userModal').text(user);
             $('.modal-body #userImageModal').attr("src", userimage);
             $('.modal-body #datecreatedModal').attr("data-original-title", datelong);
