@@ -344,20 +344,22 @@
                                             </span>
                                         </a>
                                     </div>
-                                    <div class="d-flex flex-column flex-grow-1">
+                                    <div class="d-flex flex-column">
                                         <a href="#" class="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">
                                             {{ comment.user }}
                                         </a>
                                         <span class="font-size-sm text-muted">{{ comment.date_created }}</span>
                                     </div>
-                                    <div class="dropdown dropdown-inline">
+                                    <div class="d-flex flex-grow-1 justify-content-end customDropdown dropdown-inline">
                                         <button type="button" class="btn btn-hover-secondary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="ki ki-bold-more-hor"></i>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <h6 class="dropdown-header font-size-sm text-muted">ACCIONES:</h6>
-                                            <button class="dropdown-item">Eliminar comentario</button>
-                                            <a class="dropdown-item" href="#">Action</a>
+                                            <!-- TODO: Change data-userimage to show user's profile picture -->
+                                            <button id="deleteCommentButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteCommentModal" data-user="{{ comment.user }}" data-userimage="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" data-datecreated="{{ comment.date_created }}" data-comment="{{ comment.comment }}">
+                                                Eliminar comentario
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -379,6 +381,49 @@
             </div>
         </div>
     </div>
+
+    <!-- Start:: Delete Comment Modal -->
+    <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">¡Atención!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <h3>¿Está seguro que desea eliminar este comentario?</h3>
+
+                    <div id="commentBlock" class="mt-10">
+                        <div id="userInfo" class="d-flex align-items-center mb-3">
+                            <div class="symbol symbol-40 symbol-light-success mr-5">
+                                <a href="#">
+                                    <span class="symbol-label">
+                                        <img id="userImageModal" src="" class="h-75 align-self-end" alt="">
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <a id="userModal" href="#" class="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">
+                                    {{ comment.user }}
+                                </a>
+                                <span id="datecreatedModal" class="font-size-sm text-muted">{{ comment.date_created }}</span>
+                            </div>
+                        </div>
+                        <p id="commentModal" class="font-size-lg text-dark-50">
+                            {{ comment.comment }}
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger">Eliminar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End:: Delete Comment Modal -->
 {% endblock content %}
 
 
@@ -393,5 +438,18 @@
 
 
 {% block custom_scripts %}
+    <script>
+        $(document).on("click", "#deleteCommentButton", function() {
+            var user = $(this).data('user');
+            var userimage = $(this).data('userimage');
+            var datecreated = $(this).data('datecreated');
+            var comment = $(this).data('comment');
+
+            $('.modal-body #userModal').text(user);
+            $('.modal-body #userImageModal').attr("src", userimage);
+            $('.modal-body #datecreatedModal').text(datecreated);
+            $('.modal-body #commentModal').text(comment);
+        });
+    </script>
 {% endblock custom_scripts %}
 
