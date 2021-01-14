@@ -46,6 +46,10 @@ def projectsDetail(request, projectId):
             'Proyectos': '/projects',
             project.title: '#',
         },
+        'ticketsNuevos': project.tickets.filter(status = "NUEVO").count(),
+        'ticketsAsignados': project.tickets.filter(status = "ASIGNADO").count(),
+        'ticketsEnProgreso': project.tickets.filter(status = "EN PROGRESO").count(),
+        'ticketsCerrados': project.tickets.filter(status = "CERRADO").count(),
         'project': project,
         'tickets': tickets
     }
