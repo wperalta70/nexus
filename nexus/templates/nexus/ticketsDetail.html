@@ -105,12 +105,12 @@
                             </div>
                         </div>
                         <div class="row my-5">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <p class="text-muted mt-3 mb-0">DESCRIPCIÓN:</p>
                                 <p id="ticket-description" class="text-dark-50" style="white-space: pre-wrap;">{{ ticket.description }}</p>
                             </div>
-                            <div id="dates" class="col-md-4">
-                                <div class="d-flex align-items-center justify-content-end">
+                            <div id="dates" class="col-md-4 mt-5">
+                                <div class="d-flex align-items-center justify-content-start">
                                     <div class="mr-5 text-center">
                                         <div class="font-weight-bolder mb-2 text-dark-50">Fecha de creación</div>
                                         <span data-toggle="tooltip" data-original-title="{{ ticket.date_created|date:'h:i a' }}" class="btn btn-light-primary font-weight-bolder text-uppercase">
