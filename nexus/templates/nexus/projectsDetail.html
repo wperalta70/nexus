@@ -20,6 +20,10 @@
         }
     }
 
+    .priority{
+        margin-bottom: 6px;
+    }
+
     .status{
         margin-bottom: 6px;
     }
@@ -289,10 +293,9 @@
                                             <tr class="">
                                                 <th><span>#</span></th>
                                                 <th><span>Título</span></th>
-                                                <th><span>Asignado a:</span></th>
                                                 <th><span>Prioridad</span></th>
-                                                <th><span>Estado</span></th>
                                                 <th><span>Tipo</span></th>
+                                                <th><span>Estado</span></th>
                                                 <th><span>Acciones</span></th>
                                             </tr>
                                         </thead>
@@ -301,14 +304,6 @@
                                                 <tr>
                                                     <td><span>{{ ticket.id }}</span></td>
                                                     <td><span>{{ ticket.title }}</span></td>
-                                                    <td>
-                                                        <span>
-                                                            <!-- TODO: Change to tickets.user.name -->
-                                                            <div class="">{{ ticket.user }}</div>
-                                                            <!-- TODO: Change to tickets.user.role -->
-                                                            <div class="text-muted">Desarrollador</div>
-                                                        </span>
-                                                    </td>
                                                     <td>
                                                         <span>
                                                             {% if ticket.priority == 'ALTA' %}
@@ -328,12 +323,12 @@
                                                     </td>
                                                     <td>
                                                         <span class="font-weight-bold text-nowrap text-uppercase">
-                                                            {{ ticket.status }}
+                                                            {{ ticket.type }}
                                                         </span>
                                                     </td>
                                                     <td>
                                                         <span class="font-weight-bold text-nowrap text-uppercase">
-                                                            {{ ticket.type }}
+                                                            {{ ticket.status }}
                                                         </span>
                                                     </td>
                                                     <td>
@@ -383,8 +378,7 @@
         var ticketsTable = $('#ticketsTable').DataTable({
             "columns": [
                 { "width": "1%" },
-                { "width": "40%" },
-                { "width": "15%" },
+                { "width": "55%" },
                 { "width": "10%" },
                 { "width": "15%" },
                 { "width": "10%" },
@@ -393,7 +387,7 @@
             "dom": 
                 "<'row' " +
                     "<'col-sm-12 col-md-2'l>" +
-                    "<'customFilters col-sm-12 col-md-7' <'row' <'col-md-6 status'><'col-md-6 type'> >>" +
+                    "<'customFilters col-sm-12 col-md-7' <'row' <'col-md-4 priority'><'col-md-4 type'><'col-md-4 status'> >>" +
                     "<'col-sm-12 col-md-3'f>" +
                 ">" +
                 "<'row' " +
@@ -406,15 +400,14 @@
             ,
         });
 
-        $("div.customFilters .status").append(
+        $("div.customFilters .priority").append(
             '<div class="d-flex align-items-center">'+
-                '<span class="mr-3">Estado:</span>'+
-                '<select class="form-control form-control-sm" id="selectStatus">'+
-                    '<option value="TODOS">TODOS</option>'+
-                    '<option value="NUEVO">NUEVO</option>'+
-                    '<option value="ASIGNADO">ASIGNADO</option>'+
-                    '<option value="EN DESARROLLO">EN DESARROLLO</option>'+
-                    '<option value="CERRADO">CERRADO</option>'+
+                '<span class="mr-3">Prioridad:</span>'+
+                '<select class="form-control form-control-sm" id="selectPriority">'+
+                    '<option value="TODAS">TODAS</option>'+
+                    '<option value="BAJA">BAJA</option>'+
+                    '<option value="MEDIA">MEDIA</option>'+
+                    '<option value="ALTA">ALTA</option>'+
                 '</select>'+
             '</div>'
         );
@@ -431,21 +424,43 @@
             '</div>'
         );
 
-        $('#selectStatus').on('change', function() {
-            var status = $(this).val();
-            if(status == 'TODOS'){
-                ticketsTable.column(4).search('').draw();
+        $("div.customFilters .status").append(
+            '<div class="d-flex align-items-center">'+
+                '<span class="mr-3">Estado:</span>'+
+                '<select class="form-control form-control-sm" id="selectStatus">'+
+                    '<option value="TODOS">TODOS</option>'+
+                    '<option value="NUEVO">NUEVO</option>'+
+                    '<option value="ASIGNADO">ASIGNADO</option>'+
+                    '<option value="EN DESARROLLO">EN DESARROLLO</option>'+
+                    '<option value="CERRADO">CERRADO</option>'+
+                '</select>'+
+            '</div>'
+        );
+
+        $('#selectPriority').on('change', function() {
+            var priority = $(this).val();
+            if(priority == 'TODAS'){
+                ticketsTable.column(2).search('').draw();
             }else{
-                ticketsTable.column(4).search(status).draw();
+                ticketsTable.column(2).search(priority).draw();
             }
         });
 
         $('#selectType').on('change', function() {
             var type = $(this).val();
             if(type == 'TODOS'){
-                ticketsTable.column(5).search('').draw();
+                ticketsTable.column(3).search('').draw();
             }else{
-                ticketsTable.column(5).search(type).draw();
+                ticketsTable.column(3).search(type).draw();
+            }
+        });
+
+        $('#selectStatus').on('change', function() {
+            var status = $(this).val();
+            if(status == 'TODOS'){
+                ticketsTable.column(4).search('').draw();
+            }else{
+                ticketsTable.column(4).search(status).draw();
             }
         });
     });
