@@ -8,7 +8,7 @@
 ### Nexus es una aplicación web para la gestión de proyectos de software, y la administración de tickets en equipos de desarrollo.
 
 Esta aplicación les permite a los usuarios crear proyectos, y gestionar tickets utilizando una <b>metodología de desarrollo ágil</b> similar a Scrum o Kanban, en donde se tiene 
-un backlog de tickets o tareas a realizar (<b>tickets nuevos</b>), se eligen cuáles son las tareas que se van a desarrollar en este sprint (<b>tickets en desarrollo</b>), y luego esos tickets se registran como <b>tickets cerrados.</b>
+un backlog de tickets o tareas a realizar (<b>tickets nuevos</b>), se eligen cuáles son las tareas que se van a desarrollar en este sprint (<b>tickets en desarrollo</b>), y luego esos tickets se archivan como <b>tickets cerrados.</b>
 
 <br>
 
