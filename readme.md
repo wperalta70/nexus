@@ -1,4 +1,4 @@
-# Nexus
+# Nexus - Project management software
 ### 🚧 En construcción 🚧
 <br>
 
