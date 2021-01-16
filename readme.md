@@ -51,4 +51,4 @@ un backlog de tickets o tareas a realizar (<b>tickets nuevos</b>), se eligen cu�
 
 ### - Carga de archivos relevantes para cada ticket (ej: screenshots de un bug)
 
-#### - Cada ticket tiene su propia sección de comentarios, para facilitar la comunicación entre desarrolladores y testers / QA.
+### - Cada ticket tiene su propia sección de comentarios, para facilitar la comunicación entre desarrolladores y testers / QA.
