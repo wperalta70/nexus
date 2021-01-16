@@ -16,6 +16,7 @@ un backlog de tickets o tareas a realizar (<b>tickets nuevos</b>), se eligen cu√
 - HTML, CSS, Javascript.
 - Django.
 - PostgreSQL (producci√≥n), MySQLite (desarrollo).
+- Implementado con Docker en un VPS.
 
 <br>
 
