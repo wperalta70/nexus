@@ -1,5 +1,5 @@
 # Nexus
-#### 🚧 En construcción 🚧
+### 🚧 En construcción 🚧
 <br>
 
 📼 Video de demostración:
