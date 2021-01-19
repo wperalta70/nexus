@@ -222,10 +222,10 @@
                             </div>
                             <div class="font-weight-bolder">
                                 <div class="text-muted">Asignado a:</div>
-                                <!-- TODO: Change to ticket.assigned_to -->
                                 {% if ticket.assigned_to == None %}
-                                    <div class="text-dark-75 text-hover-primary">No asignado</div>
+                                <div class="text-dark-75 text-hover-primary">No asignado</div>
                                 {% else %}
+                                    <!-- TODO: Change to ticket.assigned_to -->
                                     <div class="text-dark-75 text-hover-primary">{{ ticket.user }}</div>
                                 {% endif %}
                             </div>
@@ -369,41 +369,46 @@
 
                 <div id="comments" class="card card-custom">
                     <div class="card-body">
-                        {% for comment in comments %}
-                            <div id="commentBlock" class="mb-10">
-                                <div id="userInfo" class="d-flex align-items-center mb-3">
-                                    <div class="symbol symbol-40 symbol-light-success mr-5">
-                                        <a href="#">
-                                            <span class="symbol-label">
-                                                <img src="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" class="h-75 align-self-end" alt="">
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <div class="d-flex flex-column">
-                                        <a href="#" class="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">
-                                            {{ comment.user }}
-                                        </a>
-                                        <span class="font-size-sm text-muted" data-toggle="tooltip" title="{{ comment.date_created|date:'j \d\e F, Y - H:i a' }}">{{ comment.date_created|naturaltime }}</span>
-                                    </div>
-                                    <div class="d-flex flex-grow-1 justify-content-end customDropdown dropdown-inline">
-                                        <button type="button" class="btn btn-hover-secondary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="ki ki-bold-more-hor"></i>
-                                        </button>
-                                        <!-- TODO: Only show this div if the current user created this comment, or the user has an admin role -->
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <h6 class="dropdown-header font-size-sm text-muted">ACCIONES:</h6>
-                                            <!-- TODO: Change data-userimage to show user's profile picture -->
-                                            <button id="deleteCommentButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteCommentModal" data-commentid="{{ comment.id }}" data-user="{{ comment.user }}" data-userimage="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" data-datelong="{{ comment.date_created|date:'j \d\e F, Y - H:i a' }}" data-datenatural="{{ comment.date_created|naturaltime }}" data-comment="{{ comment.comment }}">
-                                                Eliminar comentario
+                        {% if comments %}
+                            <h3 class="mb-5">Comentarios de este ticket</h3>
+                            {% for comment in comments %}
+                                <div id="commentBlock" class="mb-10">
+                                    <div id="userInfo" class="d-flex align-items-center mb-3">
+                                        <div class="symbol symbol-40 symbol-light-success mr-5">
+                                            <a href="#">
+                                                <span class="symbol-label">
+                                                    <img src="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" class="h-75 align-self-end" alt="">
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <a href="#" class="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">
+                                                {{ comment.user }}
+                                            </a>
+                                            <span class="font-size-sm text-muted" data-toggle="tooltip" title="{{ comment.date_created|date:'j \d\e F, Y - H:i a' }}">{{ comment.date_created|naturaltime }}</span>
+                                        </div>
+                                        <div class="d-flex flex-grow-1 justify-content-end customDropdown dropdown-inline">
+                                            <button type="button" class="btn btn-hover-secondary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="ki ki-bold-more-hor"></i>
                                             </button>
+                                            <!-- TODO: Only show this div if the current user created this comment, or the user has an admin role -->
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <h6 class="dropdown-header font-size-sm text-muted">ACCIONES:</h6>
+                                                <!-- TODO: Change data-userimage to show user's profile picture -->
+                                                <button id="deleteCommentButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteCommentModal" data-commentid="{{ comment.id }}" data-user="{{ comment.user }}" data-userimage="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" data-datelong="{{ comment.date_created|date:'j \d\e F, Y - H:i a' }}" data-datenatural="{{ comment.date_created|naturaltime }}" data-comment="{{ comment.comment }}">
+                                                    Eliminar comentario
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
+                                    <p id="comment" class="font-size-lg text-dark-50">
+                                        {{ comment.comment }}
+                                    </p>
                                 </div>
-                                <p id="comment" class="font-size-lg text-dark-50">
-                                    {{ comment.comment }}
-                                </p>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            <h3>Este ticket no tiene comentarios</h3>
+                        {% endif %}
                     </div>
                 </div>
             </div>
