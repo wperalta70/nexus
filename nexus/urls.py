@@ -17,6 +17,9 @@ urlpatterns = [
     path('projects/<int:projectId>/tickets/create', views.ticketsCreate, name = "tickets-create"),
     path('projects/<int:projectId>/tickets/<int:ticketId>/update', views.ticketsUpdate, name = "tickets-update"),
     path('projects/<int:projectId>/tickets/<int:ticketId>/delete', views.ticketsDelete, name = "tickets-delete"),
+
+    # Ticket file
+    path('projects/<int:projectId>/tickets/<int:ticketId>/file-upload', views.ticketsFileUpload, name = "tickets-fileupload"),
 ]
 
 if settings.DEBUG:

@@ -361,12 +361,12 @@ h1 .primary-dash::before {
   top: 21px;
 }
 
-#ticket-info #button-col {
-  text-align: right;
+#ticket-info #ticket-description {
+  font-size: 1.2rem;
 }
 
-#ticket-info #ticket-description {
-  font-size: 1.5rem;
+#ticket-info #button-col {
+  text-align: right;
 }
 
 @media (max-width: 768px) {

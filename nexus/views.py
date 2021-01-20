@@ -282,3 +282,8 @@ def ticketsDelete(request, projectId, ticketId):
         'ticket': ticket
     }
     return render(request, 'nexus/ticketsDelete.html', context)
+
+# Ticket file upload
+def ticketsFileUpload(request, projectId, ticketId):
+    pass
+    #return render(request, 'nexus/ticketFileUpload')

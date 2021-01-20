@@ -4,13 +4,13 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.template.defaultfilters import slugify
 
-
+# Function to get the project thumbnail upload path, using the project's title as a slug
 def get_upload_path(self, filename):
     # file will be uploaded to MEDIA_ROOT/project_thumbnails/<project-name>/<filename>
     return 'project_thumbnails/{0}/{1}'.format(self.slug, filename)
 
 
-# Create your models here.
+# Projects
 class Project(models.Model):
     STATUS_CHOICES = (
         ('EN DESARROLLO', 'EN DESARROLLO'),
@@ -39,13 +39,15 @@ class Project(models.Model):
         super().save()
 
         # These lines check if the project's thumbnail has a size greater than 300x300,
-        # and if so resizes and re-saves it to the same path
+        # and if so resizes to save space, and re-saves it to the same path
         '''img = Image.open(self.image.path)
         if img.height > 300 or img.width > 300:
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)'''
 
+
+# Tickets
 class Ticket(models.Model):
     PRIORITY_CHOICES = (
         ('BAJA', 'BAJA'),
@@ -90,3 +92,13 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment
+
+# Ticket files
+class TicketFiles(models.Model):
+    ticket = models.ForeignKey(Ticket, on_delete = models.CASCADE, related_name = 'ticketfiles')
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'ticketfiles')
+    description = models.TextField()
+    date_uploaded = models.DateTimeField(default = timezone.now)
+
+    def __str__(self):
+        return self.filename

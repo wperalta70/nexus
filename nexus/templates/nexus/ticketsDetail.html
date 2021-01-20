@@ -96,7 +96,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-9">
-                                <h1 id="ticket-title" class="m-0"><span class="primary-dash"></span>{{ ticket.title }}</h1>
+                                <h1 id="ticket-title" class="m-0">{{ ticket.title }}</h1>
                             </div>
                             <div id="button-col" class="col-md-3">
                                 <a href="{% url 'tickets-update' project.id ticket.id %}" class="btn btn-sm btn-primary btn-hover-light-primary font-weight-bolder text-uppercase mr-2">Modificar</a>
@@ -106,8 +106,8 @@
                         </div>
                         <div class="row my-5">
                             <div class="col-md-12">
-                                <p class="text-muted mt-3 mb-0">DESCRIPCIÓN:</p>
-                                <p id="ticket-description" class="text-dark-50" style="white-space: pre-wrap;">{{ ticket.description }}</p>
+                                <h6 class="text-muted mt-3">DESCRIPCIÓN</h6>
+                                <p id="ticket-description" class="text-dark font-weight-bold ml-md-5" style="white-space: pre-wrap;">{{ ticket.description }}</p>
                             </div>
                         </div>
                         {% if ticket.status == 'CERRADO' %}
@@ -418,7 +418,32 @@
                     <div class="card-body">
                         <div class="text-center mb-5">
                             <h3>Archivos del ticket</h3>
-                            <a href="#" class="btn btn-sm btn-outline-primary font-weight-bolder px-10 py-3">Cargar Archivo</a>
+                            <button class="btn btn-sm btn-outline-primary font-weight-bolder px-10 py-3" type="button" data-toggle="modal" data-target="#fileUploadModal">Cargar Archivo</button>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="fileUploadModal" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <form method="POST">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Modal title</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Body
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary">Save</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+
                         </div>
                         <div class="file mb-5">
                             <h3>file</h3>
