@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 # Function to get the project thumbnail upload path, using the project's title as a slug
 def get_upload_path(self, filename):
     # file will be uploaded to MEDIA_ROOT/project_thumbnails/<project-name>/<filename>
-    return 'project_thumbnails/{0}/{1}'.format(self.slug, filename)
+    return 'project_thumbnails/{project_name}/{filename}'.format(project_name = self.slug, filename = filename)
 
 
 # Projects
@@ -93,12 +93,18 @@ class Comment(models.Model):
     def __str__(self):
         return self.comment
 
+# Function to get the ticket's files upload path, using the project's title as a slug,
+def get_ticket_file_upload_path(self, filename):
+    # file will be uploaded to MEDIA_ROOT/ticket_files/<ticket_id>/<filename>
+    return 'ticket_files/ticket_{id}/{filename}'.format(id = self.ticket_id, filename = filename)
+
 # Ticket files
-class TicketFiles(models.Model):
+class TicketFile(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete = models.CASCADE, related_name = 'ticketfiles')
     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'ticketfiles')
-    description = models.TextField()
+    title = models.CharField(max_length = 100)
+    file = models.FileField(upload_to = get_ticket_file_upload_path)
     date_uploaded = models.DateTimeField(default = timezone.now)
 
     def __str__(self):
-        return self.filename
+        return self.title

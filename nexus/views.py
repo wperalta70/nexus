@@ -165,9 +165,26 @@ def ticketsDetail(request, projectId, ticketId):
             comment = Comment.objects.get(id = commentId)
             comment.delete()
 
+        # File upload
+        if 'uploadFileBtn' in request.POST:
+            uploadFileForm = TicketFileUploadForm(request.POST, request.FILES)
+
+            if uploadFileForm.is_valid:
+                file = uploadFileForm.save(commit = False)
+                file.user = request.user
+                file.ticket = ticket
+                file.save()
+
+
+
+        # File delete
+        if 'deleteFileBtn' in request.POST:
+            pass
+
         return redirect('tickets-detail', projectId = projectId, ticketId = ticketId)
 
     commentForm = CreateCommentForm()
+    fileUploadForm = TicketFileUploadForm()
 
     context = {
         'title': 'Detalles del ticket',
@@ -187,7 +204,9 @@ def ticketsDetail(request, projectId, ticketId):
         'project': project,
         'ticket': ticket,
         'commentForm': commentForm,
-        'comments': comments
+        'comments': comments,
+        'fileUploadForm': fileUploadForm,
+        'files': 'files'
     }
     return render(request, 'nexus/ticketsDetail.html', context)
 

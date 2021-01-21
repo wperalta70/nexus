@@ -229,3 +229,30 @@ class CreateCommentForm(forms.ModelForm):
         fields = ['comment']
 
 ### TICKET COMMENT FORMS ###
+
+
+### TICKET FILE FORMS ###
+
+class TicketFileUploadForm(forms.ModelForm):
+    title = forms.CharField(
+        required = True,
+        max_length = 100,
+        label = 'Título:'
+    )
+
+    file = forms.FileField(
+        required = True,
+        widget = forms.FileInput(
+            attrs = {
+                'class': 'custom-file-input',
+                'id': 'customFile'
+            }
+        ),
+        label = 'Archivo:',
+    )
+
+    class Meta:
+        model = TicketFile
+        fields = ['title', 'file']
+
+### TICKET FILE FORMS ###
