@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(Project)
 admin.site.register(Ticket)
 admin.site.register(Comment)
+admin.site.register(TicketFile)

@@ -145,6 +145,7 @@ def ticketsDetail(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
     comments = Comment.objects.filter(ticket = ticketId).order_by('-id')
+    files = TicketFile.objects.filter(ticket = ticketId)
 
     if request.method == 'POST':
 
@@ -206,7 +207,7 @@ def ticketsDetail(request, projectId, ticketId):
         'commentForm': commentForm,
         'comments': comments,
         'fileUploadForm': fileUploadForm,
-        'files': 'files'
+        'files': files
     }
     return render(request, 'nexus/ticketsDetail.html', context)
 

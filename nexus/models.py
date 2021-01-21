@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from PIL import Image
 from django.template.defaultfilters import slugify
+import os
 
 # Function to get the project thumbnail upload path, using the project's title as a slug
 def get_upload_path(self, filename):
@@ -108,3 +109,6 @@ class TicketFile(models.Model):
 
     def __str__(self):
         return self.title
+
+    def filename(self):
+        return os.path.basename(self.file.name)

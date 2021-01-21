@@ -408,7 +408,7 @@
                                 </div>
                             {% endfor %}
                         {% else %}
-                            <h3>Este ticket no tiene comentarios</h3>
+                            <h3 class="text-muted m-0">Este ticket no tiene comentarios</h3>
                         {% endif %}
                     </div>
                 </div>
@@ -420,57 +420,55 @@
                         <div class="text-center mb-5">
                             <h3>Archivos del ticket</h3>
                             <button class="btn btn-sm btn-outline-primary font-weight-bolder px-10 py-3" type="button" data-toggle="modal" data-target="#fileUploadModal">Cargar Archivo</button>
-                            
-                            <!-- Modal -->
-                            <div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="fileUploadModal" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <form method="POST" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Subir Archivo</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                            </div>
-                                            <div class="modal-body text-left px-md-20">
-                                                <div class="form-group">
-                                                    {{ fileUploadForm.title|as_crispy_field }}
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>{{ fileUploadForm.file.label }}</label>
-                                                    <div></div>
-                                                    <div class="custom-file">
-                                                        {{ fileUploadForm.file }}
-                                                        <label class="custom-file-label" for="customFile">Seleccionar archivo</label>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button name="uploadFileBtn" type="submit" class="btn btn-primary">Aceptar</button>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                        </div>
+                        {% for file in files %}
+                            <div class="file mb-5 d-flex flex-column align-items-center">
+                                <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="bg-hover-light p-0 py-2 m-0" type="button">
+                                    <img alt="{{ file.title }}" class="w-100 max-h-100px mb-3" src="{% static 'assets/media/svg/files/pdf.svg' %}">
+                                    <span class="text-dark-75 font-weight-bold font-size-lg">{{ file.filename }}</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu" style="">
+                                    <h6 class="dropdown-header font-size-sm text-muted">ACCIONES:</h6>
+                                    <!-- TODO: Change data-userimage to show user's profile picture -->
+                                    <button id="deleteCommentButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteCommentModal" data-commentid="9" data-user="admin" data-userimage="/static/assets/media/svg/avatars/007-boy-2.svg" data-datelong="13 de Enero, 2021 - 04:06 a.m." data-datenatural="hace 1&nbsp;semana, 1&nbsp;día" data-comment="Test comment #4">
+                                        Eliminar comentario
+                                    </button>
                                 </div>
                             </div>
 
-
-                        </div>
-                        <div class="file mb-5">
-                            <h3>file</h3>
-                            <h3>description</h3>
-                        </div>
-                        <div class="file mb-5">
-                            <h3>file</h3>
-                            <h3>description</h3>
-                        </div>
-                        <div class="file mb-5">
-                            <h3>file</h3>
-                            <h3>description</h3>
-                        </div>
+                            <div class="file mb-5 py-2 d-flex flex-column align-items-center">
+                                <div class="dropdown-inline d-flex flex-column align-self-right" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
+                                    <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="ki ki-bold-more-hor"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-right" style="">
+                                        <!--begin::Navigation-->
+                                        <ul class="navi navi-hover py-5">
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon">
+                                                        <i class="flaticon2-drop"></i>
+                                                    </span>
+                                                    <span class="navi-text">New Group</span>
+                                                </a>
+                                            </li>
+                                            <li class="navi-item">
+                                                <a href="#" class="navi-link">
+                                                    <span class="navi-icon">
+                                                        <i class="flaticon2-list-3"></i>
+                                                    </span>
+                                                    <span class="navi-text">Contacts</span>
+                                                </a>
+                                            </li>
+                                            
+                                        </ul>
+                                        <!--end::Navigation-->
+                                    </div>
+                                </div>
+                                <img alt="{{ file.title }}" class="w-100 max-h-100px mb-3" src="{% static 'assets/media/svg/files/pdf.svg' %}">
+                                <span class="text-dark-75 font-weight-bold font-size-lg">{{ file.filename }}</span>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -509,6 +507,100 @@
                         <p id="commentModal" class="font-size-lg text-dark-50">
                             {{ comment.comment }}
                         </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input name="commentIdModal" id="commentIdModal" type="hidden">
+                        <button name="deleteCommentModalBtn" type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End:: Delete Comment Modal -->
+
+    <!-- Start:: File Upload Modal -->
+    <div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="fileUploadModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Subir Archivo</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body text-left">
+                        <div class="form-group">
+                            {{ fileUploadForm.title|as_crispy_field }}
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ fileUploadForm.file.label }}<span class="asteriskField">*</span></label>
+                            <div></div>
+                            <div class="custom-file">
+                                {{ fileUploadForm.file }}
+                                <label class="custom-file-label" for="customFile">Seleccionar archivo</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button name="uploadFileBtn" type="submit" class="btn btn-primary">Aceptar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- End:: File Upload Modal -->
+
+    <!-- Start:: File Details Modal -->
+    <div class="modal fade" id="fileDetailsModal" tabindex="-1" role="dialog" aria-labelledby="fileUploadModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalles del archivo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body text-left">
+                    test
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End:: File Details Modal -->
+
+    <!-- Start:: Delete File Modal -->
+    <div class="modal fade" id="deleteFileModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">¡Atención!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <h3>¿Está seguro que desea eliminar este archivo?</h3>
+
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center">
+                            <!--begin: Icon-->
+                            <img alt="" class="max-h-65px" src="{% static 'assets/media/svg/files/pdf.svg' %}">
+                            <!--end: Icon-->
+                            <!--begin: Tite-->
+                            <a href="#" class="text-dark-75 font-weight-bold mt-15 font-size-lg">Technical Requiremnts.pdf</a>
+                            <!--end: Tite-->
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
