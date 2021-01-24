@@ -1,2 +1,4 @@
 nexus/static/assets/js/* linguist-vendored
 nexus/static/assets/plugins/* linguist-vendored
+nexus/templates/nexus/metronic_files/* linguist-vendored
+nexus/templates/nexus/template_files/* linguist-vendored
