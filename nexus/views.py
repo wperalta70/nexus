@@ -161,7 +161,7 @@ def ticketsDetail(request, projectId, ticketId):
 
         # Delete comment
         if 'deleteCommentModalBtn' in request.POST:
-            commentId = request.POST.get("commentIdModal")
+            commentId = request.POST.get("commentId")
 
             comment = Comment.objects.get(id = commentId)
             comment.delete()
@@ -176,11 +176,12 @@ def ticketsDetail(request, projectId, ticketId):
                 file.ticket = ticket
                 file.save()
 
-
-
         # File delete
-        if 'deleteFileBtn' in request.POST:
-            pass
+        if 'deleteFileModalBtn' in request.POST:
+            fileId = request.POST.get("fileId")
+
+            file = TicketFile.objects.get(id = fileId)
+            file.delete()
 
         return redirect('tickets-detail', projectId = projectId, ticketId = ticketId)
 

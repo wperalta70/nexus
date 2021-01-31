@@ -440,16 +440,23 @@
                                             <!-- <i class="flaticon2-list-3 mr-4"></i> -->
     
                                             <!-- TODO: Change data-userimage to show user's profile picture -->
-                                            <button id="deleteCommentButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteFileModal" data-commentid="9" data-user="admin" data-userimage="/static/assets/media/svg/avatars/007-boy-2.svg" data-datelong="13 de Enero, 2021 - 04:06 a.m." data-datenatural="hace 1&nbsp;semana, 1&nbsp;día" data-comment="Test comment #4">
+                                            <button id="deleteFileButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteFileModal" data-fileid="{{ file.id }}" data-title="{{ file.title }}" data-filename="{{ file.filename }}" data-extension="{{ file.extension }}">
                                                 <div class="d-flex align-items-center">
                                                     <span><i class="flaticon-delete mr-4"></i></span>
                                                     <span>Eliminar archivo</span>
                                                 </div>
                                             </button>
+
+                                            <!-- <button id="deleteCommentButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteFileModal" data-fileid="{{ file.id }}" data-user="{{ file.user }}" data-datelong="{{ comment.date_created|date:'j \d\e F, Y - H:i a' }}" data-datenatural="{{ comment.date_created|naturaltime }}" data-title="{{ file.title }}" data-filename="{{ file.filename }}" data-extension="{{ file.extension }}">
+                                                <div class="d-flex align-items-center">
+                                                    <span><i class="flaticon-delete mr-4"></i></span>
+                                                    <span>Eliminar archivo</span>
+                                                </div>
+                                            </button> -->
                                         </div>
                                     </div>
                                 </div>
-                                <img alt="{{ file.title }}" class="w-100 max-h-100px mb-3" src="{% static 'assets/media/svg/files/pdf.svg' %}">
+                                <img alt="{{ file.title }}" class="w-100 max-h-100px mb-3" src="{% static 'assets/media/svg/files/'|add:file.extension|add:'.svg' %}"> 
                                 <span class="text-dark-75 font-weight-bold font-size-lg">{{ file.title|truncatechars:45 }}</span>
                             </div>
                         </div>
@@ -477,18 +484,18 @@
                             <div class="symbol symbol-40 symbol-light-success mr-5">
                                 <a href="#">
                                     <span class="symbol-label">
-                                        <img id="userImageModal" src="" class="h-75 align-self-end" alt="">
+                                        <img id="userImage" src="" class="h-75 align-self-end" alt="">
                                     </span>
                                 </a>
                             </div>
                             <div class="d-flex flex-column">
-                                <a id="userModal" href="#" class="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">
+                                <a id="user" href="#" class="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">
                                     {{ comment.user }}
                                 </a>
-                                <span id="datecreatedModal" class="font-size-sm text-muted" data-toggle="tooltip" data-original-title="">{{ comment.date_created }}</span>
+                                <span id="datecreated" class="font-size-sm text-muted" data-toggle="tooltip" data-original-title="">{{ comment.date_created }}</span>
                             </div>
                         </div>
-                        <p id="commentModal" class="font-size-lg text-dark-50">
+                        <p id="comment" class="font-size-lg text-dark-50">
                             {{ comment.comment }}
                         </p>
                     </div>
@@ -496,7 +503,7 @@
                 <div class="modal-footer">
                     <form method="POST">
                         {% csrf_token %}
-                        <input name="commentIdModal" id="commentIdModal" type="hidden">
+                        <input name="commentId" id="commentId" type="hidden">
                         <button name="deleteCommentModalBtn" type="submit" class="btn btn-danger">Eliminar</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     </form>
@@ -578,20 +585,19 @@
 
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center">
-                            <!--begin: Icon-->
-                            <img alt="" class="max-h-65px" src="{% static 'assets/media/svg/files/pdf.svg' %}">
-                            <!--end: Icon-->
-                            <!--begin: Tite-->
-                            <a href="#" class="text-dark-75 font-weight-bold mt-15 font-size-lg">Technical Requiremnts.pdf</a>
-                            <!--end: Tite-->
+                            <!-- TODO: Add alt, src with jquery -->
+                            <img id="logo" class="w-100 max-h-100px mb-3" src="">
+                            <!-- TODO: Add with title jquery -->
+                            <span id="title" class="text-dark-75 font-weight-bold font-size-lg mb-3"></span>
+                            <span id="filename" class="text-muted font-weight-bold font-size-lg"></span>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <form method="POST">
                         {% csrf_token %}
-                        <input name="commentIdModal" id="commentIdModal" type="hidden">
-                        <button name="deleteCommentModalBtn" type="submit" class="btn btn-danger">Eliminar</button>
+                        <input name="fileId" id="fileId" type="hidden">
+                        <button name="deleteFileModalBtn" type="submit" class="btn btn-danger">Eliminar</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     </form>
                 </div>
@@ -617,6 +623,7 @@
         // When "deleteCommentButton" is clicked, the "deleteComment" modal will be opened,
         // and all of the data within the specific "deleteCommentButton" that is pressed
         // will be transferred into the modal to display to the user.
+        /* Script for delete comment modal */
         $(document).on("click", "#deleteCommentButton", function() {
             var commentId = $(this).data('commentid');
             var user = $(this).data('user');
@@ -625,12 +632,27 @@
             var datenatural = $(this).data('datenatural');
             var comment = $(this).data('comment');
 
-            $('#commentIdModal').val(commentId);
-            $('.modal-body #userModal').text(user);
-            $('.modal-body #userImageModal').attr("src", userimage);
-            $('.modal-body #datecreatedModal').attr("data-original-title", datelong);
-            $('.modal-body #datecreatedModal').text(datenatural);
-            $('.modal-body #commentModal').text(comment);
+            $('#deleteCommentModal #commentId').val(commentId);
+            $('#deleteCommentModal #user').text(user);
+            $('#deleteCommentModal #userImage').attr("src", userimage);
+            $('#deleteCommentModal #datecreated').attr("data-original-title", datelong);
+            $('#deleteCommentModal #datecreated').text(datenatural);
+            $('#deleteCommentModal #comment').text(comment);
+        });
+
+        /* Script for delete file modal */
+        $(document).on("click", "#deleteFileButton", function() {
+            var fileId = $(this).data('fileid');
+            var title = $(this).data('title');
+            var filename = $(this).data('filename');
+            var extension = $(this).data('extension');
+
+            var logoSrc = "/static/assets/media/svg/files/"+ extension +".svg"
+
+            $('#deleteFileModal #fileId').val(fileId);
+            $('#deleteFileModal #logo').attr("src", logoSrc);
+            $('#deleteFileModal #title').text(title);
+            $('#deleteFileModal #filename').text(filename);
         });
     </script>
 

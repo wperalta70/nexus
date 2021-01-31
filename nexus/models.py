@@ -112,3 +112,26 @@ class TicketFile(models.Model):
 
     def filename(self):
         return os.path.basename(self.file.name)
+
+    def extension(self):
+        name, extension = os.path.splitext(self.file.name)
+        extension = extension.replace(".", "")
+
+        fileFormats = ["ai", "css", "csv", "doc", "exe", "html", "jpg", "js", "json", "mp3", "mp4", "pdf", "png", "psd", "svg", "txt", "xml", "doc", "xls", "ppt"]
+
+        if extension == 'docx':
+            return 'doc'
+
+        if extension == 'xlsx':
+            return 'xls'
+
+        if extension == 'pptx':
+            return 'ppt'
+
+        if extension == 'rar':
+            return 'zip'
+
+        if extension not in fileFormats:
+            return 'other'
+
+        return extension
