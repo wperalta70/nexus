@@ -563,7 +563,7 @@
                     </div>
                     <div class="form-group">
                         <label class="text-muted font-weight-bolder">NOMBRE DEL ARCHIVO:</label>
-                        <input class="form-control" type="text" disabled value="test">
+                        <input class="form-control" type="text" disabled value="test.pdf">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -581,6 +581,17 @@
                     </div>
                     <div class="form-group">
                         <label class="text-muted font-weight-bolder">ARCHIVO:</label>
+                        <div class="d-flex flex-row">
+                            <img id="logo" class="max-h-100px mb-3" src="{% static 'assets/media/svg/files/pdf.svg' %}">
+                            <div class="d-flex flex-column">
+                                <span id="title" class="text-dark-75 font-weight-bold font-size-lg">Prueba - nombre del archivo</span>
+                                <span id="filename" class="text-muted font-weight-bold font-size-lg mb-3">archivo.pdf</span>
+                                <button class="btn btn-primary d-flex flex-row" style="max-width: 125px;">
+                                    <i class="icon-xl la la-download"></i>
+                                    Descargar
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -606,9 +617,7 @@
 
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center">
-                            <!-- TODO: Add alt, src with jquery -->
                             <img id="logo" class="w-100 max-h-100px mb-3" src="">
-                            <!-- TODO: Add with title jquery -->
                             <span id="title" class="text-dark-75 font-weight-bold font-size-lg mb-3"></span>
                             <span id="filename" class="text-muted font-weight-bold font-size-lg"></span>
                         </div>
