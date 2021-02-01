@@ -107,7 +107,7 @@
                         </div>
                         <div class="row my-5">
                             <div class="col-md-12">
-                                <h6 class="text-muted mt-3">DESCRIPCIÓN</h6>
+                                <h6 class="text-muted mt-3">DESCRIPCIÓN:</h6>
                                 <p id="ticket-description" class="text-dark font-weight-bold ml-md-5" style="white-space: pre-wrap;">{{ ticket.description }}</p>
                             </div>
                         </div>
@@ -396,7 +396,7 @@
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <h6 class="dropdown-header font-size-sm text-muted">ACCIONES:</h6>
                                                 <!-- TODO: Change data-userimage to show user's profile picture -->
-                                                <button id="deleteCommentButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteCommentModal" data-commentid="{{ comment.id }}" data-user="{{ comment.user }}" data-userimage="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" data-datelong="{{ comment.date_created|date:'j \d\e F, Y - H:i a' }}" data-datenatural="{{ comment.date_created|naturaltime }}" data-comment="{{ comment.comment }}">
+                                                <button id="commentDeleteButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#commentDeleteModal" data-commentid="{{ comment.id }}" data-user="{{ comment.user }}" data-userimage="{% static 'assets/media/svg/avatars/007-boy-2.svg' %}" data-datelong="{{ comment.date_created|date:'j \d\e F, Y - H:i a' }}" data-datenatural="{{ comment.date_created|naturaltime }}" data-comment="{{ comment.comment }}">
                                                     Eliminar comentario
                                                 </button>
                                             </div>
@@ -436,23 +436,20 @@
                                         <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
                                             <h6 class="dropdown-header font-size-sm text-muted">ACCIONES:</h6>
 
-                                            <!-- TODO: Agregar botón modal para ver detalles -->
-                                            <!-- <i class="flaticon2-list-3 mr-4"></i> -->
+                                            <button id="fileDetailsButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#fileDetailsModal" data-fileid="{{ file.id }}" data-user="{{ file.user }}" data-datelong="{{ file.date_uploaded|date:'j \d\e F, Y - H:i a' }}" data-datenatural="{{ file.date_uploaded|naturaltime }}" data-title="{{ file.title }}" data-filename="{{ file.filename }}" data-extension="{{ file.extension }}">
+                                                <div class="d-flex align-items-center">
+                                                    <span><i class="flaticon2-list-3 mr-4"></i></span>
+                                                    <span>Ver detalles</span>
+                                                </div>
+                                            </button>
     
                                             <!-- TODO: Change data-userimage to show user's profile picture -->
-                                            <button id="deleteFileButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteFileModal" data-fileid="{{ file.id }}" data-title="{{ file.title }}" data-filename="{{ file.filename }}" data-extension="{{ file.extension }}">
+                                            <button id="fileDeleteButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#fileDeleteModal" data-fileid="{{ file.id }}" data-title="{{ file.title }}" data-filename="{{ file.filename }}" data-extension="{{ file.extension }}">
                                                 <div class="d-flex align-items-center">
                                                     <span><i class="flaticon-delete mr-4"></i></span>
                                                     <span>Eliminar archivo</span>
                                                 </div>
                                             </button>
-
-                                            <!-- <button id="deleteCommentButton" type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteFileModal" data-fileid="{{ file.id }}" data-user="{{ file.user }}" data-datelong="{{ comment.date_created|date:'j \d\e F, Y - H:i a' }}" data-datenatural="{{ comment.date_created|naturaltime }}" data-title="{{ file.title }}" data-filename="{{ file.filename }}" data-extension="{{ file.extension }}">
-                                                <div class="d-flex align-items-center">
-                                                    <span><i class="flaticon-delete mr-4"></i></span>
-                                                    <span>Eliminar archivo</span>
-                                                </div>
-                                            </button> -->
                                         </div>
                                     </div>
                                 </div>
@@ -467,7 +464,7 @@
     </div>
 
     <!-- Start:: Delete Comment Modal -->
-    <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="commentDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -560,7 +557,31 @@
                         </button>
                 </div>
                 <div class="modal-body text-left">
-                    test
+                    <div class="form-group">
+                        <label class="text-muted font-weight-bolder">TÍTULO:</label>
+                        <input class="form-control" type="text" disabled value="test">
+                    </div>
+                    <div class="form-group">
+                        <label class="text-muted font-weight-bolder">NOMBRE DEL ARCHIVO:</label>
+                        <input class="form-control" type="text" disabled value="test">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="text-muted font-weight-bolder">SUBIDO POR:</label><br>
+                                <label class="font-weight-bolder"><a class="text-dark text-hover-primary" href="#">Waldemar Peralta</a></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="text-muted font-weight-bolder">FECHA DE SUBIDA:</label>
+                                <label class="font-weight-bolder">31/01/2021 20:54pm</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-muted font-weight-bolder">ARCHIVO:</label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -571,7 +592,7 @@
     <!-- End:: File Details Modal -->
 
     <!-- Start:: Delete File Modal -->
-    <div class="modal fade" id="deleteFileModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="fileDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -620,11 +641,12 @@
 
 {% block custom_scripts %}
     <script>
-        // When "deleteCommentButton" is clicked, the "deleteComment" modal will be opened,
-        // and all of the data within the specific "deleteCommentButton" that is pressed
-        // will be transferred into the modal to display to the user.
         /* Script for delete comment modal */
-        $(document).on("click", "#deleteCommentButton", function() {
+        $(document).on("click", "#commentDeleteButton", function() {
+            // When "deleteCommentButton" is clicked, the "deleteComment" modal will be opened,
+            // and all of the data within the specific "deleteCommentButton" that is pressed
+            // will be transferred into the modal to display to the user.
+
             var commentId = $(this).data('commentid');
             var user = $(this).data('user');
             var userimage = $(this).data('userimage');
@@ -632,16 +654,16 @@
             var datenatural = $(this).data('datenatural');
             var comment = $(this).data('comment');
 
-            $('#deleteCommentModal #commentId').val(commentId);
-            $('#deleteCommentModal #user').text(user);
-            $('#deleteCommentModal #userImage').attr("src", userimage);
-            $('#deleteCommentModal #datecreated').attr("data-original-title", datelong);
-            $('#deleteCommentModal #datecreated').text(datenatural);
-            $('#deleteCommentModal #comment').text(comment);
+            $('#commentDeleteModal #commentId').val(commentId);
+            $('#commentDeleteModal #user').text(user);
+            $('#commentDeleteModal #userImage').attr("src", userimage);
+            $('#commentDeleteModal #datecreated').attr("data-original-title", datelong);
+            $('#commentDeleteModal #datecreated').text(datenatural);
+            $('#commentDeleteModal #comment').text(comment);
         });
 
         /* Script for delete file modal */
-        $(document).on("click", "#deleteFileButton", function() {
+        $(document).on("click", "#fileDeleteButton", function() {
             var fileId = $(this).data('fileid');
             var title = $(this).data('title');
             var filename = $(this).data('filename');
@@ -649,10 +671,10 @@
 
             var logoSrc = "/static/assets/media/svg/files/"+ extension +".svg"
 
-            $('#deleteFileModal #fileId').val(fileId);
-            $('#deleteFileModal #logo').attr("src", logoSrc);
-            $('#deleteFileModal #title').text(title);
-            $('#deleteFileModal #filename').text(filename);
+            $('#fileDeleteModal #fileId').val(fileId);
+            $('#fileDeleteModal #logo').attr("src", logoSrc);
+            $('#fileDeleteModal #title').text(title);
+            $('#fileDeleteModal #filename').text(filename);
         });
     </script>
 
