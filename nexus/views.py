@@ -268,7 +268,7 @@ def ticketsUpdate(request, projectId, ticketId):
             f'Ticket #{ticketId}': f'/projects/{projectId}/tickets/{ticketId}',
             'Modificar Ticket': '#',
         },
-        'projectId': projectId,
+        'ticket': ticket,
         'form': form
     }
 
