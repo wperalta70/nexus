@@ -6,7 +6,7 @@ from django.template.defaultfilters import slugify
 import os
 
 # Function to get the project thumbnail upload path, using the project's title as a slug
-def get_upload_path(self, filename):
+def get_project_upload_path(self, filename):
     # file will be uploaded to MEDIA_ROOT/project_thumbnails/<project-name>/<filename>
     return 'project_thumbnails/{project_name}/{filename}'.format(project_name = self.slug, filename = filename)
 
@@ -23,7 +23,7 @@ class Project(models.Model):
     title = models.CharField(max_length = 150)
     short_description = models.CharField(max_length = 50, null = True, blank = True)
     description = models.TextField()
-    image = models.ImageField(upload_to=get_upload_path, blank = True, null = True, default = None)
+    image = models.ImageField(upload_to = get_project_upload_path, blank = True, null = True, default = None)
     status = models.CharField(max_length = 14, choices = STATUS_CHOICES)
     date_created = models.DateTimeField(default = timezone.now)
     last_updated = models.DateTimeField(null = True, blank = True)
@@ -94,7 +94,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.comment
 
-# Function to get the ticket's files upload path, using the project's title as a slug,
+# Function to get the ticket's files upload path
 def get_ticket_file_upload_path(self, filename):
     # file will be uploaded to MEDIA_ROOT/ticket_files/<ticket_id>/<filename>
     return 'ticket_files/ticket_{id}/{filename}'.format(id = self.ticket_id, filename = filename)
@@ -135,3 +135,15 @@ class TicketFile(models.Model):
             return 'other'
 
         return extension
+
+# Function to get the user's profile image upload path
+def get_user_image_upload_path(self, image):
+    # file will be uploaded to MEDIA_ROOT/ticket_files/<ticket_id>/<filename>
+    return 'profile_pictures/user_{id}/{image}'.format(id = self.user_id, image = image)
+
+# User profile
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE, related_name='profile')
+    firstName = models.CharField(max_length = 100)
+    lastName = models.CharField(max_length = 100)
+    image = models.ImageField(upload_to = get_user_image_upload_path)

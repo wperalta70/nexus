@@ -304,7 +304,6 @@ def ticketsDelete(request, projectId, ticketId):
     }
     return render(request, 'nexus/ticketsDelete.html', context)
 
-# Ticket file upload
-def ticketsFileUpload(request, projectId, ticketId):
+# Create user
+def usersCreate(request):
     pass
-    #return render(request, 'nexus/ticketFileUpload')
