@@ -23,7 +23,7 @@ class Project(models.Model):
     title = models.CharField(max_length = 150)
     short_description = models.CharField(max_length = 50, null = True, blank = True)
     description = models.TextField()
-    image = models.ImageField(upload_to = get_project_upload_path, blank = True, null = True, default = None)
+    image = models.ImageField(upload_to = get_project_upload_path, blank = True, null = True)
     status = models.CharField(max_length = 14, choices = STATUS_CHOICES)
     date_created = models.DateTimeField(default = timezone.now)
     last_updated = models.DateTimeField(null = True, blank = True)
@@ -41,11 +41,12 @@ class Project(models.Model):
 
         # These lines check if the project's thumbnail has a size greater than 300x300,
         # and if so resizes to save space, and re-saves it to the same path
-        '''img = Image.open(self.image.path)
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)'''
+        if self.image and hasattr(self.image.path, 'path'):
+            img = Image.open(self.image.path)
+            if img.height > 300 or img.width > 300:
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+                img.save(self.image.path)
 
 
 # Tickets
@@ -142,8 +143,11 @@ def get_user_image_upload_path(self, image):
     return 'profile_pictures/user_{id}/{image}'.format(id = self.user_id, image = image)
 
 # User profile
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE, related_name='profile')
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE, related_name = 'profile')
     firstName = models.CharField(max_length = 100)
     lastName = models.CharField(max_length = 100)
-    image = models.ImageField(upload_to = get_user_image_upload_path)
+    image = models.ImageField(upload_to = get_user_image_upload_path, default = "")
+
+    def __str__(self):
+        return f'Perfil de {self.firstName} {self.lastName}'
