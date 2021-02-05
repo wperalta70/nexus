@@ -1,0 +1,17 @@
+// Theme colors
+$primary:       								    #0BB783;
+$primary-hover:    									#04AA77;
+$primary-light:    									#D7F9EF;
+$primary-inverse:  									#FFFFFF;
+
+.login-aside{
+    background-color: $primary-light;
+}
+
+.title{
+    font-size: 4rem !important;
+}
+
+.subtitle{
+    color: rgba($color: #000000, $alpha: 0.5)
+}

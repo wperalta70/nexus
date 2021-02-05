@@ -304,6 +304,10 @@ def ticketsDelete(request, projectId, ticketId):
     }
     return render(request, 'nexus/ticketsDelete.html', context)
 
+# User login
+def userLogin(request):
+    return render(request, 'nexus/login.html')
+
 # Create user
 def usersCreate(request):
     pass

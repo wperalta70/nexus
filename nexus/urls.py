@@ -20,6 +20,9 @@ urlpatterns = [
 
     # Users
     path('users/create', views.usersCreate, name="users-create"),
+    
+    
+    path('login/', views.userLogin, name="login"),
 ]
 
 if settings.DEBUG:
