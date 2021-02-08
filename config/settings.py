@@ -135,9 +135,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Change message constants so I can use them with bootstrap classes
 MESSAGE_TAGS = {
-    message_constants.DEBUG: 'debug',
-    message_constants.INFO: 'info',
-    message_constants.SUCCESS: 'success',
-    message_constants.WARNING: 'warning',
     message_constants.ERROR: 'danger'
 }

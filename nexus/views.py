@@ -321,6 +321,12 @@ def userLogin(request):
 
     return render(request, 'nexus/login.html')
 
+# User logout
+def userLogout(request):
+    logout(request)
+
+    return redirect('login')
+
 # Create user
 def usersCreate(request):
     form = CreateUserForm()
