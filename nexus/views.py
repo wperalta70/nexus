@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .forms import *
 from .models import *
 import datetime
+from django.contrib.auth import authenticate, login, logout
 
 # context:
 #   title: Page's main title
@@ -310,4 +310,24 @@ def userLogin(request):
 
 # Create user
 def usersCreate(request):
-    pass
+    form = CreateUserForm()
+
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            # TODO: Change to redirect('users-list')
+            return redirect('projects-list')
+
+    context = {
+        'title': 'Crear Usuario',
+        'breadcrumbs': {
+            'Inicio': '/',
+            'Usuarios': '/users',
+            'Crear Usuario': '#',
+        },
+        'form': form
+    }
+
+    return render(request, 'nexus/usersCreate.html', context)

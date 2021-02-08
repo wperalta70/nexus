@@ -1,6 +1,8 @@
 from django import forms
-from django.forms.widgets import ClearableFileInput, TextInput
+from django.forms.widgets import ClearableFileInput, PasswordInput, TextInput
 from .models import *
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 ### PROJECT FORMS ###
 
@@ -256,3 +258,29 @@ class TicketFileUploadForm(forms.ModelForm):
         fields = ['title', 'file']
 
 ### TICKET FILE FORMS ###
+
+### USER FORMS ###
+
+class CreateUserForm(UserCreationForm):
+    first_name = forms.CharField(
+        required = True,
+        label = 'Nombre',
+        max_length = 150
+    )
+
+    last_name = forms.CharField(
+        required = True,
+        label = 'Apellido',
+        max_length = 150
+    )
+
+    email = forms.EmailField(
+        required = True,
+        label = 'Dirección de email',
+    )
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
+
+### USER FORMS ###

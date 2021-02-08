@@ -19,7 +19,7 @@ urlpatterns = [
     path('projects/<int:projectId>/tickets/<int:ticketId>/delete', views.ticketsDelete, name = "tickets-delete"),
 
     # Users
-    path('users/create', views.usersCreate, name="users-create"),
+    path('users/create/', views.usersCreate, name="users-create"),
     
     
     path('login/', views.userLogin, name="login"),

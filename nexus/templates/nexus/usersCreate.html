@@ -1,0 +1,64 @@
+{% extends "nexus/base.html" %}
+{% load static %}
+{% load template_tags %}
+{% load crispy_forms_tags %}
+<!-- --- -->
+{% block template_vendors_css %}
+{% endblock template_vendors_css %}
+
+{% block template_layout_css %}
+{% endblock template_layout_css %}
+<!-- --- -->
+
+
+{% block page_title %}
+    {{ title }}
+{% endblock page_title %}
+
+{% block breadcrumbs %}
+    {% for item in breadcrumbs %}
+        <li class="breadcrumb-item">
+            <a href="{{ breadcrumbs|get_item:item }}" class="text-muted">{{ item }}</a>
+        </li>
+    {% endfor %}
+{% endblock breadcrumbs %}
+
+{% block subheader_toolbar %}{% endblock subheader_toolbar %}
+
+{% block content %}
+    <div class="container">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <h1 class="card-title">{{ title }}</h1>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    {{form|crispy}}
+
+                    <div class="d-flex justify-content-center">
+                        <input class="btn btn-primary btn-lg mx-2" value="Crear Usuario" type="submit">
+                        <!-- TODO: Change to users-list -->
+                        <a class="btn btn-outline-primary btn-lg mx-2" href="{% url 'index' %}">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+<!-- --- -->
+{% block template_vendor_js %}
+{% endblock template_vendor_js %}
+
+{% block template_page_js %}
+{% endblock template_page_js %}
+<!-- --- -->
+
+
+
+{% block custom_scripts %}
+{% endblock custom_scripts %}
+
