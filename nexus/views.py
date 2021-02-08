@@ -4,6 +4,7 @@ from .models import *
 import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # context:
 #   title: Page's main title
@@ -11,10 +12,12 @@ from django.contrib import messages
 
 # Create your views here.
 # Index (dashboard)
+@login_required(login_url='login')
 def index(request):
     return redirect('projects-list')
 
 # List of projects
+@login_required(login_url='login')
 def projectsList(request):
     context = {
         'title': 'Listado de proyectos',
@@ -36,6 +39,7 @@ def projectsList(request):
     return render(request, 'nexus/projectsList.html', context)
 
 # Project details
+@login_required(login_url='login')
 def projectsDetail(request, projectId):
     project = Project.objects.get(id = projectId)
     tickets = project.tickets.exclude(status = "CERRADO")
@@ -58,6 +62,7 @@ def projectsDetail(request, projectId):
     return render(request, 'nexus/projectsDetail.html', context)
 
 # Create project
+@login_required(login_url='login')
 def projectsCreate(request):
     if request.method == 'POST':
         form = CreateProjectForm(request.POST, request.FILES)
@@ -87,6 +92,7 @@ def projectsCreate(request):
     return render(request, 'nexus/projectsCreate.html', context)
 
 # Update project
+@login_required(login_url='login')
 def projectsUpdate(request, projectId):
     project = Project.objects.get(id = projectId)
 
@@ -116,6 +122,7 @@ def projectsUpdate(request, projectId):
     return render(request, 'nexus/projectsUpdate.html', context)
 
 # Delete project
+@login_required(login_url='login')
 def projectsDelete(request, projectId):
     project = Project.objects.get(id = projectId)
 
@@ -142,6 +149,7 @@ def projectsDelete(request, projectId):
     return render(request, 'nexus/projectsDelete.html', context)
 
 # Ticket details
+@login_required(login_url='login')
 def ticketsDetail(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
@@ -214,6 +222,7 @@ def ticketsDetail(request, projectId, ticketId):
     return render(request, 'nexus/ticketsDetail.html', context)
 
 # Create ticket
+@login_required(login_url='login')
 def ticketsCreate(request, projectId):
     project = Project.objects.get(id = projectId)
 
@@ -244,6 +253,7 @@ def ticketsCreate(request, projectId):
     return render(request, 'nexus/ticketsCreate.html', context)
 
 # Update ticket
+@login_required(login_url='login')
 def ticketsUpdate(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
@@ -276,6 +286,7 @@ def ticketsUpdate(request, projectId, ticketId):
     return render(request, 'nexus/ticketsUpdate.html', context)
 
 # Delete ticket
+@login_required(login_url='login')
 def ticketsDelete(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
@@ -328,6 +339,7 @@ def userLogout(request):
     return redirect('login')
 
 # Create user
+@login_required(login_url='login')
 def usersCreate(request):
     form = CreateUserForm()
 
