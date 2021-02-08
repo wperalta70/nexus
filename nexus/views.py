@@ -318,6 +318,9 @@ def ticketsDelete(request, projectId, ticketId):
 
 # User login
 def userLogin(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
