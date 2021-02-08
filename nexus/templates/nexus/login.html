@@ -61,16 +61,28 @@
 						<!--begin::Signin-->
 						<div class="login-form login-signin">
 							<!--begin::Form-->
-							<form class="form">
+							<form method="POST" action="" class="form">
+								{% csrf_token %}
 								<!--begin::Title-->
 								<div class="pb-5 pt-lg-0 pt-5">
 									<h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Bienvenido a Nexus</h3>
 								</div>
 								<!--begin::Title-->
+
+								{% if messages %}
+									<div class="messages">
+										{% for message in messages %}
+											<div {% if message.tags %} class="alert alert-{{message.tags}} font-weight-bolder font-size-lg"{% endif %} >
+												{{ message }}
+											</div>
+										{% endfor %}
+									</div>
+								{% endif %}
+
 								<!--begin::Form group-->
 								<div class="form-group">
 									<label class="font-size-h6 font-weight-bolder text-dark">Usuario</label>
-									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="username" autocomplete="off" />
+									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="text" name="username" tabindex="1" autofocus>
 								</div>
 								<!--end::Form group-->
 								<!--begin::Form group-->
@@ -79,12 +91,13 @@
 										<label class="font-size-h6 font-weight-bolder text-dark pt-5">Contraseña</label>
 										<a href="#" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">Olvidó su contraseña?</a>
 									</div>
-									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="password" name="password" autocomplete="off" />
+									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="password" name="password" tabindex="2">
 								</div>
 								<!--end::Form group-->
+
 								<!--begin::Action-->
 								<div class="pb-lg-0 pb-5 d-flex justify-content-center">
-									<button type="button" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Iniciar sesión</button>
+									<button type="submit" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3" tabindex="3">Iniciar sesión</button>
 								</div>
 								<!--end::Action-->
 							</form>
