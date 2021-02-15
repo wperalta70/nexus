@@ -5,6 +5,8 @@ import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .decorators import *
+from django.contrib.auth.models import Group
 
 # context:
 #   title: Page's main title
@@ -317,10 +319,8 @@ def ticketsDelete(request, projectId, ticketId):
     return render(request, 'nexus/ticketsDelete.html', context)
 
 # User login
+@check_login
 def userLogin(request):
-    if request.user.is_authenticated:
-        return redirect('index')
-
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -343,6 +343,7 @@ def userLogout(request):
 
 # Create user
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def usersCreate(request):
     form = CreateUserForm()
 
@@ -350,7 +351,11 @@ def usersCreate(request):
         form = CreateUserForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            user = form.save()
+            role = request.POST.get("role")
+            group = Group.objects.get(name = role)
+            user.groups.add(group)
+
             # TODO: Change to redirect('users-list')
             return redirect('projects-list')
 

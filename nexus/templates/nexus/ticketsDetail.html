@@ -11,6 +11,19 @@
 {% endblock template_layout_css %}
 <!-- --- -->
 
+{% block page_messages %}
+    <div class="container py-3 pt-lg-8 pb-lg-4">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{message.tags}} font-weight-bolder font-size-lg"{% endif %} >
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock page_messages %}
 
 {% block page_title %}
     {{ title }}

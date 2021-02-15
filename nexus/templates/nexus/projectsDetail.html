@@ -45,8 +45,22 @@
 {% endblock template_layout_css %}
 <!-- --- -->
 
+{% block page_messages %}
+    <div class="px-8 pt-lg-8">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{message.tags}} font-weight-bolder font-size-lg"{% endif %} >
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock page_messages %}
+
 {% block content %}
-    <div id="projects-detail-container" class="container-fluid">
+    <div id="projects-detail-container" class="container-fluid my-4">
         <div class="d-flex align-items-baseline flex-wrap mb-2 mr-5">
             <h2 class="d-flex align-items-center text-dark font-weight-bold my-1 mr-3">{{ title }}</h2>
 
@@ -463,6 +477,8 @@
                 ticketsTable.column(4).search(status).draw();
             }
         });
+
+        $('.subheader').remove();
     });
 </script>
 {% endblock custom_scripts %}

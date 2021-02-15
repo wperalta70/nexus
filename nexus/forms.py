@@ -261,7 +261,19 @@ class TicketFileUploadForm(forms.ModelForm):
 
 ### USER FORMS ###
 
+USER_ROLES = (
+    ('', '...'),
+    ('admin', 'Administrador'),
+    ('developer', 'Desarrollador'),
+    ('project_manager', 'Project Manager'),
+    ('tester', 'Tester'),
+)
+
 class CreateUserForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super(CreateUserForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.pop("autofocus", None)
+
     first_name = forms.CharField(
         required = True,
         label = 'Nombre',
@@ -277,6 +289,12 @@ class CreateUserForm(UserCreationForm):
     email = forms.EmailField(
         required = True,
         label = 'Dirección de email',
+    )
+
+    role = forms.ChoiceField(
+        required = True,
+        label = 'Tipo de usuario',
+        choices = USER_ROLES
     )
 
     class Meta:
