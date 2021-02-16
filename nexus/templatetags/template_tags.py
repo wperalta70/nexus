@@ -11,3 +11,8 @@ def get_item(dictionary, key):
 @register.filter
 def pick_color(list):
     return random.choice(list)
+
+# This filter returns true if the user belongs to a certain group
+@register.filter
+def has_role(user, role):
+    return user.groups.filter(name = role).exists()

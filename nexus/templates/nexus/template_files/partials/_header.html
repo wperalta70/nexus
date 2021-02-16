@@ -22,19 +22,15 @@
 									<!--begin::Tab Navs(for desktop mode)-->
 									<ul class="header-tabs nav align-self-end font-size-lg" role="tablist">
 
-										<!--begin::Item-->
 										<li class="nav-item">
 											<a href="#" class="nav-link py-4 px-6 active" data-toggle="tab" data-target="#kt_header_tab_1" role="tab">Proyectos</a>
 										</li>
 
-										<!--end::Item-->
-
-										<!--begin::Item-->
-										<li class="nav-item mr-3">
-											<a href="#" class="nav-link py-4 px-6" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Panel de Administrador</a>
-										</li>
-
-										<!--end::Item-->
+										{% if request.user|has_role:"admin" %}
+											<li class="nav-item mr-3">
+												<a href="#" class="nav-link py-4 px-6" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Panel de Administrador</a>
+											</li>
+										{% endif %}
 									</ul>
 
 									<!--begin::Tab Navs-->
