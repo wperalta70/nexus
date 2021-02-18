@@ -20,6 +20,7 @@ urlpatterns = [
 
     # Users
     path('users/create/', views.usersCreate, name="users-create"),
+    path('users/', views.usersList, name="users-list"),
     
     
     path('login/', views.userLogin, name="login"),

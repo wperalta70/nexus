@@ -28,7 +28,7 @@
 
 										{% if request.user|has_role:"admin" %}
 											<li class="nav-item mr-3">
-												<a href="#" class="nav-link py-4 px-6" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Panel de Administrador</a>
+												<a href="#" class="nav-link py-4 px-6" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Usuarios</a>
 											</li>
 										{% endif %}
 									</ul>
@@ -222,18 +222,13 @@
 												<!--begin::Nav-->
 												<ul class="menu-nav">
 													<li class="menu-item" aria-haspopup="true">
-														<a href="/" class="menu-link">
+														<a href="{#% url 'users-list' %#}" class="menu-link">
 															<span class="menu-text">Gestionar Usuarios</span>
 														</a>
 													</li>
 													<li class="menu-item" aria-haspopup="true">
 														<a href="{% url 'users-create' %}" class="menu-link">
 															<span class="menu-text">Crear Usuario</span>
-														</a>
-													</li>
-													<li class="menu-item" aria-haspopup="true">
-														<a href="/" class="menu-link">
-															<span class="menu-text">Asignar permisos</span>
 														</a>
 													</li>
 												</ul>

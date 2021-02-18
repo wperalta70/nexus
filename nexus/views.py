@@ -341,6 +341,31 @@ def userLogout(request):
 
     return redirect('login')
 
+# Users list
+@login_required(login_url='login')
+# TODO: Also allow project managers?
+@allowed_users(allowed_roles=['admin'])
+def usersList(request):
+    users = User.objects.all()
+
+    context = {
+        'title': 'Listado de Usuarios',
+        'breadcrumbs': {
+            'Inicio': '/',
+            'Usuarios': '#',
+        },
+        'logo_colors': [
+            'primary',
+            'success',
+            'danger',
+            'warning',
+            'info'
+        ],
+        'users': users,
+    }
+    return render(request, 'nexus/usersList.html', context)
+
+
 # Create user
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
