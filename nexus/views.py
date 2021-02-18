@@ -16,6 +16,7 @@ from django.contrib.auth.models import Group
 # Index (dashboard)
 @login_required(login_url='login')
 def index(request):
+    # TODO: Add context with 'tab' and 'section' variables
     return redirect('projects-list')
 
 # List of projects
@@ -28,6 +29,8 @@ def projectsList(request):
             'Proyectos': '/projects',
             'Listado': '#'
         },
+        'tab': 'proyectos',
+        'section': 'proyectos',
         'projects': Project.objects.all(),
         'logo_colors': [
             'primary',
@@ -53,6 +56,8 @@ def projectsDetail(request, projectId):
             'Proyectos': '/projects',
             project.title: '#',
         },
+        'tab': 'proyectos',
+        'section': 'proyectos',
         'ticketsNuevos': project.tickets.filter(status = "NUEVO").count(),
         'ticketsAsignados': project.tickets.filter(status = "ASIGNADO").count(),
         'ticketsEnDesarrollo': project.tickets.filter(status = "EN DESARROLLO").count(),
@@ -88,6 +93,8 @@ def projectsCreate(request):
             'Proyectos': '/projects',
             'Crear Proyecto': '#',
         },
+        'tab': 'proyectos',
+        'section': 'proyectos',
         'form': form
     }
 
@@ -117,6 +124,8 @@ def projectsUpdate(request, projectId):
             'Proyectos': '/projects',
             'Modificar Proyecto': '#',
         },
+        'tab': 'proyectos',
+        'section': 'proyectos',
         'projectId': projectId,
         'form': form
     }
@@ -139,6 +148,8 @@ def projectsDelete(request, projectId):
             'Proyectos': '/projects',
             'Eliminar Proyecto': '#',
         },
+        'tab': 'proyectos',
+        'section': 'proyectos',
         'logo_colors': [
             'primary',
             'success',
@@ -207,6 +218,8 @@ def ticketsDetail(request, projectId, ticketId):
             project.title: f'/projects/{projectId}',
             f'Ticket #{ticketId}': '#',
         },
+        'tab': 'proyectos',
+        'section': 'tickets',
         'logo_colors': [
             'primary',
             'success',
@@ -249,6 +262,8 @@ def ticketsCreate(request, projectId):
             project.title: f'/projects/{projectId}',
             'Crear nuevo ticket': '#',
         },
+        'tab': 'proyectos',
+        'section': 'tickets',
         'projectId': projectId,
         'form': form
     }
@@ -281,6 +296,8 @@ def ticketsUpdate(request, projectId, ticketId):
             f'Ticket #{ticketId}': f'/projects/{projectId}/tickets/{ticketId}',
             'Modificar Ticket': '#',
         },
+        'tab': 'proyectos',
+        'section': 'tickets',
         'ticket': ticket,
         'form': form
     }
@@ -306,6 +323,8 @@ def ticketsDelete(request, projectId, ticketId):
             f'Ticket #{ticketId}': f'/projects/{projectId}/tickets/{ticketId}',
             'Eliminar Ticket': '#',
         },
+        'tab': 'proyectos',
+        'section': 'tickets',
         'logo_colors': [
             'primary',
             'success',
@@ -354,6 +373,8 @@ def usersList(request):
             'Inicio': '/',
             'Usuarios': '#',
         },
+        'tab': 'usuarios',
+        'section': 'gestionar_usuarios',
         'logo_colors': [
             'primary',
             'success',
@@ -391,6 +412,8 @@ def usersCreate(request):
             'Usuarios': '/users',
             'Crear Usuario': '#',
         },
+        'tab': 'usuarios',
+        'section': 'crear_usuario',
         'form': form
     }
 

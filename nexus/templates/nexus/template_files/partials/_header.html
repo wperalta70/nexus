@@ -23,12 +23,12 @@
 									<ul class="header-tabs nav align-self-end font-size-lg" role="tablist">
 
 										<li class="nav-item">
-											<a href="#" class="nav-link py-4 px-6 active" data-toggle="tab" data-target="#kt_header_tab_1" role="tab">Proyectos</a>
+											<a href="#" class="nav-link py-4 px-6 {% if tab == 'proyectos' or tab == Null %}active{% endif %}" data-toggle="tab" data-target="#kt_header_tab_1" role="tab">Proyectos</a>
 										</li>
 
 										{% if request.user|has_role:"admin" %}
 											<li class="nav-item mr-3">
-												<a href="#" class="nav-link py-4 px-6" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Usuarios</a>
+												<a href="#" class="nav-link py-4 px-6 {% if tab == 'usuarios' %}active{% endif %}" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Usuarios</a>
 											</li>
 										{% endif %}
 									</ul>
@@ -157,14 +157,14 @@
 
 										<!--begin::Item-->
 										<li class="nav-item mr-2">
-											<a href="#" class="nav-link btn btn-clean active" data-toggle="tab" data-target="#kt_header_tab_1" role="tab">Proyectos</a>
+											<a href="#" class="nav-link btn btn-clean {% if tab == 'proyectos' or tab == Null %}active{% endif %}" data-toggle="tab" data-target="#kt_header_tab_1" role="tab">Proyectos</a>
 										</li>
 
 										<!--end::Item-->
 
 										<!--begin::Item-->
 										<li class="nav-item mr-2">
-											<a href="#" class="nav-link btn btn-clean" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Panel Admin.</a>
+											<a href="#" class="nav-link btn btn-clean {% if tab == 'usuarios' %}active{% endif %}" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Usuarios</a>
 										</li>
 
 										<!--end::Item-->
@@ -176,30 +176,31 @@
 									<div class="tab-content">
 
 										<!--begin::Tab Pane-->
-										<div class="tab-pane py-5 p-lg-0 show active" id="kt_header_tab_1">
+										<div class="tab-pane py-5 p-lg-0 {% if tab == 'proyectos' or tab == Null %}show active{% endif %}" id="kt_header_tab_1">
 
 											<!--begin::Menu-->
 											<div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
 
 												<!--begin::Nav-->
 												<ul class="menu-nav">
-													<li class="menu-item menu-item-active" aria-haspopup="true">
+													<li class="menu-item {% if section == 'inicio' %}menu-item-active{% endif %}" aria-haspopup="true">
 														<a href="/" class="menu-link">
 															<span class="menu-text">Inicio</span>
 														</a>
 													</li>
-													<li class="menu-item" aria-haspopup="true">
-														<a href="index.html" class="menu-link">
+													<li class="menu-item {% if section == 'proyectos' %}menu-item-active{% endif %}" aria-haspopup="true">
+														<a href="{% url 'projects-list' %}" class="menu-link">
 															<span class="menu-text">Proyectos</span>
 														</a>
 													</li>
-													<li class="menu-item" aria-haspopup="true">
-														<a href="index.html" class="menu-link">
+													<li class="menu-item {% if section == 'tickets' %}menu-item-active{% endif %}" aria-haspopup="true">
+														<a href="#" class="menu-link">
 															<span class="menu-text">Tickets</span>
 														</a>
 													</li>
-													<li class="menu-item" aria-haspopup="true">
-														<a href="index.html" class="menu-link">
+													<!-- TODO: Change users-assign to something else? -->
+													<li class="menu-item {% if section == 'asignar_personal' %}menu-item-active{% endif %}" aria-haspopup="true">
+														<a href="#" class="menu-link">
 															<span class="menu-text">Asignar personal</span>
 														</a>
 													</li>
@@ -214,19 +215,19 @@
 										<!--begin::Tab Pane-->
 
 										<!--begin::Tab Pane-->
-										<div class="tab-pane py-5 p-lg-0" id="kt_header_tab_2">
+										<div class="tab-pane py-5 p-lg-0 {% if tab == 'usuarios' %}show active{% endif %}" id="kt_header_tab_2">
 
 											<!--begin::Menu-->
 											<div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
 
 												<!--begin::Nav-->
 												<ul class="menu-nav">
-													<li class="menu-item" aria-haspopup="true">
-														<a href="{#% url 'users-list' %#}" class="menu-link">
+													<li class="menu-item {% if section == 'gestionar_usuarios' %}menu-item-active{% endif %}" aria-haspopup="true">
+														<a href="{% url 'users-list' %}" class="menu-link">
 															<span class="menu-text">Gestionar Usuarios</span>
 														</a>
 													</li>
-													<li class="menu-item" aria-haspopup="true">
+													<li class="menu-item {% if section == 'crear_usuario' %}menu-item-active{% endif %}" aria-haspopup="true">
 														<a href="{% url 'users-create' %}" class="menu-link">
 															<span class="menu-text">Crear Usuario</span>
 														</a>
