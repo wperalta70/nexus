@@ -1,0 +1,107 @@
+{% extends "nexus/base.html" %}
+{% load static %}
+{% load template_tags %}
+{% load crispy_forms_tags %}
+<!-- --- -->
+{% block template_vendors_css %}
+{% endblock template_vendors_css %}
+
+{% block template_layout_css %}
+{% endblock template_layout_css %}
+<!-- --- -->
+
+{% block page_messages %}
+    <div class="container py-3 pt-lg-8 pb-lg-4">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{message.tags}} font-weight-bolder font-size-lg"{% endif %} >
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock page_messages %}
+
+{% block page_title %}
+    {{ title }}
+{% endblock page_title %}
+
+{% block breadcrumbs %}
+    {% for item in breadcrumbs %}
+        <li class="breadcrumb-item">
+            <a href="{{ breadcrumbs|get_item:item }}" class="text-muted">{{ item }}</a>
+        </li>
+    {% endfor %}
+{% endblock breadcrumbs %}
+
+{% block subheader_toolbar %}{% endblock subheader_toolbar %}
+
+{% block content %}
+    <div class="container">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <h1 class="card-title">{{ title }}</h1>
+            </div>
+            <!--begin::Form-->
+            <form method="POST" enctype="multipart/form-data">
+                <div class="card-body">
+                    <div class="form-group mb-8">
+                        <div class="alert alert-custom alert-default" role="alert">
+                            <div class="alert-icon">
+                                <span class="svg-icon svg-icon-primary svg-icon-xl">
+                                    <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+                                        <title>Stockholm-icons / Code / Info-circle</title>
+                                        <desc>Created with Sketch.</desc>
+                                        <defs></defs>
+                                        <g id="Stockholm-icons-/-Code-/-Info-circle" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect id="bound" x="0" y="0" width="24" height="24"></rect>
+                                            <circle id="Oval-5" fill="#000000" opacity="0.3" cx="12" cy="12" r="10"></circle>
+                                            <rect id="Rectangle-9" fill="#000000" x="11" y="10" width="2" height="7" rx="1"></rect>
+                                            <rect id="Rectangle-9-Copy" fill="#000000" x="11" y="7" width="2" height="2" rx="1"></rect>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="alert-text">Por favor complete los siguientes campos.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-wrapper">
+                        {% csrf_token %}
+                        {{ user_form|crispy }}
+            
+                        <div class="form-group">
+                            <label>{{ profile_form.image.label }}</label><br>
+                            {{ profile_form.image }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                    <a href="{#% url 'tickets-detail' ticket.project_id ticket.id %#}" class="btn btn-outline-primary">Cancelar</a>
+                </div>
+            </form>
+            <!--end::Form-->
+        </div>
+        <!--end::Card-->
+    </div>
+{% endblock content %}
+
+
+<!-- --- -->
+{% block template_vendor_js %}
+{% endblock template_vendor_js %}
+
+{% block template_page_js %}
+{% endblock template_page_js %}
+<!-- --- -->
+
+
+
+{% block custom_scripts %}
+{% endblock custom_scripts %}
+

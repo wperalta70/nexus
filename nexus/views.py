@@ -418,3 +418,34 @@ def usersCreate(request):
     }
 
     return render(request, 'nexus/usersCreate.html', context)
+
+# Update user
+def usersUpdate(request, userId):
+    user = User.objects.get(id = userId)
+
+    user_form = UpdateUserForm(instance = user)
+    profile_form = UpdateProfileForm(instance = user)
+
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance = user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance = user)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, f'Se han actualizado los datos de su perfil.')
+            return redirect('index')
+
+    context = {
+        'title': 'Modificar Usuario',
+        'breadcrumbs': {
+            'Inicio': '/',
+            'Usuarios': '/users',
+            #request.user.get_full_name: f'/users/{request.user.id}',
+            'Modificar Usuario': '#',
+        },
+        'tab': 'usuarios',
+        'section': 'gestionar_usuarios',
+        'user_form': user_form,
+        'profile_form': profile_form
+    }
+    return render(request, 'nexus/usersUpdate.html', context)

@@ -301,4 +301,25 @@ class CreateUserForm(UserCreationForm):
         model = User
         fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
 
+class UpdateUserForm(forms.ModelForm):
+    email = forms.EmailField(
+        required = True,
+        label = 'Dirección de email',
+    )
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username']
+
+class UpdateProfileForm(forms.ModelForm):
+    image = forms.ImageField(
+        label = 'Cambiar Imágen: ',
+        required = False,
+        widget = CustomClearableFileInput()
+    )
+
+    class Meta:
+        model = Profile
+        fields = ['image']
+
 ### USER FORMS ###

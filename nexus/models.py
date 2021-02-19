@@ -148,4 +148,4 @@ class Profile(models.Model):
     image = models.ImageField(upload_to = get_user_image_upload_path, default = "")
 
     def __str__(self):
-        return f'Perfil de {self.firstName} {self.lastName}'
+        return f'Perfil de {self.user.first_name} {self.user.last_name}'
