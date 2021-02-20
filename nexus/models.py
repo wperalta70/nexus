@@ -145,7 +145,7 @@ def get_user_image_upload_path(self, image):
 # User profile
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE, related_name = 'profile')
-    image = models.ImageField(upload_to = get_user_image_upload_path, default = "")
+    image = models.ImageField(upload_to = get_user_image_upload_path, default = "", blank = True, null = True)
 
     def __str__(self):
-        return f'Perfil de {self.user.first_name} {self.user.last_name}'
+        return f'Perfil de {self.user.get_full_name()}'

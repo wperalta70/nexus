@@ -53,7 +53,7 @@
                     <table id="usersDatatable" class="custom-datatable table table-hover">
                         <thead>
                             <tr>
-                                <th><span>ID</span></th>
+                                <th><span>#</span></th>
                                 <th><span>Nombre</span></th>
                                 <th><span>Rol</span></th>
                                 <th><span>Fecha de Ingreso</span></th>
@@ -123,7 +123,7 @@
                                             <a href="{% url 'users-update' user.id %}" class="btn btn-sm btn-light-primary btn-hover-primary btn-icon mr-1">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
-                                            <a href="{#% url 'users-delete' user.id %#}" class="btn btn-sm btn-light-danger btn-hover-danger btn-icon mr-1">
+                                            <a href="{% url 'users-delete' user.id %}" class="btn btn-sm btn-light-danger btn-hover-danger btn-icon mr-1">
                                                 <i class="far fa-trash-alt"></i>
                                             </a>
                                         </span>

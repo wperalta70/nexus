@@ -20,6 +20,10 @@ h1 .primary-dash::before {
   background: #0BB783;
 }
 
+.symbol img {
+  object-fit: cover;
+}
+
 /* End:: Site-wide CSS */
 /* Start:: Logo CSS */
 .brand-logo {

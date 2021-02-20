@@ -22,6 +22,7 @@ urlpatterns = [
     path('users/create/', views.usersCreate, name="users-create"),
     path('users/', views.usersList, name="users-list"),
     path('users/<int:userId>/update', views.usersUpdate, name="users-update"),
+    path('users/<int:userId>/delete', views.usersDelete, name="users-delete"),
     
     
     path('login/', views.userLogin, name="login"),

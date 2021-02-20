@@ -310,10 +310,6 @@ def ticketsDelete(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
 
-    if request.method == 'POST':
-        ticket.delete()
-        return redirect('projects-detail', projectId = projectId)
-
     context = {
         'title': 'Eliminar Ticket',
         'breadcrumbs': {
@@ -365,7 +361,10 @@ def userLogout(request):
 # TODO: Also allow project managers?
 @allowed_users(allowed_roles=['admin'])
 def usersList(request):
-    users = User.objects.all()
+    users = User.objects.filter(is_active = True).all()
+
+    if request.method == 'POST':
+        pass
 
     context = {
         'title': 'Listado de Usuarios',
@@ -420,32 +419,62 @@ def usersCreate(request):
     return render(request, 'nexus/usersCreate.html', context)
 
 # Update user
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin', 'project_manager', 'developer', 'tester'])
 def usersUpdate(request, userId):
     user = User.objects.get(id = userId)
 
     user_form = UpdateUserForm(instance = user)
-    profile_form = UpdateProfileForm(instance = user)
+    profile_form = UpdateProfileForm(instance = user.profile)
 
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance = user)
-        profile_form = UpdateProfileForm(request.POST, request.FILES, instance = user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance = user.profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
             messages.success(request, f'Se han actualizado los datos de su perfil.')
-            return redirect('index')
+            # TODO: Change redirect based on if the user changed his profile, or if an admin changed another user's profile
+            return redirect('users-list')
 
     context = {
         'title': 'Modificar Usuario',
         'breadcrumbs': {
             'Inicio': '/',
             'Usuarios': '/users',
-            #request.user.get_full_name: f'/users/{request.user.id}',
+            request.user.get_full_name(): f'/users/{request.user.id}',
             'Modificar Usuario': '#',
         },
         'tab': 'usuarios',
         'section': 'gestionar_usuarios',
+        'user': user,
         'user_form': user_form,
         'profile_form': profile_form
     }
     return render(request, 'nexus/usersUpdate.html', context)
+
+# Delete user
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def usersDelete(request, userId):
+    user = User.objects.get(id = userId)
+
+    if request.method == 'POST':
+        user.is_active = False
+        user.save()
+        messages.success(request, 'El usuario se ha dado de baja.')
+        return redirect('users-list')
+
+    context = {
+        'title': 'Modificar Usuario',
+        'breadcrumbs': {
+            'Inicio': '/',
+            'Usuarios': '/users',
+            request.user.get_full_name(): f'/users/{request.user.id}',
+            'Eliminar Usuario': '#',
+        },
+        'tab': 'usuarios',
+        'section': 'gestionar_usuarios',
+        'user': user
+    }
+    return render(request, 'nexus/usersDelete.html', context)

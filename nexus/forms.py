@@ -309,7 +309,7 @@ class UpdateUserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'username']
+        fields = ['first_name', 'last_name', 'email', 'username', 'is_active']
 
 class UpdateProfileForm(forms.ModelForm):
     image = forms.ImageField(

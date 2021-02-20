@@ -82,7 +82,8 @@
                 </div>
                 <div class="card-footer text-center">
                     <button type="submit" class="btn btn-primary">Aceptar</button>
-                    <a href="{#% url 'tickets-detail' ticket.project_id ticket.id %#}" class="btn btn-outline-primary">Cancelar</a>
+                    <!-- TODO: Remove comments after adding 'users-detail' page -->
+                    <a href="{#% url 'users-detail' user.id %#}" class="btn btn-outline-primary">Cancelar</a>
                 </div>
             </form>
             <!--end::Form-->
@@ -97,11 +98,42 @@
 {% endblock template_vendor_js %}
 
 {% block template_page_js %}
+<script src="assets/js/pages/crud/forms/widgets/bootstrap-switch.js"></script>
 {% endblock template_page_js %}
 <!-- --- -->
 
 
 
 {% block custom_scripts %}
+<script>
+    // Script para mostrar el nombre del archivo en el file input field
+    $(document).ready(function () {
+        $('.custom-file-input').on('change', function() { 
+            let fileName = $(this).val().split('\\').pop(); 
+            $(this).next('.custom-file-label').addClass("selected").html(fileName); 
+        });
+    });
+
+    // Class definition
+
+    var KTBootstrapSwitch = function() {
+        // Private functions
+        var demos = function() {
+            // minimum setup
+            $('[data-switch=true]').bootstrapSwitch();
+        };
+
+        return {
+            // public functions
+            init: function() {
+                demos();
+            },
+        };
+    }();
+
+    jQuery(document).ready(function() {
+        KTBootstrapSwitch.init();
+    });
+</script>
 {% endblock custom_scripts %}
 

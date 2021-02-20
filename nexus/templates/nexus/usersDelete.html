@@ -1,0 +1,111 @@
+{% extends "nexus/base.html" %}
+{% load static %}
+{% load template_tags %}
+{% load crispy_forms_tags %}
+<!-- --- -->
+{% block template_vendors_css %}
+{% endblock template_vendors_css %}
+
+{% block template_layout_css %}
+{% endblock template_layout_css %}
+<!-- --- -->
+
+{% block page_messages %}
+    <div class="container py-3 pt-lg-8 pb-lg-4">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{message.tags}} font-weight-bolder font-size-lg"{% endif %} >
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock page_messages %}
+
+{% block page_title %}
+    {{ title }}
+{% endblock page_title %}
+
+{% block breadcrumbs %}
+    {% for item in breadcrumbs %}
+        <li class="breadcrumb-item">
+            <a href="{{ breadcrumbs|get_item:item }}" class="text-muted">{{ item }}</a>
+        </li>
+    {% endfor %}
+{% endblock breadcrumbs %}
+
+{% block subheader_toolbar %}{% endblock subheader_toolbar %}
+
+{% block content %}
+    <div id="deleteProject" class="container">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <h1 class="card-title">{{ title }}</h1>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>¿Está seguro que desea dar de baja este usuario?</h3>
+                    </div>
+                </div>
+
+                <div id="project-title-container" class="row">
+                    <div class="col-md-12">
+                        <div class="row mt-5">
+                            <div class="col-lg-6 d-flex align-items-center">
+                                {% if user.profile.image %}
+                                    <div class="symbol symbol-80 symbol-md">
+                                        <img id="project-img" src="{{ user.profile.image.url }}">
+                                    </div>
+                                {% else %}
+                                    <div class="symbol symbol-light-{{ logo_colors|pick_color }} symbol-80 symbol symbol-md">
+                                        <span class="symbol-label">{{ user.first_name|make_list|first|upper }}</span>
+                                    </div>
+                                {% endif %}
+                                
+                                <h1 id="project-title" class="ml-5 font-weight-bolder text-dark text-hover-primary mb-0">
+                                    <a style="font-size: 2rem;" class="text-dark text-hover-primary" href="{#% url 'users-detail' user.id %#}">{{ user.get_full_name }}</a>
+                                </h1>
+                            </div>
+                            <div id="project-date" class="col-md-6 d-flex flex-column align-items-center justify-content-center">
+                                <h3>Fecha de ingreso:</h3>
+                                <h3 class="text-muted mb-0">{{ user.date_joined|date:"d/m/Y - h:i a" }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-footer py-5">
+                <div id="project-button-container" class="row m-0">
+                    <div class="col-md-12 text-center">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-lg btn-danger my-2" type="submit">Borrar</button>
+                            <!-- TODO: Remove comments after adding 'users-detail' page -->
+                            <a class="btn btn-lg btn-secondary" href="{#% url 'users-detail' user.id %#}">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+<!-- --- -->
+{% block template_vendor_js %}
+{% endblock template_vendor_js %}
+
+{% block template_page_js %}
+{% endblock template_page_js %}
+<!-- --- -->
+
+
+
+{% block custom_scripts %}
+{% endblock custom_scripts %}
+
