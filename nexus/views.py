@@ -478,3 +478,20 @@ def usersDelete(request, userId):
         'user': user
     }
     return render(request, 'nexus/usersDelete.html', context)
+
+
+@login_required(login_url='login')
+def profile(request, userId):
+    user = User.objects.get(id = userId)
+
+    context = {
+        'title': f'Perfil de {user.get_full_name()}',
+        'breadcrumbs': {
+            'Inicio': '/',
+            'Mi perfil': '#',
+        },
+        'tab': 'usuarios',
+        #'section': 'gestionar_usuarios',
+        'user': user
+    }
+    return render(request, 'nexus/profile.html', context)
