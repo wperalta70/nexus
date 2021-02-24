@@ -263,10 +263,10 @@ class TicketFileUploadForm(forms.ModelForm):
 
 USER_ROLES = (
     ('', '...'),
-    ('admin', 'Administrador'),
-    ('developer', 'Desarrollador'),
-    ('project_manager', 'Project Manager'),
-    ('tester', 'Tester'),
+    ('Administrador', 'Administrador'),
+    ('Desarrollador', 'Desarrollador'),
+    ('Project Manager', 'Project Manager'),
+    ('Tester', 'Tester'),
 )
 
 class CreateUserForm(UserCreationForm):

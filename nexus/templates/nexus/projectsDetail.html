@@ -93,15 +93,17 @@
 
                         <h5 id="short-description" class="text-dark-50 text-hover-primary">{{ project.short_description }}</h5>
 
-                        <span id="user" class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2 text-nowrap">
-                            <i class="flaticon2-user text-hover-primary text-dark-50 font-weight-bold"></i>
-                            <!-- TODO: Display user's name -->
-                            {{ project.user }}
-                        </span>
+                        <!-- TODO: Change href to user's profile -->
+                        <a href="#">
+                            <span id="user" class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2 text-nowrap">
+                                <i class="flaticon2-user text-hover-primary text-dark-50 font-weight-bold"></i>
+                                {{ project.user.get_full_name }}
+                            </span>
+                        </a>
                         <span id="user-email" class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2 text-nowrap">
                             <i class="flaticon2-black-back-closed-envelope-shape text-hover-primary text-dark-50 font-weight-bold"></i>
                             <!-- TODO: Display user's email -->
-                            waldeperalta1@gmail.com
+                            {{ project.user.email }}
                         </span>
                     </div>
                     <div id="button-col" class="mt-5 col-lg-2">
@@ -347,7 +349,6 @@
                                                     </td>
                                                     <td>
                                                         <span>
-                                                            <!-- TODO: Change url to tickets-detail -->
                                                             <a href="{% url 'tickets-detail' project.id ticket.id %}" class="btn btn-primary btn-sm font-weight-bold text-uppercase">
                                                                 Seleccionar
                                                             </a>

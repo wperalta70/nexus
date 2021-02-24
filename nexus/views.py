@@ -359,7 +359,7 @@ def userLogout(request):
 # Users list
 @login_required(login_url='login')
 # TODO: Also allow project managers?
-@allowed_users(allowed_roles=['admin'])
+@allowed_users(allowed_roles=['Administrador'])
 def usersList(request):
     users = User.objects.filter(is_active = True).all()
 
@@ -388,7 +388,7 @@ def usersList(request):
 
 # Create user
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['admin'])
+@allowed_users(allowed_roles=['Administrador'])
 def usersCreate(request):
     form = CreateUserForm()
 
@@ -401,8 +401,8 @@ def usersCreate(request):
             group = Group.objects.get(name = role)
             user.groups.add(group)
 
-            # TODO: Change to redirect('users-list')
-            return redirect('projects-list')
+            messages.success(request, f'Se ha creado una nueva cuenta para el siguiente usuario: {user.get_full_name()}')
+            return redirect('users-list')
 
     context = {
         'title': 'Crear Usuario',
@@ -420,7 +420,7 @@ def usersCreate(request):
 
 # Update user
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['admin', 'project_manager', 'developer', 'tester'])
+@allowed_users(allowed_roles=['Administrador', 'Project Manager', 'Desarrollador', 'Tester'])
 def usersUpdate(request, userId):
     user = User.objects.get(id = userId)
 
@@ -455,7 +455,7 @@ def usersUpdate(request, userId):
 
 # Delete user
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['admin'])
+@allowed_users(allowed_roles=['Administrador'])
 def usersDelete(request, userId):
     user = User.objects.get(id = userId)
 

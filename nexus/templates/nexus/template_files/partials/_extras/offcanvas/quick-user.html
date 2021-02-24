@@ -20,7 +20,7 @@
 					<div class="symbol symbol-100 mr-5">
 						{% if user.profile.image %}
 							<div class="symbol-label">
-								<img class="symbol-label" src="{% static 'assets/media/users/300_21.jpg' %}" alt="">
+								<img class="symbol-label" src="{{ user.profile.image.url }}" alt="">
 							</div>
 							<i class="symbol-badge bg-success"></i>
 						{% else %}
@@ -31,9 +31,9 @@
 						{% endif %}
 					</div>
 					<div class="d-flex flex-column">
+						<!-- TODO: Change href to profile -->
 						<a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ request.user.get_full_name }}</a>
-						<!-- TODO: Change to request.user.role -->
-						<div class="text-muted mt-1">Desarrollador</div>
+						<div class="text-muted mt-1">{{ request.user.groups.first }}</div>
 						<div class="navi mt-2">
 							<a href="#" class="navi-item">
 								<span class="navi-link p-0 pb-2">
