@@ -26,7 +26,7 @@
 											<a href="#" class="nav-link py-4 px-6 {% if tab == 'proyectos' or tab == Null %}active{% endif %}" data-toggle="tab" data-target="#kt_header_tab_1" role="tab">Proyectos</a>
 										</li>
 
-										{% if request.user|has_role:"admin" %}
+										{% if request.user|has_role:"Administrador" %}
 											<li class="nav-item mr-3">
 												<a href="#" class="nav-link py-4 px-6 {% if tab == 'usuarios' %}active{% endif %}" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Usuarios</a>
 											</li>

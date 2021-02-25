@@ -87,7 +87,7 @@
                                                 {% endif %}
                                                 <div class="ml-3 font-weight-bolder">
                                                     <div class="text-dark-75 font-size-lg mb-0">
-                                                        {{ user.first_name }}
+                                                        {{ user.get_full_name }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -96,15 +96,7 @@
                                     <td>
                                         <span>
                                             <div class="font-weight-bolder font-size-lg mb-0">
-                                                {% if user|has_role:"admin" %}
-                                                    Administrador
-                                                {% elif user|has_role:"project_manager" %}
-                                                    Project Manager
-                                                {% elif user|has_role:"developer" %}
-                                                    Desarrollador
-                                                {% elif user|has_role:"tester" %}
-                                                    Tester
-                                                {% endif %}
+                                                {{ user.groups.first }}
                                             </div>
                                         </span>
                                     </td>
