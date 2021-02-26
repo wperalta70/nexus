@@ -66,9 +66,6 @@ h1 .primary-dash::before {
 }
 
 @media (max-width: 768px) {
-  #kt_quick_user {
-    min-width: 100%;
-  }
   #profile-email {
     max-width: 150px;
     text-overflow: ellipsis;
@@ -395,3 +392,15 @@ h1 .primary-dash::before {
 }
 
 /* End:: Ticket details CSS */
+/* Start:: Profile page CSS */
+@media (min-width: 768px) {
+  #userAsideCol {
+    max-width: 350px !important;
+  }
+}
+
+#userContentCol {
+  width: 100% !important;
+}
+
+/* End:: Profile page CSS */

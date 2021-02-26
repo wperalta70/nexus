@@ -89,9 +89,10 @@ h1{
 }
 
 @media (max-width: 768px) {
-    #kt_quick_user{
-        min-width: 100%;
-    }
+    // BUG: Uncomment this
+    // #kt_quick_user{
+    //     min-width: 100%;
+    // }
 
     #profile-email{
         max-width: 150px;
@@ -503,3 +504,16 @@ h1{
     }
 }
 /* End:: Ticket details CSS */
+
+/* Start:: Profile page CSS */
+#userAsideCol{
+    
+    @media(min-width: 768px){
+        max-width: 350px !important;
+    }
+}
+
+#userContentCol{
+    width: 100% !important;
+}
+/* End:: Profile page CSS */
