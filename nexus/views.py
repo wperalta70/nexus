@@ -497,3 +497,20 @@ def profile(request, userId = None):
         'user': user
     }
     return render(request, 'nexus/profile.html', context)
+
+@login_required(login_url='login')
+def profileOld(request):
+    userId = request.user.id
+
+    user = User.objects.get(id = userId)
+
+    context = {
+        'title': f'Perfil de {user.get_full_name()}',
+        'breadcrumbs': {
+            'Inicio': '/',
+            'Mi perfil': '#',
+        },
+        'tab': 'proyectos',
+        'user': user
+    }
+    return render(request, 'nexus/profile2.html', context)
