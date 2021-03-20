@@ -486,6 +486,9 @@ def profile(request, userId = None):
         userId = request.user.id
 
     user = User.objects.get(id = userId)
+    projects = user.projects.all()
+    tickets = user.tickets.all()
+    comments = user.comments.all()
 
     context = {
         'title': f'Perfil de {user.get_full_name()}',
@@ -494,7 +497,13 @@ def profile(request, userId = None):
             'Mi perfil': '#',
         },
         'tab': 'proyectos',
-        'user': user
+        'user': user,
+        'projects': projects,
+        'tickets': tickets,
+        'comments': comments,
+        'projectCount': projects.count,
+        'ticketCount': user.tickets.filter(status="CERRADO").count,
+        'commentCount': comments.count
     }
     return render(request, 'nexus/profile.html', context)
 

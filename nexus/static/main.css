@@ -403,4 +403,29 @@ h1 .primary-dash::before {
   width: 100% !important;
 }
 
+@media (max-width: 768px) {
+  #projects-container #project {
+    margin-bottom: 4rem !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #projects-container #project .logo {
+    margin-right: 0px !important;
+    margin-bottom: 1rem;
+  }
+  #projects-container #project .titles {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  #projects-container #project .tickets {
+    margin-right: 0px !important;
+    margin-bottom: 1rem;
+    flex-direction: row !important;
+  }
+  #projects-container #project .tickets .button {
+    margin-left: 1rem;
+  }
+}
+
 /* End:: Profile page CSS */

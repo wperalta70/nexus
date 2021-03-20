@@ -507,7 +507,6 @@ h1{
 
 /* Start:: Profile page CSS */
 #userAsideCol{
-    
     @media(min-width: 768px){
         max-width: 350px !important;
     }
@@ -515,5 +514,32 @@ h1{
 
 #userContentCol{
     width: 100% !important;
+}
+
+#projects-container{
+    @media(max-width: 768px){
+        #project{
+            margin-bottom: 4rem !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .logo{
+                margin-right: 0px !important;
+                margin-bottom: 1rem;
+            }
+            .titles{
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+            .tickets{
+                margin-right: 0px !important;
+                margin-bottom: 1rem;
+                flex-direction: row !important;
+                .button{
+                    margin-left: 1rem;
+                }
+            }
+        }
+    }
 }
 /* End:: Profile page CSS */

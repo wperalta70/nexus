@@ -16,3 +16,7 @@ def pick_color(list):
 @register.filter
 def has_role(user, role):
     return user.groups.filter(name = role).exists()
+
+@register.filter
+def filter(object, attribute, value):
+    return object.filter(attribute = value)
