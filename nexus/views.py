@@ -494,7 +494,7 @@ def profile(request, userId = None):
         'title': f'Perfil de {user.get_full_name()}',
         'breadcrumbs': {
             'Inicio': '/',
-            'Mi perfil': '#',
+            f'Perfil de {user.get_full_name()}': '#',
         },
         'tab': 'proyectos',
         'user': user,
@@ -508,18 +508,33 @@ def profile(request, userId = None):
     return render(request, 'nexus/profile.html', context)
 
 @login_required(login_url='login')
-def profileOld(request):
-    userId = request.user.id
+def profileDetails(request, userId):
+    if userId != request.user.id:
+        redirect('profile')
 
-    user = User.objects.get(id = userId)
+    user = User.objects.get(id = request.user.id)
+
+    userDetailsForm = UpdateUserDetailsForm(instance = user)
+    userProfileForm = UpdateProfileForm(instance = user.profile)
+
+    if request.method == 'POST':
+        userDetailsForm = UpdateUserDetailsForm(request.POST, instance = user)
+        userProfileForm = UpdateProfileForm(request.POST, request.FILES, instance = user.profile)
+        if userDetailsForm.is_valid() and userProfileForm.is_valid():
+            userDetailsForm.save()
+            userProfileForm.save()
+            messages.success(request, f'Se han actualizado los datos de su perfil.')
+            return redirect('profile-details', user.id)
 
     context = {
-        'title': f'Perfil de {user.get_full_name()}',
+        'title': f'Información de {user.get_full_name()}',
         'breadcrumbs': {
             'Inicio': '/',
-            'Mi perfil': '#',
+            f'Perfil de {user.get_full_name()}': f'/profile/{user.id}',
         },
         'tab': 'proyectos',
-        'user': user
+        'user': user,
+        'userDetailsForm': userDetailsForm,
+        'userProfileForm': userProfileForm
     }
-    return render(request, 'nexus/profile2.html', context)
+    return render(request, 'nexus/profileDetails.html', context)

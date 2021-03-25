@@ -304,7 +304,29 @@ class CreateUserForm(UserCreationForm):
 class UpdateUserForm(forms.ModelForm):
     email = forms.EmailField(
         required = True,
-        label = 'Dirección de email',
+        label = 'Dirección de email:',
+    )
+
+    first_name = forms.CharField(
+        required = True,
+        label = 'Nombre:',
+        max_length = 150
+    )
+
+    last_name = forms.CharField(
+        required = True,
+        label = 'Apellido:',
+        max_length = 150
+    )
+
+    email = forms.EmailField(
+        required = True,
+        label = 'Dirección de email:',
+    )
+
+    username = forms.CharField(
+        required = True,
+        label = 'Nombre de usuario:'
     )
 
     class Meta:
@@ -321,5 +343,37 @@ class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
+
+class UpdateUserDetailsForm(forms.ModelForm):
+    email = forms.EmailField(
+        required = True,
+        label = 'Dirección de email:',
+    )
+
+    first_name = forms.CharField(
+        required = True,
+        label = 'Nombre:',
+        max_length = 150
+    )
+
+    last_name = forms.CharField(
+        required = True,
+        label = 'Apellido:',
+        max_length = 150
+    )
+
+    email = forms.EmailField(
+        required = True,
+        label = 'Dirección de email:',
+    )
+
+    username = forms.CharField(
+        required = True,
+        label = 'Nombre de usuario:'
+    )
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username']
 
 ### USER FORMS ###

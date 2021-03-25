@@ -70,10 +70,15 @@
                         <!--begin::User-->
                         <div class="d-flex align-items-start pt-5">
                             <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                                <!-- TODO: Change profile picture -->
-                                <div class="symbol-label">
-                                    <img src="{{ user.profile.image.url }}" alt="User profile image" class="w-100 h-100" style="border-radius: 0.42rem;">
-                                </div>
+                                {% if user.profile.image %}
+                                    <div class="symbol-label">
+                                        <img src="{{ user.profile.image.url }}" alt="User profile image" class="w-100 h-100" style="border-radius: 0.42rem;">
+                                    </div>
+                                {% else %}
+                                    <div class="symbol-label bg-primary-o-50">
+                                        <span class="symbol-label font-size-h1 font-weight-bolder text-dark bg-white-o-80">WP</span>
+                                    </div>
+                                {% endif %}
                                 <i class="symbol-badge bg-success"></i>
                             </div>
                             <div class="mt-2 mt-md-5">
@@ -94,12 +99,12 @@
                             </div>
                         </div>
                         <!--end::Contact-->
-                        <!-- TODO: Change HREF -->
-                        <a href="#" class="btn btn-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Vista general</a>
-                        <!-- TODO: Change HREF -->
-                        <a href="#" class="btn btn-outline-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Información personal</a>
-                        <!-- TODO: Change HREF -->
-                        <a href="#" class="btn btn-outline-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Cambiar contraseña</a>
+                        <a href="{% url 'profile' user.id %}" class="btn btn-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Vista general</a>
+                        {% if user.id == request.user.id %}
+                            <a href="{% url 'profile-details' user.id %}" class="btn btn-outline-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Información personal</a>
+                            <!-- TODO: Change HREF -->
+                            <a href="#" class="btn btn-outline-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Cambiar contraseña</a>
+                        {% endif %}
                     </div>
                     <!--end::Body-->
                 </div>

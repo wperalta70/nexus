@@ -29,8 +29,7 @@ urlpatterns = [
     path('logout/', views.userLogout, name="logout"),
     path('profile/', views.profile, name="profile"),
     path('profile/<int:userId>', views.profile, name="profile"),
-
-    path('profile/old', views.profileOld, name="profile"),
+    path('profile/<int:userId>/details', views.profileDetails, name="profile-details"),
 ]
 
 if settings.DEBUG:
