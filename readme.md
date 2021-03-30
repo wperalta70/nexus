@@ -3,7 +3,7 @@
 <br>
 
 📼 Video de demostración:
-(link de youtube)
+https://youtu.be/caPNqiQ5PRc
 
 ## Nexus es una aplicación web para la gestión de proyectos de software, y la administración de tickets en equipos de desarrollo.
 

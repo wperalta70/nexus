@@ -112,6 +112,10 @@ class UpdateProjectForm(forms.ModelForm):
 
 ### TICKET FORMS ###
 
+class UserModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.get_full_name()
+
 class CreateTicketForm(forms.ModelForm):
     PRIORITY_CHOICES = (
         ('BAJA', 'BAJA'),
@@ -149,9 +153,16 @@ class CreateTicketForm(forms.ModelForm):
         choices = TYPE_CHOICES
     )
 
+    assigned_to = UserModelChoiceField(
+        label = 'Asignar a: ',
+        queryset = User.objects.all(), # TODO: Change this to only show users that are assigned to this project
+        empty_label = 'Seleccione un usuario...',
+        required = False
+    )
+
     class Meta:
         model = Ticket
-        fields = ['title', 'description', 'priority', 'type']
+        fields = ['title', 'description', 'priority', 'type', 'assigned_to']
 
 class UpdateTicketForm(forms.ModelForm):
     PRIORITY_CHOICES = (

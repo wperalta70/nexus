@@ -487,7 +487,7 @@ def profile(request, userId = None):
 
     user = User.objects.get(id = userId)
     projects = user.projects.all()
-    tickets = user.tickets.all()
+    tickets = user.tickets.all() # TODO: Cambiar por: Ticket.objects.filter(assigned_to=user)
     comments = user.comments.all()
 
     context = {
