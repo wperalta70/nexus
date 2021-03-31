@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'nexus',
+    'rest_framework',
     'crispy_forms',
     'django_cleanup.apps.CleanupConfig',
     'django.contrib.humanize'
