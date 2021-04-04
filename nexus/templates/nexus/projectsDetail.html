@@ -310,7 +310,7 @@
                                                 <th><span>#</span></th>
                                                 <th><span>Título</span></th>
                                                 <th><span>Prioridad</span></th>
-                                                <th><span>Tipo</span></th>
+                                                <th><span>Asignado a:</span></th>
                                                 <th><span>Estado</span></th>
                                                 <th><span>Acciones</span></th>
                                             </tr>
@@ -338,9 +338,11 @@
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        <span class="font-weight-bold text-nowrap text-uppercase">
-                                                            {{ ticket.type }}
-                                                        </span>
+                                                        {% if ticket.assigned_to %}
+                                                            <span class="font-weight-bold text-nowrap text-uppercase label label-light label-lg label-inline text-dark-50">{{ ticket.assigned_to }}</span>
+                                                        {% else %}
+                                                            <span class="font-weight-bold text-nowrap text-uppercase label label-secondary label-lg label-inline text-dark-50">NO ASIGNADO</span>
+                                                        {% endif %}
                                                     </td>
                                                     <td>
                                                         <span class="font-weight-bold text-nowrap text-uppercase">
@@ -385,7 +387,9 @@
 {% endblock template_page_js %}
 <!-- --- -->
 
-
+<select id="assignedToSelect">
+    <option value="userId">userFullName</option>
+</select>
 
 {% block custom_scripts %}
 <script>
@@ -398,6 +402,12 @@
                 { "width": "15%" },
                 { "width": "10%" },
                 { "width": "9%" },
+            ],
+            "columnDefs": [
+                {
+                    "targets": [ 4 ],
+                    "visible": false,
+                },
             ],
             "dom": 
                 "<'row' " +
@@ -481,6 +491,24 @@
 
         $('.subheader').remove();
     });
+</script>
+
+{{ project.id|json_script:"projectId" }}
+<script>
+    function loadProjectMembers(){
+        const projectId = JSON.parse(document.getElementById('projectId').textContent);
+        $.ajax({
+            url: "/api/projects/"+ projectId +"/team-members",
+            success: function(data){
+                console.log(data);
+                list = $("#membersList");
+                list.empty();
+                for(var i = 0; i < data.length; i++){
+                    list.append('<button onclick="assignNewMember()" class="dropdown-item" data-id="'+ data[i].id +'">'+ data[i].name +'</button>');
+                }
+            }
+        });
+    }
 </script>
 {% endblock custom_scripts %}
 

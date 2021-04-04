@@ -252,7 +252,7 @@ def ticketsCreate(request, projectId):
             # TODO: Fix redirect and show message
             return redirect('projects-detail', projectId = projectId)
 
-    form = CreateTicketForm()
+    form = CreateTicketForm(project=project)
 
     context = {
         'title': 'Crear nuevo ticket',

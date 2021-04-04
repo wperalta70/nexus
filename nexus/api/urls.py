@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('projects/<int:projectId>/team', views.project_team, name="project-team"),
+    path('projects/<int:projectId>/team-members', views.project_team_members, name="team-members"),
     path('tickets/<int:ticketId>/assign', views.assign_ticket, name="assign-ticket")
 ]
 

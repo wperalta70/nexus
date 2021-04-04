@@ -117,6 +117,11 @@ class UserModelChoiceField(forms.ModelChoiceField):
         return obj.get_full_name()
 
 class CreateTicketForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        project = kwargs.pop('project')
+        super(CreateTicketForm, self).__init__(*args, **kwargs)
+        self.fields['assigned_to'].queryset = project.team_members.all()
+
     PRIORITY_CHOICES = (
         ('BAJA', 'BAJA'),
         ('MEDIA', 'MEDIA'),
@@ -155,8 +160,8 @@ class CreateTicketForm(forms.ModelForm):
 
     assigned_to = UserModelChoiceField(
         label = 'Asignar a: ',
-        queryset = User.objects.all(), # TODO: Change this to only show users that are assigned to this project
-        empty_label = 'Seleccione un usuario...',
+        empty_label = 'No asignado',
+        queryset = None,
         required = False
     )
 
