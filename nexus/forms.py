@@ -170,6 +170,11 @@ class CreateTicketForm(forms.ModelForm):
         fields = ['title', 'description', 'priority', 'type', 'assigned_to']
 
 class UpdateTicketForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        project = kwargs.pop('project')
+        super(UpdateTicketForm, self).__init__(*args, **kwargs)
+        self.fields['assigned_to'].queryset = project.team_members.all()
+
     PRIORITY_CHOICES = (
         ('BAJA', 'BAJA'),
         ('MEDIA', 'MEDIA'),
@@ -218,9 +223,16 @@ class UpdateTicketForm(forms.ModelForm):
         choices = TYPE_CHOICES
     )
 
+    assigned_to = UserModelChoiceField(
+        label = 'Asignado a: ',
+        empty_label = 'No asignado',
+        queryset = None,
+        required = False
+    )
+
     class Meta:
         model = Ticket
-        fields = ['title', 'description', 'priority', 'status', 'type']
+        fields = ['title', 'description', 'priority', 'status', 'type', 'assigned_to']
 
 ### TICKET FORMS ###
 

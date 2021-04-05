@@ -14,12 +14,16 @@ from .serializers import *
 @api_view(['POST'])
 def assign_ticket(request, ticketId):
     """
-        This view 
+        Receives:   ´ticketId´ (url parameter), ´id´ and ´name´ (request body)
+        Does:       assigns the ticket to this new user
     """
 
-    ticket = Ticket.objects.get(id = ticketId)
+    userId = request.POST.get('userId')
 
-    ticket.assigned_to = request.POST.get('userId')
+    ticket = Ticket.objects.get(id = ticketId)
+    user = User.objects.get(id = userId)
+
+    ticket.assigned_to = user
     ticket.save()
 
     return Response(status = status.HTTP_200_OK)
@@ -28,10 +32,10 @@ def assign_ticket(request, ticketId):
 def project_team_members(request, projectId):
     """
         GET:
-            Receives:   projectId(url)
+            Receives:   projectId(url parameter)
             Does:       returns a list of the project's team members
-        GET:
-            Receives:   projectId(url), userId(body)
+        POST:
+            Receives:   projectId(url parameter), userId(request body)
             Does:       adds a user as a new team member
     """
     

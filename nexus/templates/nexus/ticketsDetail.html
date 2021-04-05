@@ -236,12 +236,16 @@
                             </div>
                             <div class="font-weight-bolder">
                                 <div class="text-muted">Asignado a:</div>
-                                {% if ticket.assigned_to == None %}
-                                <div class="text-dark-75 text-hover-primary">No asignado</div>
-                                {% else %}
-                                    <!-- TODO: Change to ticket.assigned_to -->
-                                    <div class="text-dark-75 text-hover-primary">{{ ticket.user }}</div>
-                                {% endif %}
+                                <div class="dropdown">
+                                    <button id="assignTicketButton" class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {% if ticket.assigned_to %}
+                                            {{ ticket.assigned_to.get_full_name|truncatechars:16 }}
+                                        {% else %}
+                                            No asignado
+                                        {% endif %}
+                                    </button>
+                                    <div id="membersList" class="dropdown-menu" aria-labelledby="dropdownMenuButton"></div>
+                                </div>
                             </div>
                         </div>
                         <!-- End:: Item -->
@@ -671,73 +675,131 @@
 
 
 {% block custom_scripts %}
-    <script>
-        /* Script for delete comment modal */
-        $(document).on("click", "#commentDeleteButton", function() {
-            // When "deleteCommentButton" is clicked, the "deleteComment" modal will be opened,
-            // and all of the data within the specific "deleteCommentButton" that is pressed
-            // will be transferred into the modal to display to the user.
+<script>
+    /* Script for delete comment modal */
+    $(document).on("click", "#commentDeleteButton", function() {
+        // When "deleteCommentButton" is clicked, the "deleteComment" modal will be opened,
+        // and all of the data within the specific "deleteCommentButton" that is pressed
+        // will be transferred into the modal to display to the user.
 
-            var commentId = $(this).data('commentid');
-            var user = $(this).data('user');
-            var userimage = $(this).data('userimage');
-            var datelong = $(this).data('datelong');
-            var datenatural = $(this).data('datenatural');
-            var comment = $(this).data('comment');
+        var commentId = $(this).data('commentid');
+        var user = $(this).data('user');
+        var userimage = $(this).data('userimage');
+        var datelong = $(this).data('datelong');
+        var datenatural = $(this).data('datenatural');
+        var comment = $(this).data('comment');
 
-            $('#commentDeleteModal #commentId').val(commentId);
-            $('#commentDeleteModal #user').text(user);
-            $('#commentDeleteModal #userImage').attr("src", userimage);
-            $('#commentDeleteModal #datecreated').attr("data-original-title", datelong);
-            $('#commentDeleteModal #datecreated').text(datenatural);
-            $('#commentDeleteModal #comment').text(comment);
+        $('#commentDeleteModal #commentId').val(commentId);
+        $('#commentDeleteModal #user').text(user);
+        $('#commentDeleteModal #userImage').attr("src", userimage);
+        $('#commentDeleteModal #datecreated').attr("data-original-title", datelong);
+        $('#commentDeleteModal #datecreated').text(datenatural);
+        $('#commentDeleteModal #comment').text(comment);
+    });
+
+    /* Script for delete file modal */
+    $(document).on("click", "#fileDeleteButton", function() {
+        var fileId = $(this).data('fileid');
+        var title = $(this).data('title');
+        var filename = $(this).data('filename');
+        var extension = $(this).data('extension');
+
+        var logoSrc = "/static/assets/media/svg/files/"+ extension +".svg"
+
+        $('#fileDeleteModal #fileId').val(fileId);
+        $('#fileDeleteModal #logo').attr("src", logoSrc);
+        $('#fileDeleteModal #title').text(title);
+        $('#fileDeleteModal #filename').text(filename);
+    });
+
+    /* Script for file details modal */
+    $(document).on("click", "#fileDetailsButton", function() {
+        var title = $(this).data('title');
+        var filename = $(this).data('filename');
+        var user = $(this).data('user');
+        var extension = $(this).data('extension');
+        var date = $(this).data('date');
+        var url = $(this).data('url');
+
+        var logoSrc = "/static/assets/media/svg/files/"+ extension +".svg"
+
+        $('#fileDetailsModal #txtTitle').val(title);
+        $('#fileDetailsModal #txtFilename').val(filename);
+        $('#fileDetailsModal #user').text(user);
+        $('#fileDetailsModal #logo').attr("src", logoSrc);
+        $('#fileDetailsModal #title').text(title);
+        $('#fileDetailsModal #filename').text(filename);
+        $('#fileDetailsModal #date').text(date);
+        $('#fileDetailsModal #download').attr("href", url);
+    });
+</script>
+
+<script>
+    // Script para mostrar el nombre del archivo en el file input field
+    $(document).ready(function () {
+        $('.custom-file-input').on('change', function() { 
+            let fileName = $(this).val().split('\\').pop(); 
+            $(this).next('.custom-file-label').addClass("selected").html(fileName); 
         });
+    });
+</script>
 
-        /* Script for delete file modal */
-        $(document).on("click", "#fileDeleteButton", function() {
-            var fileId = $(this).data('fileid');
-            var title = $(this).data('title');
-            var filename = $(this).data('filename');
-            var extension = $(this).data('extension');
+{{ project.id|json_script:"projectId" }}
+{{ ticket.id|json_script:"ticketId" }}
+<script>
+    $(document).ready(function () {
+        loadProjectMembers();
+    });
 
-            var logoSrc = "/static/assets/media/svg/files/"+ extension +".svg"
+    function loadProjectMembers(){
+        const projectId = JSON.parse(document.getElementById('projectId').textContent);
 
-            $('#fileDeleteModal #fileId').val(fileId);
-            $('#fileDeleteModal #logo').attr("src", logoSrc);
-            $('#fileDeleteModal #title').text(title);
-            $('#fileDeleteModal #filename').text(filename);
+        $.ajax({
+            url: "/api/projects/"+ projectId +"/team-members",
+            success: function(data){
+                console.log(data);
+                list = $("#membersList");
+                list.empty();
+                for(var i = 0; i < data.length; i++){
+                    data[i].name = shortenName(data[i].name, 15);
+
+                    list.append('<button class="dropdown-item" data-id="'+ data[i].id +'" data-name="'+ data[i].name +'">'+ data[i].name +'</button>');
+                }
+            }
         });
+    }
 
-        /* Script for file details modal */
-        $(document).on("click", "#fileDetailsButton", function() {
-            var title = $(this).data('title');
-            var filename = $(this).data('filename');
-            var user = $(this).data('user');
-            var extension = $(this).data('extension');
-            var date = $(this).data('date');
-            var url = $(this).data('url');
+    $(document).on('click', '#membersList button', function(){
+        const ticketId = JSON.parse(document.getElementById('ticketId').textContent);
 
-            var logoSrc = "/static/assets/media/svg/files/"+ extension +".svg"
+        var userId = $(this).data('id');
+        var name = $(this).data('name');
 
-            $('#fileDetailsModal #txtTitle').val(title);
-            $('#fileDetailsModal #txtFilename').val(filename);
-            $('#fileDetailsModal #user').text(user);
-            $('#fileDetailsModal #logo').attr("src", logoSrc);
-            $('#fileDetailsModal #title').text(title);
-            $('#fileDetailsModal #filename').text(filename);
-            $('#fileDetailsModal #date').text(date);
-            $('#fileDetailsModal #download').attr("href", url);
+        assignTicket(ticketId, userId, name);
+    });
+
+    function assignTicket(ticketId, userId, name){
+        $.ajax({
+            type: "POST",
+            url: "/api/tickets/"+ ticketId +"/assign-ticket",
+            data: {
+                "csrfmiddlewaretoken": '{{ csrf_token }}',
+                "userId": userId
+            },
+            success: function(data){
+                console.log('Ticket assigned successfully');
+                $('#assignTicketButton').html(name);
+            }
         });
-    </script>
+    }
 
-    <script>
-        // Script para mostrar el nombre del archivo en el file input field
-        $(document).ready(function () {
-            $('.custom-file-input').on('change', function() { 
-                let fileName = $(this).val().split('\\').pop(); 
-                $(this).next('.custom-file-label').addClass("selected").html(fileName); 
-            });
-        });
-    </script>
+    function shortenName(name, maxLength = 5){
+        if (name.length > maxLength){
+            name = name.slice(0, maxLength) + '...';
+        }
+
+        return name;
+    }
+</script>
 {% endblock custom_scripts %}
 

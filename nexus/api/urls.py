@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('projects/<int:projectId>/team-members', views.project_team_members, name="team-members"),
-    path('tickets/<int:ticketId>/assign', views.assign_ticket, name="assign-ticket")
+    path('tickets/<int:ticketId>/assign-ticket', views.assign_ticket, name="assign-ticket")
 ]
 
 if settings.DEBUG:

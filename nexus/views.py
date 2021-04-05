@@ -275,10 +275,10 @@ def ticketsUpdate(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
 
-    form = UpdateTicketForm(instance = ticket)
+    form = UpdateTicketForm(instance = ticket, project=project)
 
     if request.method == 'POST':
-        form = UpdateTicketForm(request.POST, instance = ticket)
+        form = UpdateTicketForm(request.POST, instance = ticket, project=project)
 
         if form.is_valid():
             ticket = form.save(commit = False)

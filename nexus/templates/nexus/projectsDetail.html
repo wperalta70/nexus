@@ -492,23 +492,5 @@
         $('.subheader').remove();
     });
 </script>
-
-{{ project.id|json_script:"projectId" }}
-<script>
-    function loadProjectMembers(){
-        const projectId = JSON.parse(document.getElementById('projectId').textContent);
-        $.ajax({
-            url: "/api/projects/"+ projectId +"/team-members",
-            success: function(data){
-                console.log(data);
-                list = $("#membersList");
-                list.empty();
-                for(var i = 0; i < data.length; i++){
-                    list.append('<button onclick="assignNewMember()" class="dropdown-item" data-id="'+ data[i].id +'">'+ data[i].name +'</button>');
-                }
-            }
-        });
-    }
-</script>
 {% endblock custom_scripts %}
 
