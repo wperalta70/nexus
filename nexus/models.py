@@ -27,6 +27,7 @@ class Project(models.Model):
     status = models.CharField(max_length = 14, choices = STATUS_CHOICES)
     date_created = models.DateTimeField(default = timezone.now)
     last_updated = models.DateTimeField(null = True, blank = True)
+    team_members = models.ManyToManyField(User, related_name="team_members")
 
     # Create a slug based on the project's title -> project-name
     slug = models.SlugField(max_length = 30, blank=True)
@@ -48,7 +49,6 @@ class Project(models.Model):
                 img.thumbnail(output_size)
                 img.save(self.image.path)
 
-
 # Tickets
 class Ticket(models.Model):
     PRIORITY_CHOICES = (
@@ -59,7 +59,6 @@ class Ticket(models.Model):
 
     STATUS_CHOICES = (
         ('NUEVO', 'NUEVO'),
-        ('ASIGNADO', 'ASIGNADO'),
         ('EN DESARROLLO', 'EN DESARROLLO'),
         ('CERRADO', 'CERRADO'),
     )

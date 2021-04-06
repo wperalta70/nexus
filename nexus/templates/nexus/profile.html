@@ -4,9 +4,30 @@
 {% load crispy_forms_tags %}
 <!-- --- -->
 {% block template_vendors_css %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/b-1.6.5/b-html5-1.6.5/datatables.min.css"/>
 {% endblock template_vendors_css %}
 
 {% block template_layout_css %}
+<style>
+    .priority{
+        margin-top: 6px;
+        margin-bottom: 6px;
+        padding-left: 0px;
+    }
+
+    .status{
+        margin-top: 6px;
+        margin-bottom: 6px;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    @media(max-width: 768px){
+        .priority{
+            padding-right: 0px;
+        }
+    }
+</style>
 {% endblock template_layout_css %}
 <!-- --- -->
 
@@ -41,25 +62,28 @@
 {% block content %}
     <div class="container">
         <div class="d-flex flex-column flex-lg-row">
-            <div class="flex-row bg-danger w-xl-350px mr-5">
+            <div class="flex-row w-lg-350px mr-5">
                 <!--begin::Card-->
                 <div class="card card-custom gutter-b">
                     <!--begin::Body-->
                     <div class="card-body pt-4">
                         <!--begin::User-->
-                        <div class="d-flex align-items-center pt-5">
+                        <div class="d-flex align-items-start pt-5">
                             <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                                <div class="symbol-label" style="background-image:url('/static/assets/media/users/300_13.jpg')">
-                                </div>
+                                {% if user.profile.image %}
+                                    <div class="symbol-label">
+                                        <img src="{{ user.profile.image.url }}" alt="User profile image" class="w-100 h-100" style="border-radius: 0.42rem;">
+                                    </div>
+                                {% else %}
+                                    <div class="symbol-label bg-primary-o-50">
+                                        <span class="symbol-label font-size-h1 font-weight-bolder text-dark bg-white-o-80">WP</span>
+                                    </div>
+                                {% endif %}
                                 <i class="symbol-badge bg-success"></i>
                             </div>
-                            <div>
+                            <div class="mt-2 mt-md-5">
                                 <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ user.get_full_name }}</a>
                                 <div class="text-muted">{{ user.groups.first }}</div>
-                                <div class="mt-2">
-                                    <a href="#" class="btn btn-sm btn-primary font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1">Chat</a>
-                                    <a href="#" class="btn btn-sm btn-success font-weight-bold py-2 px-3 px-xxl-5 my-1">Follow</a>
-                                </div>
                             </div>
                         </div>
                         <!--end::User-->
@@ -67,30 +91,221 @@
                         <div class="pt-8 pb-6">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <span class="font-weight-bold mr-2">Email:</span>
-                                <a href="#" class="text-muted text-hover-primary">matt@fifestudios.com</a>
+                                <a href="#" class="text-muted text-hover-primary">{{ user.email }}</a>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-2">
-                                <span class="font-weight-bold mr-2">Phone:</span>
-                                <span class="text-muted">44(76)34254578</span>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <span class="font-weight-bold mr-2">Location:</span>
-                                <span class="text-muted">Melbourne</span>
+                                <span class="font-weight-bold mr-2">Fecha de ingreso:</span>
+                                <span class="text-muted">{{ user.date_joined|date:"d \d\e F, Y" }}</span>
                             </div>
                         </div>
                         <!--end::Contact-->
-                        <!--begin::Contact-->
-                        <div class="pb-6">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical.</div>
-                        <!--end::Contact-->
-                        <a href="#" class="btn btn-light-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Profile Overview</a>
+                        <a href="{% url 'profile' user.id %}" class="btn btn-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Vista general</a>
+                        {% if user.id == request.user.id %}
+                            <a href="{% url 'profile-details' user.id %}" class="btn btn-outline-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Información personal</a>
+                            <!-- TODO: Change HREF -->
+                            <a href="#" class="btn btn-outline-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Cambiar contraseña</a>
+                        {% endif %}
                     </div>
                     <!--end::Body-->
                 </div>
                 <!--end::Card-->
             </div>
-            <div class="flex-row-fluid bg-warning">
-                <div class="">test2</div>
-                <div class="">test3</div>
+            <div class="flex-row-fluid">
+                <div class="row mb-5">
+                    <div class="col-xl-4">
+                        <div class="card card-custom wave wave-animate-slow wave-primary mb-8 mb-lg-0">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center align-items-center p-0">
+                                    <div class="mr-6">
+                                        <span class="svg-icon svg-icon-primary svg-icon-4x">
+                                            <!--begin::Svg Icon | path:/metronic/theme/html/demo7/dist/assets/media/svg/icons/Home/Mirror.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <path d="M13,17.0484323 L13,18 L14,18 C15.1045695,18 16,18.8954305 16,20 L8,20 C8,18.8954305 8.8954305,18 10,18 L11,18 L11,17.0482312 C6.89844817,16.5925472 3.58685702,13.3691811 3.07555009,9.22038742 C3.00799634,8.67224972 3.3975866,8.17313318 3.94572429,8.10557943 C4.49386199,8.03802567 4.99297853,8.42761593 5.06053229,8.97575363 C5.4896663,12.4577884 8.46049164,15.1035129 12.0008191,15.1035129 C15.577644,15.1035129 18.5681939,12.4043008 18.9524872,8.87772126 C19.0123158,8.32868667 19.505897,7.93210686 20.0549316,7.99193546 C20.6039661,8.05176407 21.000546,8.54534521 20.9407173,9.09437981 C20.4824216,13.3000638 17.1471597,16.5885839 13,17.0484323 Z" fill="#000000" fill-rule="nonzero"></path>
+                                                    <path d="M12,14 C8.6862915,14 6,11.3137085 6,8 C6,4.6862915 8.6862915,2 12,2 C15.3137085,2 18,4.6862915 18,8 C18,11.3137085 15.3137085,14 12,14 Z M8.81595773,7.80077353 C8.79067542,7.43921955 8.47708263,7.16661749 8.11552864,7.19189981 C7.75397465,7.21718213 7.4813726,7.53077492 7.50665492,7.89232891 C7.62279197,9.55316612 8.39667037,10.8635466 9.79502238,11.7671393 C10.099435,11.9638458 10.5056723,11.8765328 10.7023788,11.5721203 C10.8990854,11.2677077 10.8117724,10.8614704 10.5073598,10.6647638 C9.4559885,9.98538454 8.90327706,9.04949813 8.81595773,7.80077353 Z" fill="#000000" opacity="0.3"></path>
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                            Proyectos
+                                        </a>
+                                        <div class="text-center text-dark text-hover-primary font-weight-bolder font-size-h1">
+                                            {{ projectCount }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="card card-shadow card-custom wave wave-animate-slow wave-warning mb-8 mb-lg-0">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center p-0">
+                                    <div class="mr-6">
+                                        <span class="svg-icon svg-icon-warning svg-icon-4x">
+                                            <!--begin::Svg Icon | path:/metronic/theme/html/demo7/dist/assets/media/svg/icons/Home/Mirror.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <path d="M13,17.0484323 L13,18 L14,18 C15.1045695,18 16,18.8954305 16,20 L8,20 C8,18.8954305 8.8954305,18 10,18 L11,18 L11,17.0482312 C6.89844817,16.5925472 3.58685702,13.3691811 3.07555009,9.22038742 C3.00799634,8.67224972 3.3975866,8.17313318 3.94572429,8.10557943 C4.49386199,8.03802567 4.99297853,8.42761593 5.06053229,8.97575363 C5.4896663,12.4577884 8.46049164,15.1035129 12.0008191,15.1035129 C15.577644,15.1035129 18.5681939,12.4043008 18.9524872,8.87772126 C19.0123158,8.32868667 19.505897,7.93210686 20.0549316,7.99193546 C20.6039661,8.05176407 21.000546,8.54534521 20.9407173,9.09437981 C20.4824216,13.3000638 17.1471597,16.5885839 13,17.0484323 Z" fill="#000000" fill-rule="nonzero"></path>
+                                                    <path d="M12,14 C8.6862915,14 6,11.3137085 6,8 C6,4.6862915 8.6862915,2 12,2 C15.3137085,2 18,4.6862915 18,8 C18,11.3137085 15.3137085,14 12,14 Z M8.81595773,7.80077353 C8.79067542,7.43921955 8.47708263,7.16661749 8.11552864,7.19189981 C7.75397465,7.21718213 7.4813726,7.53077492 7.50665492,7.89232891 C7.62279197,9.55316612 8.39667037,10.8635466 9.79502238,11.7671393 C10.099435,11.9638458 10.5056723,11.8765328 10.7023788,11.5721203 C10.8990854,11.2677077 10.8117724,10.8614704 10.5073598,10.6647638 C9.4559885,9.98538454 8.90327706,9.04949813 8.81595773,7.80077353 Z" fill="#000000" opacity="0.3"></path>
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                            Tickets cerrados
+                                        </a>
+                                        <div class="text-center text-dark text-hover-primary font-weight-bolder font-size-h1">
+                                            {{ ticketCount }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="card card-custom wave wave-animate-slow wave-info mb-8 mb-lg-0">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center p-0">
+                                    <div class="mr-6">
+                                        <span class="svg-icon svg-icon-info svg-icon-4x">
+                                            <!--begin::Svg Icon | path:/metronic/theme/html/demo7/dist/assets/media/svg/icons/Home/Mirror.svg-->
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                                    <path d="M13,17.0484323 L13,18 L14,18 C15.1045695,18 16,18.8954305 16,20 L8,20 C8,18.8954305 8.8954305,18 10,18 L11,18 L11,17.0482312 C6.89844817,16.5925472 3.58685702,13.3691811 3.07555009,9.22038742 C3.00799634,8.67224972 3.3975866,8.17313318 3.94572429,8.10557943 C4.49386199,8.03802567 4.99297853,8.42761593 5.06053229,8.97575363 C5.4896663,12.4577884 8.46049164,15.1035129 12.0008191,15.1035129 C15.577644,15.1035129 18.5681939,12.4043008 18.9524872,8.87772126 C19.0123158,8.32868667 19.505897,7.93210686 20.0549316,7.99193546 C20.6039661,8.05176407 21.000546,8.54534521 20.9407173,9.09437981 C20.4824216,13.3000638 17.1471597,16.5885839 13,17.0484323 Z" fill="#000000" fill-rule="nonzero"></path>
+                                                    <path d="M12,14 C8.6862915,14 6,11.3137085 6,8 C6,4.6862915 8.6862915,2 12,2 C15.3137085,2 18,4.6862915 18,8 C18,11.3137085 15.3137085,14 12,14 Z M8.81595773,7.80077353 C8.79067542,7.43921955 8.47708263,7.16661749 8.11552864,7.19189981 C7.75397465,7.21718213 7.4813726,7.53077492 7.50665492,7.89232891 C7.62279197,9.55316612 8.39667037,10.8635466 9.79502238,11.7671393 C10.099435,11.9638458 10.5056723,11.8765328 10.7023788,11.5721203 C10.8990854,11.2677077 10.8117724,10.8614704 10.5073598,10.6647638 C9.4559885,9.98538454 8.90327706,9.04949813 8.81595773,7.80077353 Z" fill="#000000" opacity="0.3"></path>
+                                                </g>
+                                            </svg>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                            Comentarios
+                                        </a>
+                                        <div class="text-center text-dark text-hover-primary font-weight-bolder font-size-h1">
+                                            {{ commentCount }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12" id="projects-container">
+                        <div class="card card-custom gutter-b">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h1 class="text-dark m-0">Proyectos</h1>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% for project in projects %}
+                                    <div class="d-flex mb-5" id="project">
+                                        <div class="logo symbol symbol-60 symbol-2by3 mr-4">
+                                            <div class="symbol-label">
+                                                <img src="{{ project.image.url }}" class="w-100 h-100" style="border-radius: 0.5rem;">
+                                            </div>
+                                        </div>
+                                        <div class="titles d-flex flex-column flex-grow-1 justify-content-center">
+                                            <span class="font-size-h3 font-weight-bolder">{{ project.title }}</span>
+                                            <span class="font-weight-bolder text-muted">{{ project.short_description }}</span>
+                                        </div>
+                                        <div class="tickets d-flex align-items-center mr-5">
+                                            <span class="text-muted font-weight-bolder font-size-sm mr-2">TICKETS ABIERTOS:</span>
+                                            <span class="text-dark-75 font-weight-bolder">{{ project.tickets.count }}</span>
+                                            <a href="{% url 'projects-detail' project.id %}" class="ml-3 button btn btn-icon btn-light btn-sm">
+                                                <span class="svg-icon svg-icon-success">
+                                                    <span class="svg-icon svg-icon-md">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                                <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)" x="11" y="5" width="2" height="14" rx="1"></rect>
+                                                                <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)"></path>
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-custom gutter-b">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h1 class="text-dark m-0">Tickets</h1>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="ticketsTable" class="custom-datatable table table-hover">
+                                        <thead class="text-nowrap">
+                                            <tr class="">
+                                                <th><span>#</span></th>
+                                                <th><span>Título</span></th>
+                                                <th><span>Prioridad</span></th>
+                                                <th><span>Estado</span></th>
+                                                <th><span>Acciones</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for ticket in tickets %}
+                                                <tr>
+                                                    <td><span>{{ ticket.id }}</span></td>
+                                                    <td><span>{{ ticket.title }}</span></td>
+                                                    <td>
+                                                        <span>
+                                                            {% if ticket.priority == 'ALTA' %}
+                                                                <span class="label label-lg font-weight-bold  label-light-danger label-inline text-nowrap text-uppercase">
+                                                                    {{ ticket.priority }}
+                                                                </span>
+                                                            {% elif ticket.priority == 'MEDIA' %}
+                                                                <span class="label label-lg font-weight-bold  label-light-warning label-inline text-nowrap text-uppercase">
+                                                                    {{ ticket.priority }}
+                                                                </span>
+                                                            {% elif ticket.priority == 'BAJA' %}
+                                                                <span class="label label-lg font-weight-bold  label-light-primary label-inline text-nowrap text-uppercase">
+                                                                    {{ ticket.priority }}
+                                                                </span>
+                                                            {% endif %}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="font-weight-bold text-nowrap text-uppercase">
+                                                            {{ ticket.status }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            <a href="{% url 'tickets-detail' ticket.project.id ticket.id %}" class="btn btn-primary btn-sm font-weight-bold text-uppercase">
+                                                                Seleccionar
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -102,11 +317,86 @@
 {% endblock template_vendor_js %}
 
 {% block template_page_js %}
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/b-1.6.5/b-html5-1.6.5/datatables.min.js"></script>
 {% endblock template_page_js %}
 <!-- --- -->
 
 
 
 {% block custom_scripts %}
+<script>
+    $(document).ready(function () {
+        var ticketsTable = $('#ticketsTable').DataTable({
+            "columns": [
+                { "width": "1%" },
+                { "width": "70%" },
+                { "width": "10%" },
+                { "width": "10%" },
+                { "width": "9%" },
+            ],
+            "dom": 
+                "<'row' " +
+                    "<'col-sm-12 col-md-6'l>" +
+                    "<'col-sm-12 col-md-6'f>" +
+                ">" +
+                "<'row' " +
+                    "<'customFilters col-sm-12 col-md-12' <'row' <'col-md-6 priority'><'col-md-6 status'> >>" +
+                ">" +
+                "<'row' " +
+                    "<'col-sm-12'tr>" + 
+                ">" +
+                "<'row' " +
+                    "<'col-sm-12 col-md-5'i>" +
+                    "<'col-sm-12 col-md-7'p>" +
+                ">"
+            ,
+        });
+
+        $("div.customFilters .priority").append(
+            '<div class="d-flex align-items-center">'+
+                '<span class="mr-3">Prioridad:</span>'+
+                '<select class="form-control form-control-sm" id="selectPriority">'+
+                    '<option value="TODAS">TODAS</option>'+
+                    '<option value="BAJA">BAJA</option>'+
+                    '<option value="MEDIA">MEDIA</option>'+
+                    '<option value="ALTA">ALTA</option>'+
+                '</select>'+
+            '</div>'
+        );
+
+        $("div.customFilters .status").append(
+            '<div class="d-flex align-items-center">'+
+                '<span class="mr-3">Estado:</span>'+
+                '<select class="form-control form-control-sm" id="selectStatus">'+
+                    '<option value="TODOS">TODOS</option>'+
+                    '<option value="NUEVO">NUEVO</option>'+
+                    '<option value="ASIGNADO">ASIGNADO</option>'+
+                    '<option value="EN DESARROLLO">EN DESARROLLO</option>'+
+                    '<option value="CERRADO">CERRADO</option>'+
+                '</select>'+
+            '</div>'
+        );
+
+        $('#selectPriority').on('change', function() {
+            var priority = $(this).val();
+            if(priority == 'TODAS'){
+                ticketsTable.column(2).search('').draw();
+            }else{
+                ticketsTable.column(2).search(priority).draw();
+            }
+        });
+
+        $('#selectStatus').on('change', function() {
+            var status = $(this).val();
+            if(status == 'TODOS'){
+                ticketsTable.column(3).search('').draw();
+            }else{
+                ticketsTable.column(3).search(status).draw();
+            }
+        });
+
+        $('.subheader').remove();
+    });
+</script>
 {% endblock custom_scripts %}
 

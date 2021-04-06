@@ -242,7 +242,7 @@ def ticketsCreate(request, projectId):
     project = Project.objects.get(id = projectId)
 
     if request.method == 'POST':
-        form = CreateTicketForm(request.POST)
+        form = CreateTicketForm(request.POST, project=project)
 
         if form.is_valid():
             ticket = form.save(commit = False)
@@ -252,7 +252,7 @@ def ticketsCreate(request, projectId):
             # TODO: Fix redirect and show message
             return redirect('projects-detail', projectId = projectId)
 
-    form = CreateTicketForm()
+    form = CreateTicketForm(project=project)
 
     context = {
         'title': 'Crear nuevo ticket',
@@ -275,10 +275,10 @@ def ticketsUpdate(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
 
-    form = UpdateTicketForm(instance = ticket)
+    form = UpdateTicketForm(instance = ticket, project=project)
 
     if request.method == 'POST':
-        form = UpdateTicketForm(request.POST, instance = ticket)
+        form = UpdateTicketForm(request.POST, instance = ticket, project=project)
 
         if form.is_valid():
             ticket = form.save(commit = False)
@@ -486,31 +486,55 @@ def profile(request, userId = None):
         userId = request.user.id
 
     user = User.objects.get(id = userId)
+    projects = user.projects.all()
+    tickets = user.tickets.all() # TODO: Cambiar por: Ticket.objects.filter(assigned_to=user)
+    comments = user.comments.all()
 
     context = {
         'title': f'Perfil de {user.get_full_name()}',
         'breadcrumbs': {
             'Inicio': '/',
-            'Mi perfil': '#',
+            f'Perfil de {user.get_full_name()}': '#',
         },
         'tab': 'proyectos',
-        'user': user
+        'user': user,
+        'projects': projects,
+        'tickets': tickets,
+        'comments': comments,
+        'projectCount': projects.count,
+        'ticketCount': user.tickets.filter(status="CERRADO").count,
+        'commentCount': comments.count
     }
     return render(request, 'nexus/profile.html', context)
 
 @login_required(login_url='login')
-def profileOld(request):
-    userId = request.user.id
+def profileDetails(request, userId):
+    if userId != request.user.id:
+        redirect('profile')
 
-    user = User.objects.get(id = userId)
+    user = User.objects.get(id = request.user.id)
+
+    userDetailsForm = UpdateUserDetailsForm(instance = user)
+    userProfileForm = UpdateProfileForm(instance = user.profile)
+
+    if request.method == 'POST':
+        userDetailsForm = UpdateUserDetailsForm(request.POST, instance = user)
+        userProfileForm = UpdateProfileForm(request.POST, request.FILES, instance = user.profile)
+        if userDetailsForm.is_valid() and userProfileForm.is_valid():
+            userDetailsForm.save()
+            userProfileForm.save()
+            messages.success(request, f'Se han actualizado los datos de su perfil.')
+            return redirect('profile-details', user.id)
 
     context = {
-        'title': f'Perfil de {user.get_full_name()}',
+        'title': f'Información de {user.get_full_name()}',
         'breadcrumbs': {
             'Inicio': '/',
-            'Mi perfil': '#',
+            f'Perfil de {user.get_full_name()}': f'/profile/{user.id}',
         },
         'tab': 'proyectos',
-        'user': user
+        'user': user,
+        'userDetailsForm': userDetailsForm,
+        'userProfileForm': userProfileForm
     }
-    return render(request, 'nexus/profile2.html', context)
+    return render(request, 'nexus/profileDetails.html', context)

@@ -161,10 +161,7 @@
                                 <i class="fa fa-exclamation text-white"></i>
                             </div>
                         {% endif %}
-                        <h3 class="text-center">Información del ticket</h3>
-                        <div class="d-flex justify-content-center mb-5">
-                            <a href="#" class="btn btn-sm btn-outline-primary font-weight-bolder px-10 py-3">Modificar Ticket</a>
-                        </div>
+                        <h3 class="text-center mb-5">Información del ticket</h3>
                         <!-- Start:: Item -->
                         <div class="d-flex align-items-center mb-4">
                             <div class="symbol symbol-50 symbol-light mr-4">
@@ -184,13 +181,24 @@
                             </div>
                             <div class="">
                                 <div class="text-muted font-weight-bolder">Prioridad:</div>
-                                {% if ticket.priority == 'ALTA' %}
+                                <!-- {% if ticket.priority == 'ALTA' %}
                                     <span class="label label-lg label-danger label-inline font-weight-bolder py-3 px-3">{{ ticket.priority }}</span>
                                 {% elif ticket.priority == 'MEDIA'  %}
                                     <span class="label label-lg label-warning label-inline font-weight-bolder py-3 px-3">{{ ticket.priority }}</span>
                                 {% elif ticket.priority == 'BAJA' %}
                                     <span class="label label-lg label-primary label-inline font-weight-bolder py-3 px-3">{{ ticket.priority }}</span>
-                                {% endif %}
+                                {% endif %} -->
+
+                                
+
+                                <button id="changePriorityButton" class="btn btn-sm btn-{{ ticket.priority|get_priority_color }} dropdown-toggle text-uppercase font-weight-bolder" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ ticket.priority }}
+                                </button>
+                                <div id="priorityList" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <button class="dropdown-item text-danger font-weight-bolder" data-priority="ALTA">ALTA</button>
+                                    <button class="dropdown-item text-warning font-weight-bolder" data-priority="MEDIA">MEDIA</button>
+                                    <button class="dropdown-item text-primary font-weight-bolder" data-priority="BAJA">BAJA</button>
+                                </div>
                             </div>
                         </div>
                         <!-- End:: Item -->
@@ -236,12 +244,16 @@
                             </div>
                             <div class="font-weight-bolder">
                                 <div class="text-muted">Asignado a:</div>
-                                {% if ticket.assigned_to == None %}
-                                <div class="text-dark-75 text-hover-primary">No asignado</div>
-                                {% else %}
-                                    <!-- TODO: Change to ticket.assigned_to -->
-                                    <div class="text-dark-75 text-hover-primary">{{ ticket.user }}</div>
-                                {% endif %}
+                                <div class="dropdown">
+                                    <button id="assignTicketButton" class="btn btn-sm btn-secondary dropdown-toggle text-uppercase font-weight-bolder text-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {% if ticket.assigned_to %}
+                                            {{ ticket.assigned_to.get_full_name|truncatechars:16 }}
+                                        {% else %}
+                                            No asignado
+                                        {% endif %}
+                                    </button>
+                                    <div id="membersList" class="dropdown-menu" aria-labelledby="dropdownMenuButton"></div>
+                                </div>
                             </div>
                         </div>
                         <!-- End:: Item -->
@@ -671,73 +683,176 @@
 
 
 {% block custom_scripts %}
-    <script>
-        /* Script for delete comment modal */
-        $(document).on("click", "#commentDeleteButton", function() {
-            // When "deleteCommentButton" is clicked, the "deleteComment" modal will be opened,
-            // and all of the data within the specific "deleteCommentButton" that is pressed
-            // will be transferred into the modal to display to the user.
+<script>
+    /* Script for delete comment modal */
+    $(document).on("click", "#commentDeleteButton", function() {
+        // When "deleteCommentButton" is clicked, the "deleteComment" modal will be opened,
+        // and all of the data within the specific "deleteCommentButton" that is pressed
+        // will be transferred into the modal to display to the user.
 
-            var commentId = $(this).data('commentid');
-            var user = $(this).data('user');
-            var userimage = $(this).data('userimage');
-            var datelong = $(this).data('datelong');
-            var datenatural = $(this).data('datenatural');
-            var comment = $(this).data('comment');
+        var commentId = $(this).data('commentid');
+        var user = $(this).data('user');
+        var userimage = $(this).data('userimage');
+        var datelong = $(this).data('datelong');
+        var datenatural = $(this).data('datenatural');
+        var comment = $(this).data('comment');
 
-            $('#commentDeleteModal #commentId').val(commentId);
-            $('#commentDeleteModal #user').text(user);
-            $('#commentDeleteModal #userImage').attr("src", userimage);
-            $('#commentDeleteModal #datecreated').attr("data-original-title", datelong);
-            $('#commentDeleteModal #datecreated').text(datenatural);
-            $('#commentDeleteModal #comment').text(comment);
+        $('#commentDeleteModal #commentId').val(commentId);
+        $('#commentDeleteModal #user').text(user);
+        $('#commentDeleteModal #userImage').attr("src", userimage);
+        $('#commentDeleteModal #datecreated').attr("data-original-title", datelong);
+        $('#commentDeleteModal #datecreated').text(datenatural);
+        $('#commentDeleteModal #comment').text(comment);
+    });
+
+    /* Script for delete file modal */
+    $(document).on("click", "#fileDeleteButton", function() {
+        var fileId = $(this).data('fileid');
+        var title = $(this).data('title');
+        var filename = $(this).data('filename');
+        var extension = $(this).data('extension');
+
+        var logoSrc = "/static/assets/media/svg/files/"+ extension +".svg"
+
+        $('#fileDeleteModal #fileId').val(fileId);
+        $('#fileDeleteModal #logo').attr("src", logoSrc);
+        $('#fileDeleteModal #title').text(title);
+        $('#fileDeleteModal #filename').text(filename);
+    });
+
+    /* Script for file details modal */
+    $(document).on("click", "#fileDetailsButton", function() {
+        var title = $(this).data('title');
+        var filename = $(this).data('filename');
+        var user = $(this).data('user');
+        var extension = $(this).data('extension');
+        var date = $(this).data('date');
+        var url = $(this).data('url');
+
+        var logoSrc = "/static/assets/media/svg/files/"+ extension +".svg"
+
+        $('#fileDetailsModal #txtTitle').val(title);
+        $('#fileDetailsModal #txtFilename').val(filename);
+        $('#fileDetailsModal #user').text(user);
+        $('#fileDetailsModal #logo').attr("src", logoSrc);
+        $('#fileDetailsModal #title').text(title);
+        $('#fileDetailsModal #filename').text(filename);
+        $('#fileDetailsModal #date').text(date);
+        $('#fileDetailsModal #download').attr("href", url);
+    });
+</script>
+
+<script>
+    // Script para mostrar el nombre del archivo en el file input field
+    $(document).ready(function () {
+        $('.custom-file-input').on('change', function() { 
+            let fileName = $(this).val().split('\\').pop(); 
+            $(this).next('.custom-file-label').addClass("selected").html(fileName); 
         });
+    });
+</script>
 
-        /* Script for delete file modal */
-        $(document).on("click", "#fileDeleteButton", function() {
-            var fileId = $(this).data('fileid');
-            var title = $(this).data('title');
-            var filename = $(this).data('filename');
-            var extension = $(this).data('extension');
+{{ project.id|json_script:"projectId" }}
+{{ ticket.id|json_script:"ticketId" }}
+<script>
+    $(document).ready(function () {
+        getProjectMembers();
+    });
 
-            var logoSrc = "/static/assets/media/svg/files/"+ extension +".svg"
+    function getProjectMembers(){
+        const projectId = JSON.parse(document.getElementById('projectId').textContent);
 
-            $('#fileDeleteModal #fileId').val(fileId);
-            $('#fileDeleteModal #logo').attr("src", logoSrc);
-            $('#fileDeleteModal #title').text(title);
-            $('#fileDeleteModal #filename').text(filename);
+        $.ajax({
+            url: "/api/projects/"+ projectId +"/team-members",
+            success: function(data){
+                console.log(data);
+                list = $("#membersList");
+                list.empty();
+                for(var i = 0; i < data.length; i++){
+                    data[i].name = shortenName(data[i].name, 15);
+
+                    list.append('<button class="dropdown-item" data-id="'+ data[i].id +'" data-name="'+ data[i].name +'">'+ data[i].name +'</button>');
+                }
+            }
         });
+    }
 
-        /* Script for file details modal */
-        $(document).on("click", "#fileDetailsButton", function() {
-            var title = $(this).data('title');
-            var filename = $(this).data('filename');
-            var user = $(this).data('user');
-            var extension = $(this).data('extension');
-            var date = $(this).data('date');
-            var url = $(this).data('url');
+    $(document).on('click', '#membersList button', function(){
+        const ticketId = JSON.parse(document.getElementById('ticketId').textContent);
 
-            var logoSrc = "/static/assets/media/svg/files/"+ extension +".svg"
+        var userId = $(this).data('id');
+        var name = $(this).data('name');
 
-            $('#fileDetailsModal #txtTitle').val(title);
-            $('#fileDetailsModal #txtFilename').val(filename);
-            $('#fileDetailsModal #user').text(user);
-            $('#fileDetailsModal #logo').attr("src", logoSrc);
-            $('#fileDetailsModal #title').text(title);
-            $('#fileDetailsModal #filename').text(filename);
-            $('#fileDetailsModal #date').text(date);
-            $('#fileDetailsModal #download').attr("href", url);
+        assignTicket(ticketId, userId, name);
+    });
+
+    function assignTicket(ticketId, userId, name){
+        $.ajax({
+            type: "POST",
+            url: "/api/tickets/"+ ticketId +"/assign-ticket",
+            data: {
+                "csrfmiddlewaretoken": '{{ csrf_token }}',
+                "userId": userId
+            },
+            success: function(data){
+                console.log('Ticket assigned successfully');
+                $('#assignTicketButton').html(name);
+            }
         });
-    </script>
+    }
 
-    <script>
-        // Script para mostrar el nombre del archivo en el file input field
-        $(document).ready(function () {
-            $('.custom-file-input').on('change', function() { 
-                let fileName = $(this).val().split('\\').pop(); 
-                $(this).next('.custom-file-label').addClass("selected").html(fileName); 
-            });
+    function shortenName(name, maxLength = 5){
+        if (name.length > maxLength){
+            name = name.slice(0, maxLength) + '...';
+        }
+
+        return name;
+    }
+</script>
+
+<script>
+    $(document).on('click', '#priorityList button', function(){
+        const ticketId = JSON.parse(document.getElementById('ticketId').textContent);
+
+        console.log(ticketId)
+
+        var priority = $(this).data('priority');
+
+        console.log(priority)
+
+        changePriority(ticketId, priority);
+    });
+
+    function changePriority(ticketId, priority){
+        $.ajax({
+            type: "POST",
+            url: "/api/tickets/"+ ticketId +"/change-priority",
+            data: {
+                "csrfmiddlewaretoken": '{{ csrf_token }}',
+                "priority": priority
+            },
+            success: function(data){
+                console.log('Priority changed successfully');
+                $('#changePriorityButton').html(priority);
+
+                $('#changePriorityButton').removeClass();
+                if(priority == 'ALTA'){
+                    color = 'danger';
+                    $('#changePriorityButton').addClass('btn btn-sm btn-'+ color +' dropdown-toggle text-uppercase font-weight-bolder');
+                }
+
+                if(priority == 'MEDIA'){
+                    color = 'warning';
+                    $('#changePriorityButton').addClass('btn btn-sm btn-'+ color +' dropdown-toggle text-uppercase font-weight-bolder');
+                }
+
+                if(priority == 'BAJA'){
+                    color = 'primary';
+                    $('#changePriorityButton').addClass('btn btn-sm btn-'+ color +' dropdown-toggle text-uppercase font-weight-bolder');
+                }
+            }
         });
-    </script>
+    }
+</script>
 {% endblock custom_scripts %}
 
