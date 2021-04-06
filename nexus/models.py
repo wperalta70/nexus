@@ -59,7 +59,6 @@ class Ticket(models.Model):
 
     STATUS_CHOICES = (
         ('NUEVO', 'NUEVO'),
-        ('ASIGNADO', 'ASIGNADO'),
         ('EN DESARROLLO', 'EN DESARROLLO'),
         ('CERRADO', 'CERRADO'),
     )

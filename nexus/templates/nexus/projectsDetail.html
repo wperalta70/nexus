@@ -339,7 +339,7 @@
                                                     </td>
                                                     <td>
                                                         {% if ticket.assigned_to %}
-                                                            <span class="font-weight-bold text-nowrap text-uppercase label label-light label-lg label-inline text-dark-50">{{ ticket.assigned_to }}</span>
+                                                            <span class="font-weight-bold text-nowrap text-uppercase label label-light-info label-lg label-inline">{{ ticket.assigned_to.get_full_name|truncatechars:10 }}</span>
                                                         {% else %}
                                                             <span class="font-weight-bold text-nowrap text-uppercase label label-secondary label-lg label-inline text-dark-50">NO ASIGNADO</span>
                                                         {% endif %}

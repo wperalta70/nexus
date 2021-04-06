@@ -242,7 +242,7 @@ def ticketsCreate(request, projectId):
     project = Project.objects.get(id = projectId)
 
     if request.method == 'POST':
-        form = CreateTicketForm(request.POST)
+        form = CreateTicketForm(request.POST, project=project)
 
         if form.is_valid():
             ticket = form.save(commit = False)

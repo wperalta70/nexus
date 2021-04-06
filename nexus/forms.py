@@ -160,7 +160,7 @@ class CreateTicketForm(forms.ModelForm):
 
     assigned_to = UserModelChoiceField(
         label = 'Asignar a: ',
-        empty_label = 'No asignado',
+        empty_label = 'No asignar',
         queryset = None,
         required = False
     )

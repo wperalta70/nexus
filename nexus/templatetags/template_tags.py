@@ -20,3 +20,17 @@ def has_role(user, role):
 @register.filter
 def filter(object, attribute, value):
     return object.filter(attribute = value)
+
+# This filter receives a ticket's priority, and returns a color based on the priority
+@register.filter
+def get_priority_color(priority):
+    if priority == 'ALTA':
+        return 'danger'
+    
+    if priority == 'MEDIA':
+        return 'warning'
+
+    if priority == 'BAJA':
+        return 'primary'
+
+    return 'secondary'
