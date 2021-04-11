@@ -181,16 +181,6 @@
                             </div>
                             <div class="">
                                 <div class="text-muted font-weight-bolder">Prioridad:</div>
-                                <!-- {% if ticket.priority == 'ALTA' %}
-                                    <span class="label label-lg label-danger label-inline font-weight-bolder py-3 px-3">{{ ticket.priority }}</span>
-                                {% elif ticket.priority == 'MEDIA'  %}
-                                    <span class="label label-lg label-warning label-inline font-weight-bolder py-3 px-3">{{ ticket.priority }}</span>
-                                {% elif ticket.priority == 'BAJA' %}
-                                    <span class="label label-lg label-primary label-inline font-weight-bolder py-3 px-3">{{ ticket.priority }}</span>
-                                {% endif %} -->
-
-                                
-
                                 <button id="changePriorityButton" class="btn btn-sm btn-{{ ticket.priority|get_priority_color }} dropdown-toggle text-uppercase font-weight-bolder" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ ticket.priority }}
                                 </button>
@@ -220,8 +210,18 @@
                                 </div>
                             </div>
                             <div class="font-weight-bolder">
-                                <div class="text-muted">Estado:</div>
-                                <span class="font-weight-bolder">{{ ticket.status }}</span>
+                                <!-- <div class="text-muted">Estado:</div>
+                                <span class="font-weight-bolder">{{ ticket.status }}</span> -->
+
+                                <div class="text-muted font-weight-bolder">Estado:</div>
+                                <button id="changeStatusButton" class="btn btn-sm btn-secondary dropdown-toggle text-uppercase font-weight-bolder" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ ticket.status }}
+                                </button>
+                                <div id="statusList" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <button class="dropdown-item text-danger font-weight-bolder" data-status="NUEVO">NUEVO</button>
+                                    <button class="dropdown-item text-warning font-weight-bolder" data-status="EN DESARROLLO">EN DESARROLLO</button>
+                                    <button class="dropdown-item text-primary font-weight-bolder" data-status="CERRADO">CERRADO</button>
+                                </div>
                             </div>
                         </div>
                         <!-- End:: Item -->
@@ -814,11 +814,7 @@
     $(document).on('click', '#priorityList button', function(){
         const ticketId = JSON.parse(document.getElementById('ticketId').textContent);
 
-        console.log(ticketId)
-
         var priority = $(this).data('priority');
-
-        console.log(priority)
 
         changePriority(ticketId, priority);
     });
@@ -850,6 +846,31 @@
                     color = 'primary';
                     $('#changePriorityButton').addClass('btn btn-sm btn-'+ color +' dropdown-toggle text-uppercase font-weight-bolder');
                 }
+            }
+        });
+    }
+</script>
+
+<script>
+    $(document).on('click', '#statusList button', function(){
+        const ticketId = JSON.parse(document.getElementById('ticketId').textContent);
+
+        var status = $(this).data('status');
+
+        changeStatus(ticketId, status);
+    });
+
+    function changeStatus(ticketId, status){
+        $.ajax({
+            type: "POST",
+            url: "/api/tickets/"+ ticketId +"/change-status",
+            data: {
+                "csrfmiddlewaretoken": '{{ csrf_token }}',
+                "status": status
+            },
+            success: function(data){
+                console.log('Status changed successfully');
+                $('#changeStatusButton').html(status);
             }
         });
     }

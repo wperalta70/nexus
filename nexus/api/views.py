@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from .serializers import *
+from datetime import datetime
 
 @api_view(['GET', 'POST'])
 def project_team_members(request, projectId):
@@ -42,9 +43,12 @@ def project_team_members(request, projectId):
 
         userId = request.POST.get('userId')
         user = User.objects.get(id = userId)
-        project.team_members.add(user)
 
-        return Response(status = status.HTTP_201_CREATED)
+        try:
+            project.team_members.add(user)
+            return Response(status = status.HTTP_201_CREATED)
+        except Exception:
+            return Response(status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def assign_ticket(request, ticketId):
@@ -59,10 +63,12 @@ def assign_ticket(request, ticketId):
     user = User.objects.get(id = userId)
 
     ticket.assigned_to = user
-    ticket.status = 'ASIGNADO'
-    ticket.save()
-
-    return Response(status = status.HTTP_200_OK)
+    
+    try:
+        ticket.save()
+        return Response(status = status.HTTP_200_OK)
+    except Exception:
+        return Response(status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def change_priority(request, ticketId):
@@ -74,6 +80,26 @@ def change_priority(request, ticketId):
     ticket = Ticket.objects.get(id = ticketId)
 
     ticket.priority = request.POST.get('priority')
-    ticket.save()
 
-    return Response(status = status.HTTP_200_OK)
+    try:
+        ticket.save()
+        return Response(status = status.HTTP_200_OK)
+    except Exception:
+        return Response(status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def change_status(request, ticketId):
+    """
+        Receives:   ´ticketId´ (url parameter), ´status´ (request body)
+        Does:       changes the ticket's status
+    """
+
+    ticket = Ticket.objects.get(id = ticketId)
+    ticket.status = request.POST.get('status')
+    ticket.last_updated = datetime.now()
+
+    try:
+        ticket.save()
+        return Response(status = status.HTTP_200_OK)
+    except Exception:
+        return Response(status = status.HTTP_400_BAD_REQUEST)
