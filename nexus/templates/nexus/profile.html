@@ -102,8 +102,7 @@
                         <a href="{% url 'profile' user.id %}" class="btn btn-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Vista general</a>
                         {% if user.id == request.user.id %}
                             <a href="{% url 'profile-details' user.id %}" class="btn btn-outline-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Información personal</a>
-                            <!-- TODO: Change HREF -->
-                            <a href="#" class="btn btn-outline-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Cambiar contraseña</a>
+                            <a href="{% url 'change-password' user.id %}" class="btn btn-outline-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Cambiar contraseña</a>
                         {% endif %}
                     </div>
                     <!--end::Body-->

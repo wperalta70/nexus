@@ -30,6 +30,7 @@ urlpatterns = [
     path('profile/', views.profile, name="profile"),
     path('profile/<int:userId>', views.profile, name="profile"),
     path('profile/<int:userId>/details', views.profileDetails, name="profile-details"),
+    path('profile/<int:userId>/changePassword', views.changePassword, name="change-password"),
 ]
 
 if settings.DEBUG:

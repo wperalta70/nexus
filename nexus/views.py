@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 import datetime
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .decorators import *
 from django.contrib.auth.models import Group
+from django.contrib.auth.forms import PasswordChangeForm
 
 # context:
 #   title: Page's main title
@@ -538,3 +539,35 @@ def profileDetails(request, userId):
         'userProfileForm': userProfileForm
     }
     return render(request, 'nexus/profileDetails.html', context)
+
+@login_required(login_url='login')
+def changePassword(request, userId):
+    if userId != request.user.id:
+        redirect('profile')
+
+    user = User.objects.get(id = request.user.id)
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(user, request.POST)
+        
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Se ha actualizado exitosamente la contraseña')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Hubo un error al intentar cambiar la contraseña.')
+
+    form = PasswordChangeForm(user)
+
+    context = {
+        'title': f'Información de {user.get_full_name()}',
+        'breadcrumbs': {
+            'Inicio': '/',
+            f'Perfil de {user.get_full_name()}': f'/profile/{user.id}',
+        },
+        'tab': 'proyectos',
+        'user': user,
+        'form': form,
+    }
+    return render(request, 'nexus/profileChangePassword.html', context)
