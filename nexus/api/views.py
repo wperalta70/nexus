@@ -63,6 +63,7 @@ def assign_ticket(request, ticketId):
     user = User.objects.get(id = userId)
 
     ticket.assigned_to = user
+    ticket.last_updated = datetime.now()
     
     try:
         ticket.save()
@@ -80,6 +81,7 @@ def change_priority(request, ticketId):
     ticket = Ticket.objects.get(id = ticketId)
 
     ticket.priority = request.POST.get('priority')
+    ticket.last_updated = datetime.now()
 
     try:
         ticket.save()
