@@ -8,25 +8,15 @@ from nexus.decorators import *
 from django.contrib.auth.models import Group
 
 from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework import status, viewsets
+from rest_framework.decorators import action, api_view
 from .serializers import *
 from datetime import datetime
 
-@api_view(['GET', 'POST'])
-def project_team_members(request, projectId):
-    """
-        GET:
-            Receives:   projectId(url parameter)
-            Does:       returns a list of the project's team members
-        POST:
-            Receives:   projectId(url parameter), userId(request body)
-            Does:       adds a user as a new team member
-    """
-    
-    project = Project.objects.get(id = projectId)
-
-    if request.method == 'GET':
+class ProjectTeamMembersViewSet(viewsets.ViewSet):
+    # Ver el listado de miembros asignados a un proyecto
+    def list(self, request, projectId):
+        project = Project.objects.get(id = projectId)
         team_members = project.team_members.all()
 
         team_members_list = []
@@ -38,15 +28,32 @@ def project_team_members(request, projectId):
             team_members_list.append(member)
         
         return Response(team_members_list)
-    
-    elif request.method == 'POST':
 
-        userId = request.POST.get('userId')
+    # Asignar un usuario a un proyecto
+    @action(detail = False, methods=['post'])
+    def assign(self, request, projectId):
+        project = Project.objects.get(id = projectId)
+
+        userId = request.data.get('userId') # Recibe {"userId": id} en el request body
         user = User.objects.get(id = userId)
 
         try:
             project.team_members.add(user)
             return Response(status = status.HTTP_201_CREATED)
+        except Exception:
+            return Response(status = status.HTTP_400_BAD_REQUEST)
+
+    # Remover un usuario del listado de usuarios asignados a un proyecto
+    @action(detail = False, methods=['post'])
+    def remove(self, request, projectId):
+        project = Project.objects.get(id = projectId)
+
+        userId = request.data.get('userId') # Recibe {"userId": id} en el request body
+        user = User.objects.get(id = userId)
+
+        try:
+            project.team_members.remove(user)
+            return Response(status = status.HTTP_200_OK)
         except Exception:
             return Response(status = status.HTTP_400_BAD_REQUEST)
 

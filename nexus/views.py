@@ -487,8 +487,8 @@ def profile(request, userId = None):
         userId = request.user.id
 
     user = User.objects.get(id = userId)
-    projects = user.projects.all()
-    tickets = user.tickets.all() # TODO: Cambiar por: Ticket.objects.filter(assigned_to=user)
+    projects = user.projects.all() # TODO: Currently this variable contains all of the projects that were created by the user. Change this to show all of the projects that the user is assigned to
+    tickets = Ticket.objects.filter(assigned_to=user)
     comments = user.comments.all()
 
     context = {
@@ -502,8 +502,8 @@ def profile(request, userId = None):
         'projects': projects,
         'tickets': tickets,
         'comments': comments,
-        'projectCount': projects.count,
-        'ticketCount': user.tickets.filter(status="CERRADO").count,
+        'projectCount': projects.count, # TODO: Currently this variable contains all of the projects that were created by the user. Change this to show all of the projects that the user is assigned to
+        'ticketCount': Ticket.objects.filter(assigned_to=user, status="CERRADO").count,
         'commentCount': comments.count
     }
     return render(request, 'nexus/profile.html', context)
