@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 import datetime
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .decorators import *
 from django.contrib.auth.models import Group
+from django.contrib.auth.forms import PasswordChangeForm
 
 # context:
 #   title: Page's main title
@@ -242,17 +243,20 @@ def ticketsCreate(request, projectId):
     project = Project.objects.get(id = projectId)
 
     if request.method == 'POST':
-        form = CreateTicketForm(request.POST)
+        form = CreateTicketForm(request.POST, project=project)
 
         if form.is_valid():
             ticket = form.save(commit = False)
             ticket.project = project
             ticket.user = request.user
             ticket.save()
-            # TODO: Fix redirect and show message
-            return redirect('projects-detail', projectId = projectId)
+            messages.success(request, 'Se ha creado exitosamente el nuevo ticket')
+        else:
+            messages.error(request, 'Ha ocurrido un error al intentar crear el nuevo ticket')
+        
+        return redirect('tickets-detail', projectId = projectId, ticketId = ticket.id)
 
-    form = CreateTicketForm()
+    form = CreateTicketForm(project=project)
 
     context = {
         'title': 'Crear nuevo ticket',
@@ -275,15 +279,18 @@ def ticketsUpdate(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
 
-    form = UpdateTicketForm(instance = ticket)
+    form = UpdateTicketForm(instance = ticket, project=project)
 
     if request.method == 'POST':
-        form = UpdateTicketForm(request.POST, instance = ticket)
+        form = UpdateTicketForm(request.POST, instance = ticket, project=project)
 
         if form.is_valid():
             ticket = form.save(commit = False)
             ticket.last_updated = datetime.datetime.now()
             ticket.save()
+            messages.success(request, 'Se ha actualizado exitosamente la información del ticket.')
+        else:
+            messages.error(request, 'Ha ocurrido un error al intentar actualizar la información del ticket.')
 
         return redirect('tickets-detail', projectId = projectId, ticketId = ticketId)
 
@@ -309,6 +316,15 @@ def ticketsUpdate(request, projectId, ticketId):
 def ticketsDelete(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
+
+    if request.method == 'POST':
+        try:
+            ticket.delete()
+            messages.success(request, 'Se ha eliminado el ticket.')
+            return redirect('projects-detail', projectId = projectId)
+        except Exception:
+            messages.error(request, 'Ha ocurrido un error al intentar eliminar el ticket.')
+            return redirect('projects-detail', projectId = projectId)
 
     context = {
         'title': 'Eliminar Ticket',
@@ -434,7 +450,6 @@ def usersUpdate(request, userId):
             user_form.save()
             profile_form.save()
             messages.success(request, f'Se han actualizado los datos de su perfil.')
-            # TODO: Change redirect based on if the user changed his profile, or if an admin changed another user's profile
             return redirect('users-list')
 
     context = {
@@ -486,14 +501,87 @@ def profile(request, userId = None):
         userId = request.user.id
 
     user = User.objects.get(id = userId)
+    projects = user.projects.all() # TODO: Currently this variable contains all of the projects that were created by the user. Change this to show all of the projects that the user is assigned to
+    tickets = Ticket.objects.filter(assigned_to=user)
+    comments = user.comments.all()
 
     context = {
         'title': f'Perfil de {user.get_full_name()}',
         'breadcrumbs': {
             'Inicio': '/',
-            'Mi perfil': '#',
+            f'Perfil de {user.get_full_name()}': '#',
         },
         'tab': 'proyectos',
-        'user': user
+        'user': user,
+        'projects': projects,
+        'tickets': tickets,
+        'comments': comments,
+        'projectCount': projects.count, # TODO: Currently this variable contains all of the projects that were created by the user. Change this to show all of the projects that the user is assigned to
+        'ticketCount': Ticket.objects.filter(assigned_to=user, status="CERRADO").count,
+        'commentCount': comments.count
     }
     return render(request, 'nexus/profile.html', context)
+
+@login_required(login_url='login')
+def profileDetails(request, userId):
+    if userId != request.user.id:
+        redirect('profile')
+
+    user = User.objects.get(id = request.user.id)
+
+    userDetailsForm = UpdateUserDetailsForm(instance = user)
+    userProfileForm = UpdateProfileForm(instance = user.profile)
+
+    if request.method == 'POST':
+        userDetailsForm = UpdateUserDetailsForm(request.POST, instance = user)
+        userProfileForm = UpdateProfileForm(request.POST, request.FILES, instance = user.profile)
+        if userDetailsForm.is_valid() and userProfileForm.is_valid():
+            userDetailsForm.save()
+            userProfileForm.save()
+            messages.success(request, f'Se han actualizado los datos de su perfil.')
+            return redirect('profile-details', user.id)
+
+    context = {
+        'title': f'Información de {user.get_full_name()}',
+        'breadcrumbs': {
+            'Inicio': '/',
+            f'Perfil de {user.get_full_name()}': f'/profile/{user.id}',
+        },
+        'tab': 'proyectos',
+        'user': user,
+        'userDetailsForm': userDetailsForm,
+        'userProfileForm': userProfileForm
+    }
+    return render(request, 'nexus/profileDetails.html', context)
+
+@login_required(login_url='login')
+def changePassword(request, userId):
+    if userId != request.user.id:
+        redirect('profile')
+
+    user = User.objects.get(id = request.user.id)
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(user, request.POST)
+        
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Se ha actualizado exitosamente la contraseña')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Hubo un error al intentar cambiar la contraseña.')
+
+    form = PasswordChangeForm(user)
+
+    context = {
+        'title': f'Información de {user.get_full_name()}',
+        'breadcrumbs': {
+            'Inicio': '/',
+            f'Perfil de {user.get_full_name()}': f'/profile/{user.id}',
+        },
+        'tab': 'proyectos',
+        'user': user,
+        'form': form,
+    }
+    return render(request, 'nexus/profileChangePassword.html', context)

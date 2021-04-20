@@ -1,0 +1,167 @@
+{% extends "nexus/base.html" %}
+{% load static %}
+{% load template_tags %}
+{% load crispy_forms_tags %}
+<!-- --- -->
+{% block template_vendors_css %}
+{% endblock template_vendors_css %}
+
+{% block template_layout_css %}
+{% endblock template_layout_css %}
+<!-- --- -->
+
+{% block page_messages %}
+    <div class="container py-3 pt-lg-8 pb-lg-4">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{message.tags}} font-weight-bolder font-size-lg"{% endif %} >
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock page_messages %}
+
+{% block page_title %}
+    {{ title }}
+{% endblock page_title %}
+
+{% block breadcrumbs %}
+    {% for item in breadcrumbs %}
+        <li class="breadcrumb-item">
+            <a href="{{ breadcrumbs|get_item:item }}" class="text-muted">{{ item }}</a>
+        </li>
+    {% endfor %}
+{% endblock breadcrumbs %}
+
+{% block subheader_toolbar %}{% endblock subheader_toolbar %}
+
+{% block content %}
+    <div class="container">
+        <div class="d-flex flex-column flex-lg-row">
+            <div class="flex-row w-lg-350px mr-5">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b">
+                    <!--begin::Body-->
+                    <div class="card-body pt-4">
+                        <!--begin::User-->
+                        <div class="d-flex align-items-start pt-5">
+                            <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
+                                <!-- TODO: Change profile picture -->
+                                {% if user.profile.image %}
+                                    <div class="symbol-label">
+                                        <img src="{{ user.profile.image.url }}" alt="User profile image" class="w-100 h-100" style="border-radius: 0.42rem;">
+                                    </div>
+                                {% else %}
+                                    <div class="symbol-label bg-primary-o-50">
+                                        <span class="symbol-label font-size-h1 font-weight-bolder text-dark bg-white-o-80">WP</span>
+                                    </div>
+                                {% endif %}
+                                <i class="symbol-badge bg-success"></i>
+                            </div>
+                            <div class="mt-2 mt-md-5">
+                                <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ user.get_full_name }}</a>
+                                <div class="text-muted">{{ user.groups.first }}</div>
+                            </div>
+                        </div>
+                        <!--end::User-->
+                        <!--begin::Contact-->
+                        <div class="pt-8 pb-6">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="font-weight-bold mr-2">Email:</span>
+                                <a href="#" class="text-muted text-hover-primary">{{ user.email }}</a>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="font-weight-bold mr-2">Fecha de ingreso:</span>
+                                <span class="text-muted">{{ user.date_joined|date:"d \d\e F, Y" }}</span>
+                            </div>
+                        </div>
+                        <!--end::Contact-->
+                        <a href="{% url 'profile' user.id %}" class="btn btn-outline-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Vista general</a>
+                        <a href="{% url 'profile-details' user.id %}" class="btn btn-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Información personal</a>
+                        <a href="{% url 'change-password' user.id %}" class="btn btn-outline-success font-weight-bold py-3 px-6 mb-2 text-center btn-block">Cambiar contraseña</a>
+                    </div>
+                    <!--end::Body-->
+                </div>
+                <!--end::Card-->
+            </div>
+            <div class="flex-row-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-custom gutter-b">
+                            <form method="POST" enctype="multipart/form-data">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class="card-title mb-0">
+                                        <h1 class="text-dark m-0">Información personal</h1>
+                                    </div>
+                                    <div class="card-toolbar">
+                                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="">
+                                        {% csrf_token %}
+                                        {{ userDetailsForm|crispy }}
+                            
+                                        <div class="form-group">
+                                            <label>{{ userProfileForm.image.label }}</label><br>
+                                            {{ userProfileForm.image }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+<!-- --- -->
+{% block template_vendor_js %}
+{% endblock template_vendor_js %}
+
+{% block template_page_js %}
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/b-1.6.5/b-html5-1.6.5/datatables.min.js"></script>
+{% endblock template_page_js %}
+<!-- --- -->
+
+
+
+{% block custom_scripts %}
+<script>
+    // Script para mostrar el nombre del archivo en el file input field
+    $(document).ready(function () {
+        $('.custom-file-input').on('change', function() { 
+            let fileName = $(this).val().split('\\').pop(); 
+            $(this).next('.custom-file-label').addClass("selected").html(fileName); 
+        });
+    });
+
+    // Class definition
+
+    var KTBootstrapSwitch = function() {
+        // Private functions
+        var demos = function() {
+            // minimum setup
+            $('[data-switch=true]').bootstrapSwitch();
+        };
+
+        return {
+            // public functions
+            init: function() {
+                demos();
+            },
+        };
+    }();
+
+    jQuery(document).ready(function() {
+        KTBootstrapSwitch.init();
+    });
+</script>
+{% endblock custom_scripts %}
+
