@@ -74,8 +74,7 @@
                     </div>
                     <div class="col-md-4">
                         <span class="text-muted font-size-lg font-weight-bold">CREADO POR:</span>
-                        <!-- TODO: Link to the user's profile -->
-                        <h4 class="text-dark-75">{{ ticket.user }}</h4>
+                        <a href="{% url 'profile' ticket.user.id %}"><h4 class="text-dark-75 text-hover-primary">{{ ticket.user.get_full_name }}</h4></a>
                     </div>
                     <div class="col-md-4">
                         <span class="text-muted font-size-lg font-weight-bold">FECHA DE CREACIÓN:</span>

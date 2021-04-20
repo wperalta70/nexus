@@ -18,14 +18,14 @@
 				<!--begin::Header-->
 				<div class="d-flex align-items-center mt-5">
 					<div class="symbol symbol-100 mr-5">
-						{% if user.profile.image %}
+						{% if request.user.profile.image %}
 							<div class="symbol-label">
-								<img class="symbol-label" src="{{ user.profile.image.url }}" alt="">
+								<img class="symbol-label" src="{{ request.user.profile.image.url }}" alt="">
 							</div>
 							<i class="symbol-badge bg-success"></i>
 						{% else %}
 							<div class="symbol-label bg-primary-o-50">
-								<span class="symbol-label font-size-h1 font-weight-bolder text-dark bg-white-o-80">{{ request.user.first_name|make_list|first }}{{ request.user.last_name|make_list|first|upper }}</span>
+								<span class="symbol-label font-size-h1 font-weight-bolder text-dark bg-white-o-80">{{ request.user.first_name|make_list|first|upper }}{{ request.user.last_name|make_list|first|upper }}</span>
 							</div>
 							<i class="symbol-badge bg-success"></i>
 						{% endif %}

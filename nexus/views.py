@@ -250,8 +250,11 @@ def ticketsCreate(request, projectId):
             ticket.project = project
             ticket.user = request.user
             ticket.save()
-            # TODO: Fix redirect and show message
-            return redirect('projects-detail', projectId = projectId)
+            messages.success(request, 'Se ha creado exitosamente el nuevo ticket')
+        else:
+            messages.error(request, 'Ha ocurrido un error al intentar crear el nuevo ticket')
+        
+        return redirect('tickets-detail', projectId = projectId, ticketId = ticket.id)
 
     form = CreateTicketForm(project=project)
 
@@ -285,6 +288,9 @@ def ticketsUpdate(request, projectId, ticketId):
             ticket = form.save(commit = False)
             ticket.last_updated = datetime.datetime.now()
             ticket.save()
+            messages.success(request, 'Se ha actualizado exitosamente la información del ticket.')
+        else:
+            messages.error(request, 'Ha ocurrido un error al intentar actualizar la información del ticket.')
 
         return redirect('tickets-detail', projectId = projectId, ticketId = ticketId)
 
@@ -310,6 +316,15 @@ def ticketsUpdate(request, projectId, ticketId):
 def ticketsDelete(request, projectId, ticketId):
     project = Project.objects.get(id = projectId)
     ticket = Ticket.objects.get(id = ticketId)
+
+    if request.method == 'POST':
+        try:
+            ticket.delete()
+            messages.success(request, 'Se ha eliminado el ticket.')
+            return redirect('projects-detail', projectId = projectId)
+        except Exception:
+            messages.error(request, 'Ha ocurrido un error al intentar eliminar el ticket.')
+            return redirect('projects-detail', projectId = projectId)
 
     context = {
         'title': 'Eliminar Ticket',
@@ -435,7 +450,6 @@ def usersUpdate(request, userId):
             user_form.save()
             profile_form.save()
             messages.success(request, f'Se han actualizado los datos de su perfil.')
-            # TODO: Change redirect based on if the user changed his profile, or if an admin changed another user's profile
             return redirect('users-list')
 
     context = {
